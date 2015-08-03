@@ -1,0 +1,428 @@
+主要内容
+	CI简介
+	CI的超级对象
+	CI的控制器与视图
+	数据库访问
+	AR模型
+	如何扩展CI的控制器
+	CI中的模型
+	
+	url相关函数
+	设置路由
+	分页
+	文件上传
+	session
+	验证码
+	表单验证
+
+入口文件.php/控制器/动作
+
+	controlles 	控制器
+	models		模型
+	views		试图
+
+默认控制器是welcome
+默认动作是index
+不做任何指定 默认访问的
+
+CI中的控制器：
+	1.不需要加后缀 例如：userAction，直接是类名.php
+	2.文件名全部小写
+	3.所有的控制器需要直接或间接继承自CI_Controller类
+	4.protected 受保护的 方法不能被浏览器直接请求
+	5.以下划线开头的方法，不能被浏览器直接请求_test
+	6.	public function test2(){	//在类内部可以
+			$this->_test1();
+		}
+	7.控制器中对动作(方法)要求：public
+								以_开头
+	8.方法名不区分大小写
+	9.与类名相同的，会被PHP当做构造方法，__construct()
+
+CI中的视图：
+	1.在控制器中加载特定文件夹的视图 user/index
+	2.视图中直接使用原声php代码，不适用模板引擎
+	3.如何将变量分配到视图中，在视图里使用
+		1.$this->assign('key','value'); smarty
+		2.$this->load->vars('title','this is title');
+		3.在视图输出 ：echo $title;
+		4.分配二维数组
+			$list = array(array(),array(),array());
+			$data['list'] = $list;
+			$data['title'] = '这是标题';
+			$this->load->vars($data); //可以多次使用
+			//模板
+	4.推荐使用<?php foreach($list as $item):?>
+				<?=$item['name']?>
+			  <?php endforeach;?>
+			  
+CI中的超级对象：
+	var_dump($this); //控制器对象，超级对象
+	var_dump($this->load);
+	当前的控制器对象
+	提供了很多属性
+	$this->load
+		装载器类的实例 system/core/Loader.php
+		装载器类提供的方法：
+		view() 		装载视图
+		vars() 		分配变量到视图
+		database()	装载数据库操作对象
+		model()		装载模型对象
+		helper()	加载一些辅助函数
+		
+		//CI会自动实例化一个CI_Loader的对象，放在超级对象的属性中
+		//下面代码帮助大家理解$this->load属性
+		$obj = new CI_Loader();
+		$this->load=$obj;
+		$this->load->view();
+	
+	$this->uri
+		是CI_URI的实例(url的一些东西)system/core/URI.php
+		CI_URI类提供方法：
+		*segment(n)  用于获取url中的第n个参数(值)
+		入口文件.php/控制器/动作/参数1/参数2
+			$this->uri->segment(4); //获取第四段的
+			传统的：使用 参数1/值1/参数2/值2  //$_GET['id'];
+		可以在方法里面直接写，直接输出
+		//index.php/控制器/index/6
+		echo $this->segment(2);	//输出6
+		public function index($p) {
+			echo $p; //输出6
+		}
+	$this->input
+		是CI_Input的实例(url的一些东西)system/core/Input.php
+		提供的方法
+			$this->input_post('username');
+			$this->input_server('DOCUMENT_ROOT');
+				等于 var_dump($_SERVER['']);
+	在视图中 直接用$this来访问超级对象	
+	
+	
+ci中的数据库操作
+		AR模型，就是以前的model
+		1.打开配置文件database.php
+		2.将数据库访问对象，装载到超级对象的属性 $this->db 中
+			$this->load->database();	
+			//配置自动加载db
+			//把他写入autoload里面,$autoload['libraries'] = array('database'); ,就不需要每次加载了
+		3.执行一些数据库操作函数
+			
+			查询：
+				var_dump($this->db)		//加载后，会放入超级对象属性中,默认属性名是db
+				//执行操作,调用对象的某一个方法
+				$res = $this->db->query($sql);	//返回对象
+				$list = $res->result();	//返回数组，里面是一个一个的对象
+				var_dump($list);
+				//mysql_fetch_object(); //返回对象
+				
+				$data['user_list'] = $users;
+				//放到模板中,作为第二个参数
+				$this->load->view('user/showusers',$data);
+				
+				$res->result_array(); 	//返回二维数组，关联数组
+				$res->row();			//返回第一条数据,直接是一个对象
+			
+			添加：
+				$this->load->databases(); 	//加载数据库操作类
+				$sql = "insert into user (name,password) values ('jack','123')";
+				$res = $this->db->query($sql);	//结果为：true or false
+				if($res) {
+					$this->db->affected_rows();	//获取影响行数mysql_affected_rows()
+					$this->db->insert_id();		//获取insert操作产生的id，自增id
+				}
+			修改：
+			删除：
+	
+			解决安全：	可以表前缀;
+							配置一下
+							$db['default']['dbprefix'] = 'blog_';
+							$db['default']['swap_pre'] = 'blog_';
+							配置为一样，代码中就直接写死就行，如果以后表前缀变化，只需要
+							修改$db['default']['dbprefix'] = 'new_'; 代码中的blog_会自动替换为new_
+						参数绑定,?添加 查询;
+							$data[0] = "ss";
+							$data[1] = "123";
+							$sql = "insert into user (name,password) values (?,?)";//安全
+							$res = $this->db->query($sql,$data);
+							
+							$sql = "select * from test where name=?";
+							$res = $this->db->query($sql,$name);
+							如果有多个?时，传入索引数组
+			db自动加载:
+					
+	
+CI中的AR（数据库增删改查）  // 简化操作
+	控制文件中
+	$active_record = TRUE; //开启AR模型，控制器中可以直接使用$this->db ，false 则不可以，只可以使用query
+	
+	1.确保database.php里$active_record = TRUE ，开启AR模型
+	2.在配置文件中，正确配置表前缀后，会自动添加表前缀
+	
+	//查
+	$res = $this->db->get('表名');  //返回结果集对象
+	$res->result();
+	//增
+	$bool = $this->db->insert('表名',关联数组);
+	//改
+	$bool = $this->db->update('表名',关联数组,条件);//条件应为数组
+	//删
+	$bool = $this->db->delete('表名',条件);
+	
+	//连贯操作
+		//select * from user where id>=3 order by id desc limit 2,3;
+		$res = $this->db->select('id,name') 	//id大于1，id排序，
+				 ->from('user')
+				 ->where('id >=',3)
+				 ->limit(3,2)					//表示跳过2条，取出3条数据
+				 ->order_by('id desc')
+				 ->get();
+		echo $this->db->last_query(); 			//打印最后一条sql语句
+		var_dump($res->result);		//打印结果集
+	//where方法
+		//where方法
+		$res = $this->db->where('name','jack')->get('user');	//直接传字段，和值
+		$res = $this->db->where(array('name'=>'jack'))->get('user');			//传数组 ， name为jack
+		$res = $this->db->where(array('name'=>'jack','id >'=>2))->get('user');	//id 大于2
+		//$res = $this->db->where('name !=','jack')->get('user');	//直接传字段，和值 name不为jack
+		//$res = $this->db->where('name =','jack')->get('user');	//直接传字段，和值 name为jack
+		
+	复杂的查询，请用$this->db->query($sql,$data); //使用问号参数绑定
+	
+扩展CI的控制器:
+	在application/core/MY_Controller.php
+	继承CI的基类，可以重写构造方法，
+	\system 这里面有很多系统的，如果想重写其他的也可以
+	
+	可以修改自定义控制器的前缀 在config.php里
+	
+	
+CI中的模型model	
+	继承自CI_Model，
+	application/models
+	user_model.php（文件名全小写） 
+	class User_model(类名首字母大写)
+	建议使用_model作为后缀，防止和控制器类名冲突
+	
+	在模型中，可以直接使用超级对象中的属性 （超级对象就是控制器属性）
+	模型中的方法，是根据控制器的需求，控制器要什么的数据，就在模型中就OK了
+	
+CI中的url相关函数
+	htdoc/phpci/
+	$this->load->helper('url'); //加载url函数,可以配置自动加载$autiload['helper'] = array('url');
+	
+	site_url('控制器/方法');	//生成url ,适用于表单
+	base_url(); 				//网站根目录 <?php echo base_url(); ?>upload/girl.jpg
+	
+CI中的路由与伪静态、隐藏index.php入口文件
+	路由：
+		配置文件：application\config\routes.php
+		默认控制器：$route['default_controller'] = "welcome"; //默认进来访问的页面
+		
+	加入伪静态：	
+		//http://localhost/phpci/news/4.html
+		//$route['news/[\d]+\.html'] = 'article/show/$1';
+		//$route['news/[\d]{6}/([\d]+)\.html'] = 'article/show/$1';
+	
+	隐藏入口文件index.php：
+		  开启apache的rewrite模块：apache的配置文件 httpd.conf，找rewrite,去掉注释，重置apache
+		  在入口文件同级目录下建立.htaccess文件
+		  加入以下内容：
+			RewriteEngine on   
+			RewriteCond %{REQUEST_FILENAME} !-f
+			RewriteCond %{REQUEST_FILENAME} !-d  
+			RewriteCond $1 !^(index/.php|images|js|css|robots/.txt)  
+			RewriteRule ^(.*)$ index.php?/$1 [L]
+	
+CI中的分页
+		//装载类文件
+		$this->load->library('pagination');
+		$this->load->helper('url'); //加载url辅助函数
+		//配置
+		$page_size = 10; //每页显示10条数据
+		
+		$config['base_url'] = site_url('user/page'); 	//当前控制器下的当前方法
+		$config['total_rows'] = '200';	//总条数
+		$config['per_page'] = '10';		//每页显示条数
+		
+		$config['first_link'] = '首页';
+		$config['next_link'] = '上一页';
+		$config['prev_link'] = '下一页';
+		$config['uri_segment'] = 3;	//分页的数据查询偏移量在哪一段
+		
+		$this->pagination->initialize($config);
+		
+		$offset = intval($this->uri->segment(3));  //获取第三段的参数值,与$config['uri_segment']对应
+		
+		echo $sql = "select * from blog_user limit $offset,$page_size"; //sql语句
+		
+		$data['links'] = $this->pagination->create_links(); //创建上一页，下一页的按钮
+		$this->load->view('user/page',$data);
+	
+CI中的文件上传
+	1.创建上传目录
+	2.建立上传页面
+		<form action="<?php echo site_url('user/upload'); ?>" method="post" enctype="multipart/form-data">
+			<input type="file" name="pic">
+			<input type="submit" value="上传">
+		</form>
+	3.执行上传
+		$config['upload_path'] = './upload/'; 			//上传目录，需要手工创建，以入口文件为准
+		$config['allowed_types'] = 'gif|png|jpg|jpeg'; 	//文件允许类型
+		$config['file_name'] = uniqid(); 				//生成新文件名称
+		
+		$this->load->library('upload',$config); 		//加载文件上传类，放入配置文件
+		$this->upload->do_upload('pic');				//调用文件上传方法，执行上传，放表单名字
+		
+		//var_dump($this->upload->data());	//打印上传成功 返回信息
+		$data = $this->upload->data();
+		echo $data['file_name'];//输出新文件名
+	
+CI中的Session
+		//CI中不使用PHP的原声session，默认CI中的session使用的是cookie，
+		
+		//SESSION类
+		public function login() {
+			//echo md5(uniqid());  //使用它生成一个加密id，填入配置文件中config.php 里的$config['encryption_key'] = 'c40e2bfe70d2c6956044f944bdfaaf8b';选项
+			
+			$this->load->library('session'); //一旦被载入, session就可以这样使用： $this->session
+			$user = array('id'=>3,'name'=>'jack');
+			
+			$this->session->set_userdata('user',$user);	//将数据放入session中，只允许放KEY 和VALUE 键值对应的数据
+			//刚放完之后，不要马上在这里获取刚放入的数据,只有页面重新加载或跳转到别的url中才能获取到
+			
+			//可以在配置文件中设置加密存放
+			//$config['sess_encrypt_cookie'] = FALSE; 	//使用加密存放 TRUE为是
+			
+			//另一种放置数据，可以用于登陆，放入登陆前的url
+			$this->session->set_flashdata('test','aaaaaa');  //和session原理一样，下次刷新将没有，一次性数据
+		}
+		
+		//SESSION类
+		public function show_session() {
+			//去另一个页面去取 CI 中session的数据
+			$this->load->library('session');
+			$user = $this->session->userdata('user'); 	//获取session中的数据
+			var_dump($user);
+			
+			$test = $this->session->flashdata('test');
+			echo $test;
+		}
+	
+CI中的验证码,CAPTCHA 辅助函数
+		1.先手动在index入口文件同级目录下，创建文件夹
+		2.	//验证码
+			public function code() {
+				$this->load->helper('url');
+				$this->load->helper('captcha'); //是辅助函数
+				$vals = array(
+						//'word' => rand(1000,9999),					//指定随机字符串
+						'img_path' => './codeimg/', 					//验证码存放目录，手动创建 ，必须参数
+						'img_url' => base_url().'/codeimg/',			//url
+						//'font_path' => './path/to/fonts/texb.ttf', 	//如果验证码为中文，指定字体目录
+						//'img_width' => '150',
+						//'img_height' => 30,
+						//'expiration' => 60 							//验证码删除时间,秒
+				);
+				
+				$cap = create_captcha($vals); //创建验证码
+				//echo $cap['image'];
+				$this->load->view('user/code',array('cap'=>$cap['image'])); //将图片分配到页面
+				
+				//echo $cap['word']; //验证码数字内容，可以放到session中，进行验证，看手册
+				//session_start();
+				//$_SESSION['cap'] = $cap['word'];
+				
+				//验证的时候，对比$cap['word']就行
+			}
+			
+CI中的表单验证
+	//表单验证类,此方法可以不要，直接用下面的,没有数据直接显示，所有类似的都可以
+	public function forms() {
+		$this->load->view('user/add');
+	}
+	
+	//表单验证类
+	public function form() {
+		$this->load->library('form_validation');	//加载类库
+		//验证规则
+		$this->form_validation->set_rules('name', '用户名', 'required');
+		
+		$bool = $this->form_validation->run(); //执行验证，成功返回true
+		//var_dump($bool);
+		if($bool) {
+			//为真，调用模型保存到数据库
+		} else {
+			//显示错误信息
+			$this->load->view('user/form');
+		}
+	}	
+	
+	<html>
+		<head>
+			<title></title>
+		</head>
+		<body>
+			<?php echo validation_errors();?> <!-- 显示所有错误 -->
+			<form action="<?php echo site_url('user/insert'); ?>" method="post">
+				name:<input type="text" name="name" value="<?php echo set_value('name'); ?>"/>
+				<?php echo form_error('name','<span>','</span>');?><!-- 输出错误信息 -->
+				<br>
+				pass:<input type="text" name="password" /><br>
+				email:<input type="text" name="email" /><br>
+				<input type="submit" value="提交" /><br>
+			</form>
+		</body>
+	</html>
+		
+修改语言包
+	//语言包放到application/language/
+	//修改配置文件$config['language']	= 'english';		
+		
+//前后台分离
+	修改/index.php  
+	将$application_folder = 'application';改为$application_folder = 'home';
+	/application/文件夹 改为/home/文件夹
+
+	新建/admin/文件夹 将/index.php与/home/下所有文件复制到/admin/
+
+	修改/admin/index.php 
+		$application_folder = 'application';改为：$application_folder = './'
+		$system_path = 'system';改为：$system_path = '../system';
+
+//开启session加密
+	修改/admin/config/config.php下的$config['encryption_key']如下：
+	$config['encryption_key'] = 'rushui';	
+		
+//开启自动加载数据库链接与session
+	修改/admin/config/autoload.php下的默认加载值如下：
+	$autoload['libraries'] = array('database','session');
+//开启URL 辅助函数
+	$autoload['helper'] = array('url');
+
+//去掉index.php
+	将/home/ 和/admin/目录下的.htaccess文件内容改为（去掉index.php,在开启rewrite时生效）：
+	RewriteEngine on
+	RewriteCond %{REQUEST_FILENAME} !-f  
+	RewriteCond $1 !^(index\\.php|public|robots\\.txt) (允许访问的目录)
+	RewriteRule ^(.*)$ /index.php/$1 [L]		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
