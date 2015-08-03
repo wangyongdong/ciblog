@@ -263,16 +263,42 @@ function getArticleNums($uid) {
 }
 
 /**
- * 获取分类信息
+ * 获取分类名
  */
-function makeSort($id) {
+function beSort($iSort) {
 	$db = DB('default');
-	$sql = 'SELECT name FROM blog_sort WHERE id='.$id;
+	$sql = 'SELECT name FROM blog_sort WHERE id='.$iSort;
 	$res = $db->query($sql);
 	$aList = $res->row_array();
 	return $aList['name'];
 }
-
+/**
+ * 获取用户名
+ */
+function beName($iUser) {
+	$db = DB('default');
+	$sql = 'SELECT username FROM blog_member WHERE id='.$iUser;
+	$res = $db->query($sql);
+	$aList = $res->row_array();
+	return $aList['username'];
+}
+/**
+ * 获取置顶方式
+ */
+function beTop($sType) {
+	switch ($sType) {
+		case 'home':
+			$name = '首页';
+			break;
+		case 'sort':
+			$name = '分类';
+			break;
+		default:
+			$name = '无';
+			break;
+	}
+	return $name;
+}
 /**
  * 获取文章所属分类
  */

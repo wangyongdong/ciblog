@@ -73,26 +73,4 @@ class Sort extends MY_Controller {
 		echo $affect;
 	}
 	
-	/**
-	 * 移动类别
-	 */
-	public function sortChange() {
-		$aId = sg($_POST['id']);
-		$val = sg($_POST['val']);
-		
-		//将获取到的值进行拆分，重组
-		$var = explode(",",$aId);
-		$len = count($var)-1;
-		if($var[$len] == "" || $var[$len] == "," ) {
-			array_pop($var);
-		}
-		$id = $var;
-		//遍历查询出内容
-		$affects = 0;
-		for($i=0;$i<count($id);$i++){
-			$affect = $this->sort_model->sortChange($val,$id[$i]);
-			$affects += $affect;
-		}
-		echo json_encode($affects);
-	}
 }

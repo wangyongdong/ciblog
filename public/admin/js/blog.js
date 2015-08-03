@@ -28,7 +28,6 @@ function getCheckbox() {
 function delAll(url) {
 	if(confirm("确定要删除吗？")) {
 		id = getCheckbox();
-		alert(id);
 		$.ajax({
 			url:url,
 			data:'id='+id,
@@ -118,6 +117,38 @@ function menuC(id) {
 		$("#ch"+id).attr("class","imgcheck");
 	}
 }
+//改变sort
+function changeSort(val) {
+	id = getCheckbox();
+	$.post(
+		__A+'article/sortChange',
+		{id:id,val:val},
+		function(data){
+			if(data) {
+				window.location.reload();
+			} else {
+				alert("类别修改失败");
+			}
+		}
+	);
+}
+// 修改置顶
+function changeTop(val) {
+	id = getCheckbox();
+	$.ajax({
+		url:__A+'article/ArticleTop',
+		data:'id='+id+'&val='+val,
+		type:'post',
+		success:function(data){
+			if(data){
+				window.location.reload();
+			} else {
+				alert("置顶修改失败");
+			} 
+		}
+	})
+}
+
 
 
 function updNotice() {
@@ -146,57 +177,7 @@ function searchKeyWord() {
 	var q = $("#search_input").val();
 	window.location = __A+'search/index?q='+q;
 }
-// 改变sort
-function changeSort(val) {
-	$("input[type='checkbox']:checked").each(function(){
-		var strid = '';
-		//获取所有选中条目的id
-		$("input[type='checkbox']:checked").each(function(){
-			strid += $(this).attr("id") + ",";
-		});
-		if(strid =="," || strid=="") {
-			return false;
-		}
-		id = strid;
-	});
-	$.post(
-		__A+'sort/sortChange',
-		{id:id,val:val},
-		function(data){
-			if(data) {
-				window.location.reload();
-			} else {
-				alert("类别修改失败");
-			} 
-		}
-	);
-}
-// 修改置顶
-function changeTop(val) {
-	$("input[type='checkbox']:checked").each(function(){
-		var strid = '';
-		//获取所有选中条目的id
-		$("input[type='checkbox']:checked").each(function(){
-			strid += $(this).attr("id") + ",";
-		});
-		if(strid =="," || strid=="") {
-			return false;
-		}
-		id = strid;
-	});
-	$.ajax({
-		url:__A+'article/doArticleTop',
-		data:'id='+id+'&val='+val,
-		type:'post',
-		success:function(data){
-			if(data){
-				window.location.reload();
-			} else {
-				alert("置顶修改失败");
-			} 
-		}
-	})
-}
+
 // 文章密码显示
 $(function(){
    $(".rad").click(function(){

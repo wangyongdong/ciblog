@@ -14,17 +14,20 @@ class Article extends MY_Controller {
 	/**
 	 * 文章列表页
 	 */
-	public function alist() {
-		$data['sort_list'] = $this->sort_model->getSortList();
-		$data['user_list'] = $this->member_model->getMemberList();
+	public function index() {
+		$data['sort'] = $this->sort_model->getSortList();
+		$data['member'] = $this->member_model->getMemberList();
 		
 		//分页执行
 		$pageId = $this->input->get('page');
-		$arr = $this->public_model->getPage("article",'article/alist?',$pageId);
+		$arr = $this->public_model->getPage("article",'article/index?',$pageId);
+		
 		//执行查询
 		$data['list'] = $this->article_model->getArticleList($arr['start'],$arr['pagenum']);
 		
+		$this->load->view('public/header',$data);
 		$this->load->view('article/article_list',$data);
+		$this->load->view('public/footer',$data);
 	}
 	
 	/**
@@ -93,17 +96,21 @@ class Article extends MY_Controller {
 	 * 删除操作
 	 */
 	public function doDel() {
+		$iArticle = sg($_POST['id']);
+		$affect = $this->article_model->doDel($iArticle);
+		echo $affect;
+	}
+	
+	/**
+	 * 批量删除
+	 */
+	public function doDelAll() {
 		$sId = sg($_POST['id']);
 		//将获取到的值进行拆分，重组
-		$var = explode(",",$sId);
-		$len = count($var)-1;
-		if($var[$len] == "" || $var[$len] == "," ) {
-			array_pop($var);
-		}
-		$aId = $var;
-		//遍历查询出内容
+		$aId = explode(",",trim($sId,','));
+		//遍历删除
 		$affects = 0;
-		for($i=0;$i<count($aId);$i++){
+		for($i=0;$i<count($aId);$i++) {
 			$affect = $this->article_model->doDel($aId[$i]);
 			$affects+=$affect;
 		}
@@ -113,21 +120,38 @@ class Article extends MY_Controller {
 	/**
 	 * 文章置顶操作
 	 */
-	public function doArticleTop() {
+	public function ArticleTop() {
 		$sId = sg($_POST['id']);
 		$sTop = sg($_POST['val']);
-		
-		//将获取到的值进行拆分，重组
-		$var = explode(",",$sId);
-		$len = count($var)-1;
-		if($var[$len] == "" || $var[$len] == "," ) {
-			array_pop($var);
+		if(empty($sTop)) {
+			echo 'success';
 		}
-		$aId = $var;
+		//将获取到的值进行拆分，重组
+		$aId = explode(",",trim($sId,','));
 		//遍历查询出内容
 		$affects = 0;
-		for($i=0;$i<count($aId);$i++){
-			$affect = $this->article_model->doArticleTop($sTop,$aId[$i]); //执行修改
+		for($i=0;$i<count($aId);$i++) {
+			$affect = $this->article_model->ArticleTop($sTop,$aId[$i]);
+			$affects+=$affect;
+		}
+		echo $affects;
+	}
+	
+	/**
+	 * 移动类别
+	 */
+	public function sortChange() {
+		$sId = sg($_POST['id']);
+		$iSort = sg($_POST['val']);
+		if(empty($iSort)) {
+			echo 'success';
+		}
+		//将获取到的值进行拆分，重组
+		$aId = explode(",",trim($sId,','));
+		//遍历查询出内容
+		$affects = 0;
+		for($i=0;$i<count($aId);$i++) {
+			$affect = $this->article_model->sortChange($iSort,$aId[$i]);
 			$affects+=$affect;
 		}
 		echo $affects;

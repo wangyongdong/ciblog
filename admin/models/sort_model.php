@@ -8,7 +8,7 @@ class Sort_model extends CI_Model  {
     /**
      * 获取类别列表
      */
-    function getSortList($iStart=0,$iPageNum=10) {
+    function getSortList($iStart=0,$iPageNum=20) {
     	$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
     	$sql = 'SELECT
     				*
@@ -60,38 +60,5 @@ class Sort_model extends CI_Model  {
     	return $affect;
     }
     
-    /**
-     * 执行类别移动
-     */
-    function sortChange($sType,$iArticle) {
-    	$sArticleType = getArticleField($iArticle,'type'); //获取该文章原属于的类别
-    	
-    	$data = array('type'=>$sType);
-    	$this->db->update('article',$data,array('id'=>$iArticle));
-    	$affect = $this->db->affected_rows();
-    	if($affect) {
-    		$add = $this->sort_model->doSortNum($sType,"add"); 			//执行类别数量修改
-    		$cut = $this->sort_model->doSortNum($sArticleType,"cut"); 	//执行类别数量修改
-    	}
-    	return $affect;
-    }
     
-	/**
-     * 执行文章类别数量增加和减少
-     * @param string $type：add,cut
-     */
-    function doSortNum($iSort,$sType) {
-    	$sql = 'SELECT nums FROM blog_sort WHERE id='.$iSort;	//查询出该类别下的文章数量
-    	$query = $this->db->query($sql);
-    	$res = $query->row_array();
-    	if($sType == "add") {
-    		$num = $res['nums'] + 1;
-    	} else {
-    		$num = $res['nums'] - 1;
-    	}
-    	$data = array('nums'=>$num);
-    	$this->db->update('sort',$data,array('id'=>$iSort));
-    	$affect = $this->db->affected_rows();
-    	return $affect;
-    }
 }

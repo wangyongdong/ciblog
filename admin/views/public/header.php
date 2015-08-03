@@ -36,6 +36,9 @@
 		<![endif]-->
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="<?=ADMIN_PUBLIC?><?=ADMIN_PUBLIC?>img/favicon/favicon.png">
+		<script type="text/javascript">
+			var __A = "<?php echo base_url(); ?>";
+		</script>
 	</head>
 	<body>
 	<div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
@@ -189,8 +192,8 @@
 	          	<li class="has_sub">
 	          		<a href="#"><i class="icon-file-alt"></i> 学无止境 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
-		              	<li><a href="article_new.html">发布文章</a></li>
-		              	<li><a href="article_list.html">文章列表</a></li>
+		              	<li><a href="<?=site_url('article/create')?>">发布文章</a></li>
+		              	<li><a href="<?=site_url('article')?>">文章列表</a></li>
 		              	<li><a href="<?=site_url('sort')?>">文章分类</a></li>
 		            </ul>
 	          	</li>

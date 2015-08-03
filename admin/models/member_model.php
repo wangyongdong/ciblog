@@ -8,7 +8,7 @@ class Member_model extends CI_Model  {
     /**
      * 获取用户信息
      */
-    function getMemberList($iStart=0,$iPageNum=10) {
+    function getMemberList($iStart=0,$iPageNum=20) {
     	$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
     	$sql = 'SELECT 
     				* 
