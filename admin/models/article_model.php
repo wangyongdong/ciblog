@@ -46,25 +46,20 @@ class Article_model extends CI_Model {
      * 执行文章添加,修改
      */
     function doArticle($data) {
-    	if(empty($data['id'])) {	//添加
+    	if(empty($data['id'])) {
     		$this->db->insert('article',$data);
-    	} else {					//修改
+    		$this->updSortNum($data['sortid'],"1");
+    	} else {
     		//获取文章原分类
-    		$sType = getArticleField($data['id'],'type');
-    		//修改文章
+    		$iSort = getArticleField($data['id'],'sortid');
     		$this->db->update('article',$data,array('id'=>$data['id']));
+    		//原类别数量减少和新类别数量增加
+    		$this->updSortNum($iSort,"-1");
+    		$this->updSortNum($data['sortid'],"1");
     	}
    	 	$affect = $this->db->affected_rows();
     	if(!empty($affect)) {
-    		if(empty($data['id'])) {	//添加类别数量
-    			$this->doSortNum($data['type'],"add");
-    		} else {
-    			//先减去原类别数量
-    			$this->doSortNum($sType,"cut");
-    			//增加新类别数量
-    			$this->doSortNum($data['type'],"add");
-    			
-    		}
+    		
     	}
     	return $affect;
     }

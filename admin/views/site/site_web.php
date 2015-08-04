@@ -75,10 +75,10 @@
 									<div class="form-group">
 										<label class="col-lg-4 control-label">启用站点</label>
 										<div class="col-lg-8">
-											<label>
+											<label class="radio-inline">
 												<input id="web_status" type="radio" value="y" name="web_status" <?php if($list['web_status']=='y'){echo 'checked';}?>> 是
 											</label>
-											<label>
+											<label class="radio-inline">
 												<input id="web_status" type="radio" value="n" name="web_status" <?php if($list['web_status']=='y'){echo 'checked';}?>> 否
 											</label>
 										</div>

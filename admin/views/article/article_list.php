@@ -68,7 +68,16 @@
 									</tr>
 								</thead>
                       			<tbody>
-                      				<?php foreach($list as $list):?>
+                      				<?php 
+                      				if(empty($list)) {
+                      				?>
+                      				<tr>
+										<td align="center" colspan="9">还没有文章</td>
+									</tr>
+                      				<?php 
+                      				} else {
+										foreach($list as $list):
+									?>
                         			<tr>
 					                	<td>
 					                    	<span class="uni">
@@ -91,7 +100,10 @@
 	                  						</a>
 	                  					</td>
 									</tr>
-									<?php endforeach;?>
+									<?php 
+										endforeach;
+									}
+									?>
 	                      		</tbody>
 	                    	</table>
                     		<div class="widget-foot">

@@ -119,11 +119,11 @@
 										<div class="form-group">
 											<label class="col-lg-4 control-label">状态</label>
 											<div class="col-lg-8">
-												<label>
+												<label class="radio-inline">
 													<input id="optionsRadios1" type="radio" value="show" name="status" checked="" >
 													<span class="label label-success">显 示</span>
 												</label>
-												<label>
+												<label class="radio-inline">
 													<input id="optionsRadios2" type="radio" value="hide" name="status">
 													<span class="label label-danger">隐 藏</span>
 												</label>

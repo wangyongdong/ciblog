@@ -57,11 +57,11 @@
 									<div class="form-group">
 										<label class="col-lg-4 control-label">状态</label>
 										<div class="col-lg-8">
-											<label>
+											<label class="radio-inline">
 												<input id="optionsRadios1" type="radio" value="Y" name="status" <?php if($list['status']=='Y'){echo 'checked="checked"';}?>>
 												<span class="label label-success">已回复</span>
 											</label>
-											<label>
+											<label class="radio-inline">
 												<input id="optionsRadios2" type="radio" value="N" name="status" <?php if($list['status']=='N'){echo 'checked="checked"';}?>>
 												<span class="label label-danger">未回复</span>
 											</label>

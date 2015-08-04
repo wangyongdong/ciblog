@@ -6,10 +6,14 @@
 $host = "http://".$_SERVER['SERVER_NAME'];
 
 define("ADMIN_PUBLIC","/public/admin/"); 		//后台素材文件路径
+define("_PLUGIN_","/public/plugin/"); 			//后台插件路径
+define("PLUGIN_UEDITOR",$host."/public/plugin/ueditor/"); 	//编辑器插件
+define("PLUGIN_UPLOAD",$host."/public/plugin/uploadify/"); 	//图片上传插件
+
 define("UPLOAD_PUBLIC","/public/upload/"); 	//上传文件位置
+
 define("UPLOAD_PATH",$_SERVER['DOCUMENT_ROOT']."/public/upload/"); //文件上传目录
-define("UEDITOR_PLUGIN",$host."/public/ueditor/"); 	//编辑器插件
-define("UPLOAD_PLUGIN",$host."/public/uploadify/"); //图片上传插件
+
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

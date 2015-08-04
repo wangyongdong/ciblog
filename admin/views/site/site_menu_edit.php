@@ -51,11 +51,11 @@
 									<div class="form-group">
 										<label class="col-lg-4 control-label">状态</label>
 										<div class="col-lg-8">
-											<label>
+											<label class="radio-inline">
 												<input type="radio" value="show" name="status" <?php if($list['status']=='show'){echo 'checked';} ?> >
 												<span class="label label-success">显 示</span>
 											</label>
-											<label>
+											<label class="radio-inline">
 												<input type="radio" value="hide" name="status" <?php if($list['status']=='hide'){echo 'checked';} ?>>
 												<span class="label label-danger">隐 藏</span>
 											</label>

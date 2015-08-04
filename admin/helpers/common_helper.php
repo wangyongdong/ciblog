@@ -74,14 +74,12 @@ function uploadFile($upfile,$path,$typelist = array(),$maxsize=0) {
 /**
  * 加载图片上传插件
  */
-function getUploadPlug() {
-	$str = '<script src="'.UPLOADIFY_PATH.'jquery-1.8.0.min.js" type="text/javascript"></script>
-			<script src="'.UPLOADIFY_PATH.'jquery.uploadify.min.js" type="text/javascript"></script>
-			<link href="'.UPLOADIFY_PATH.'uploadify.css" rel="stylesheet" type="text/css" >
-		
+function Uploadify() {
+	$str = '<script src="'.PLUGIN_UPLOAD.'jquery-1.8.0.min.js" type="text/javascript"></script>
+			<script src="'.PLUGIN_UPLOAD.'jquery.uploadify.min.js" type="text/javascript"></script>
+			<link href="'.PLUGIN_UPLOAD.'uploadify.css" rel="stylesheet" type="text/css" >
 			<div id="queue"></div>
 			<input id="file_upload" name="file_upload" type="file" multiple="true">
-		
 			<div id="image" class="image">
 				\'<div style="float:left;margin:2px 0 0 2px"><img width="50px" height="50px" src="/public/uploads/user/14325411746706.jpg" data-ke-src="/public/uploads/user/14325411746706.jpg" height=60 width=60 />\'
 			</div>
@@ -90,8 +88,8 @@ function getUploadPlug() {
 				var i=0;							//初始化数组下标
 				$(function() {
 					$("#file_upload").uploadify({
-						"swf"      : "'.UPLOADIFY_PATH.'uploadify.swf",
-						"uploader" : "'.UPLOADIFY_PATH.'uploadify.php",
+						"swf"      : "'.PLUGIN_UPLOAD.'uploadify.swf",
+						"uploader" : "'.PLUGIN_UPLOAD.'uploadify.php",
 						"method" : "post",  						//服务端可以用$_POST数组获取数据
 						"buttonText" : "选择图片",						//设置按钮文本
 						"multi" : true,								//设置为true时可以上传多个文件
@@ -118,25 +116,28 @@ function getUploadPlug() {
 	return $str;
 }
 /**
- * 编辑器定制
+ * 文章编辑器定制
  */
-function getUeditForBig($content='') {
-	$editorInfo = '
-    		<br/>
-    		<!-- 加载编辑器的容器 -->
-		    <script id="container" name="content" type="text/plain">
-		    '.$content.'
-    		</script>
-		    <!-- 实例化编辑器 -->
-		    <script type="text/javascript">
-		        var ue = UE.getEditor("container",{
-    			maximumWords:50000,
-		    	//编辑器宽高设置
-				initialFrameWidth : 800,
-				initialFrameHeight: 400
-    		});
-		    </script>';
-	return $editorInfo;
+function ArticleUedit($content='') {
+	$sUedit = '
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'/ueditor.config.js"></script>
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'/ueditor.all.min.js"> </script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"></script>
+			<script>
+				SyntaxHighlighter.all();
+				SyntaxHighlighter.highlight();
+			</script>
+    		<script type="text/javascript">
+			    var ue = UE.getEditor("editor",{
+	    			maximumWords:50000,
+			    	//编辑器宽高设置
+					initialFrameWidth : null,
+					initialFrameHeight: 400
+	    		});
+			</script>
+			<script id="editor" name="content" type="text/plain"></script>';
+	echo $sUedit;
 }
 /**
  * 说说编辑器定制

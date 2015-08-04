@@ -33,13 +33,14 @@ class Article extends MY_Controller {
 	/**
 	 * 文章发表页面
 	 */
-	public function anew() {
-		$data['uedit'] = getUeditForBig();
-		$data['list'] = $this->sort_model->getSortList();
+	public function create() {
+		$data['sort'] = $this->sort_model->getSortList();
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
-		$this->load->view('article/article_new',$data);	
+		$this->load->view('public/header',$data);
+		$this->load->view('article/article_new',$data);
+		$this->load->view('public/footer',$data);
 	}
 	
 	/**
@@ -61,34 +62,29 @@ class Article extends MY_Controller {
 	 */
 	public function doArticle() {
 		$data = array();
-		if(!empty($_POST['id'])) {			//修改
+		if(!empty($_POST['id'])) {
 			$data['id'] = sg($_POST['id']);
-		} else {							//添加
-			$data['views'] = 0;				//访问量
-			$data['comnum'] = 0;			//评论数
+		} else {
 			$data['datetime'] = date("Y-m-d H:i:s",time());		//发表时间
 		}
-		$data['uid'] = $_SESSION['uid'];						//用户id
-		$data['title'] = sg($_POST['article_title']);			//文章标题
+		$data['uid'] = 1;						//用户id
+		$data['title'] = sg($_POST['title']);			//文章标题
 		$data['content'] = sg($_POST['content']);				//文章内容
-		$data['keyword'] = sg($_POST['article_keyword']);		//文章标签
-		$data['type'] = sg($_POST['type']);						//文章类型
+		$data['keyword'] = sg($_POST['keyword']);		//文章标签
+		$data['sortid'] = sg($_POST['sortid']);						//文章类型
 		$data['img'] = sg($_POST['img']);						//文章配图
-		$data['password'] = sg($_POST['password']);				//加密密码
-		$data['hometop'] = @sg($_POST['hometop'],'n');			//是否首页置顶
-		$data['sorttop'] = @sg($_POST['sorttop'],'n');			//是否分类置顶
-		$data['allow_remark'] = sg($_POST['allow_remark'],'n');	//是否允许评论
+		$data['status'] = sg($_POST['status']);				//加密密码
 		
 		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		//checkToken($_POST['token'],$this->tokentype);
 		
 		//输入数据验证
-		$arr = array($data['uid'],$data['title'],$data['content']);
-		checkEmpty($arr,$data['id'],'article/anew','article/update/');
+		//$arr = array($data['uid'],$data['title'],$data['content']);
+		//checkEmpty($arr,$data['id'],'article/anew','article/update/');
 		
 		$affect = $this->article_model->doArticle($data);
 		if($affect) {
-			headers(site_url('article/alist'),'active_s','文章操作成功');
+			//headers(site_url('article/alist'),'active_s','文章操作成功');
 		}
 	}
 	
