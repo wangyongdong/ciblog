@@ -22,15 +22,10 @@ SyntaxHighlighter.highlight();
 			<div id="image" class="image"></div>
 			<input type="hidden" name="img" id="img" value="">
 			<script type="text/javascript">
-				<?php $timestamp = time();?>
 				var img_id_upload = new Array();//初始化数组，存储已经上传的图片名
 				var i=0;//初始化数组下标
 				$(function() {
 					$('#file_upload').uploadify({
-						'formData'     : {
-							'timestamp' : '<?php echo $timestamp;?>',
-							'token'     : '<?php echo md5('unique_salt' . $timestamp);?>',
-						},
 						'swf'      : '<?=UPLOAD_PLUGIN?>uploadify.swf',
 						'uploader' : '<?=UPLOAD_PLUGIN?>uploadify.php',
 						'method' : 'post',  						//服务端可以用$_POST数组获取数据

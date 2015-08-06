@@ -48,13 +48,14 @@ class Article extends MY_Controller {
 	 */
 	public function update() {
 		$iArticle = $this->uri->segment(3);
-		$data['article'] = $this->article_model->getArticleInfo($iArticle);
-		$data['list'] = $this->sort_model->getSortList();
-		$data['uedit'] = getUeditForBig($data['article']['content']);
+		$data['list'] = $this->article_model->getArticleInfo($iArticle);
+		$data['sort'] = $this->sort_model->getSortList();
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
+		$this->load->view('public/header',$data);
 		$this->load->view('article/article_edit',$data);
+		$this->load->view('public/footer',$data);
 	}
 	
 	/**
@@ -65,16 +66,16 @@ class Article extends MY_Controller {
 		if(!empty($_POST['id'])) {
 			$data['id'] = sg($_POST['id']);
 		} else {
-			$data['datetime'] = date("Y-m-d H:i:s",time());		//发表时间
+			$data['datetime'] = date("Y-m-d H:i:s",time());
 		}
-		$data['uid'] = 1;						//用户id
-		$data['title'] = sg($_POST['title']);			//文章标题
-		$data['content'] = sg($_POST['content']);				//文章内容
-		$data['keyword'] = sg($_POST['keyword']);		//文章标签
-		$data['sortid'] = sg($_POST['sortid']);						//文章类型
-		$data['img'] = sg($_POST['img']);						//文章配图
-		$data['status'] = sg($_POST['status']);				//加密密码
-		
+		$data['uid'] = 1;								//用户id
+		$data['title'] = sg($_POST['title']);			//标题
+		$data['content'] = sg($_POST['content']);		//内容
+		$data['keyword'] = sg($_POST['keyword']);		//关键词
+		$data['sortid'] = sg($_POST['sortid']);			//类型
+		$data['img'] = '';								//配图
+		$data['topway'] = sg($_POST['topway']);			//置顶方式
+		$data['status'] = sg($_POST['status']);			//显示状态
 		//token验证
 		//checkToken($_POST['token'],$this->tokentype);
 		

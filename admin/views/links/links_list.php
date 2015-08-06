@@ -69,14 +69,14 @@
 		                			<div class="uni pull-left">
 			                        	<div class="uni pull-left">
 				                        	<a href="javascript:void(0);" onclick="newPage()">
-			                        		<button class="btn btn-default">添加友链</button>
-			                        	</a>
-			                      	</div>
-		                      	</div>
-				            	<ul class="pagination pull-right">
-					            	<?php 
-										echo $this->pagination->create_links();
-									?>
+			                        			<button class="btn btn-default">添加友链</button>
+			                        		</a>
+			                      		</div>
+		                      		</div>
+				            		<ul class="pagination pull-right">
+						            	<?php 
+											echo $this->pagination->create_links();
+										?>
 									</ul>
 					                <div class="clearfix"></div>
 								</div>

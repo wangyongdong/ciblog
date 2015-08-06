@@ -118,15 +118,15 @@ function Uploadify() {
 /**
  * 文章编辑器定制
  */
-function ArticleUedit($content='') {
+function ArticleUedit($sContent='') {
 	$sUedit = '
-    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'/ueditor.config.js"></script>
-    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'/ueditor.all.min.js"> </script>
-			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
-			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"></script>
-			<script>
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
+			<script type="text/javascript">
 				SyntaxHighlighter.all();
-				SyntaxHighlighter.highlight();
+				//SyntaxHighlighter.highlight();
 			</script>
     		<script type="text/javascript">
 			    var ue = UE.getEditor("editor",{
@@ -136,7 +136,44 @@ function ArticleUedit($content='') {
 					initialFrameHeight: 400
 	    		});
 			</script>
-			<script id="editor" name="content" type="text/plain"></script>';
+			<script id="editor" name="content" type="text/plain">
+			'.$sContent.'		
+			</script>';
+	echo $sUedit;
+}
+/**
+ * 文章编辑器定制
+ */
+function RecordUedit($sContent='') {
+	$sUedit = '
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
+			<script type="text/javascript">
+				SyntaxHighlighter.all();
+				//SyntaxHighlighter.highlight();
+			</script>
+    		<script type="text/javascript">
+			    var ue = UE.getEditor("editor",{
+					toolbars: [
+						[
+							"emotion", 		//表情
+				       		"simpleupload", //单图上传
+				       		"insertimage", 	//多图上传
+				       		"music", 		//音乐
+							"insertvideo", 	//视频
+						]
+					],
+					//编辑器宽高设置
+					initialFrameWidth : null,
+					initialFrameHeight: 80,
+					wordCount:false
+		    	});
+			</script>
+			<script id="editor" name="content" type="text/plain">
+			'.$sContent.'
+			</script>';
 	echo $sUedit;
 }
 /**

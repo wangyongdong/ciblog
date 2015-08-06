@@ -11,20 +11,20 @@ class Record extends MY_Controller {
 	/**
 	 * 说说
 	 */
-	public function rnew() {
+	public function index() {
 		//获取用户信息
-		$data['list'] = getUser($_SESSION['uid']);
-		//获取编辑器
-		$data['uedit'] = getUeditForRecord();
+		$data['user'] = getUser(1);
 		
 		//分页执行
 		$pageId = $this->input->get('page');
 		$sFilter = ' AND reply_id=0 ';
-		$arr = $this->public_model->getPage("record",'record/rnew?',$pageId,$sFilter);
+		$arr = $this->public_model->getPage("record",'record/index?',$pageId,$sFilter);
 		//执行查询
-		$data['record'] = $this->record_model->getRecordList($arr['start'],$arr['pagenum']);
+		$data['list'] = $this->record_model->getRecordList($arr['start'],$arr['pagenum']);
 		
-		$this->load->view('record/record',$data);			
+		$this->load->view('public/header',$data);
+		$this->load->view('record/index',$data);
+		$this->load->view('public/footer',$data);		
 	}
 	
 	/**
@@ -32,19 +32,15 @@ class Record extends MY_Controller {
 	 */
 	public function doRecord() {
 		$data = array();
-		$data['uid'] = $_SESSION['uid'];
+		$data['uid'] = 1;
 		$data['content'] = sg($_POST['content']);
-		$data['img'] = '';
-		$data['agreenum'] = 0;
-		$data['comnum'] = 0;
-		$data['reply_id'] = 0;
 		$data['datetime'] = date("Y-m-d H:i:s",time());
 		//输入数据验证
-		$arr = array($data['uid'],$data['content']);
-		checkEmpty($arr,'','record/rnew','record/rnew/');
+		//$arr = array($data['uid'],$data['content']);
+		//checkEmpty($arr,'','record/rnew','record/rnew/');
 		$affect = $this->record_model->doRecord($data);
 		if($affect) {
-			header("Location:".$_SERVER["HTTP_REFERER"]);
+			//header("Location:".$_SERVER["HTTP_REFERER"]);
 		}
 	}
 	
