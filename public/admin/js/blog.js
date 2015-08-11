@@ -89,6 +89,24 @@ function closePop() {
 	$("#replay-box").hide();
 	$("#cover").hide();
 }
+//标记为已读，隐藏等
+function doStatus(url) {
+	id = getCheckbox();
+	$.ajax({
+		url:url,
+		data:'id='+id,
+		type:'post',
+		success:function(data) {
+			if(data) {
+				window.location.reload();
+			} else {
+				alert("操作失败");
+			}
+		}
+	})
+}
+
+
 // 增加新页面
 function newPage() {
 	var main_new = document.getElementById("new_page");

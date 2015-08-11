@@ -4,9 +4,9 @@
 	<div class="page-head">
 		<h2 class="pull-left"><i class="icon-home"></i> 碎言碎语</h2>
 		<div class="bread-crumb pull-right">
-			<a href="index.html"><i class="icon-home"></i> 首页</a> 
+			<a href="/admin"><i class="icon-home"></i> 首页</a> 
 			<span class="divider">/</span> 
-			<a href="#" class="bread-current">控制台</a>
+			<a href="<?=site_url('site/web')?>" class="bread-current">控制台</a>
 		</div>
 		<div class="clearfix"></div>
 	</div>
@@ -52,8 +52,15 @@
 										<img src="<?=ADMIN_PUBLIC?>img/user.jpg" alt=""/>
 									</div>
 									<div class="chat-content">
-										<div class="chat-meta">王永东 <span class="pull-right">3 hours ago</span></div>
-											<?=stripcslashes($list['content'])?>
+										<div class="chat-meta">
+											王永东 <span class="pull-right">3 hours ago</span>
+										</div>
+										<?=stripcslashes($list['content'])?>
+										<div class="pull-right">
+											<a href="javascript:void(0);" onclick="doDel(<?=$list['id']?>,'<?=site_url('record/doDel')?>')">
+												删除
+											</a>
+										</div>
 										<div class="clearfix"></div>
 									</div>
 								</li>

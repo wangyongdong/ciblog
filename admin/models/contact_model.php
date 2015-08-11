@@ -64,6 +64,7 @@ class Contact_model extends CI_Model {
     	$affect = $this->db->affected_rows();
     	return $affect;
     }
+    
     /**
      * 添加回复
      */
@@ -76,6 +77,7 @@ class Contact_model extends CI_Model {
     	$affect = $this->db->affected_rows();
     	return $affect;
     }
+    
     /**
      * 执行删除
      */
@@ -84,5 +86,17 @@ class Contact_model extends CI_Model {
     	return $affect;
     }
     
-	
+    /**
+     * 标记已读状态
+     */
+    function doRead() {
+    	$sql = 'UPDATE
+    				blog_contact
+    			SET
+    				is_read="Y"
+    			WHERE
+    				is_read="N"';
+    	$res = $this->db->query($sql);
+    	return $res;
+    }
 }

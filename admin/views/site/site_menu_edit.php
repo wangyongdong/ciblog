@@ -4,9 +4,9 @@
 	<div class="page-head">
 		<h2 class="pull-left"><i class="icon-home"></i> 导航管理</h2>
         <div class="bread-crumb pull-right">
-	    	<a href="index.html"><i class="icon-home"></i> 首页</a> 
+	    	<a href="/admin"><i class="icon-home"></i> 首页</a> 
 	        <span class="divider">/</span> 
-	        <a href="#" class="bread-current">控制台</a>
+	        <a href="<?=site_url('site/web')?>" class="bread-current">控制台</a>
         </div>
 		<div class="clearfix"></div>
 	</div>
@@ -51,7 +51,7 @@
 									<div class="form-group">
 										<label class="col-lg-4 control-label">状态</label>
 										<div class="col-lg-8">
-											<label class="radio-inline">
+											<label class="radio-inline rad-margin">
 												<input type="radio" value="show" name="status" <?php if($list['status']=='show'){echo 'checked';} ?> >
 												<span class="label label-success">显 示</span>
 											</label>
@@ -63,7 +63,7 @@
 									</div>
                                     <div class="form-group">
 										<div class="col-lg-offset-2 col-lg-9">
-											<button type="submit" class="btn btn-success">保存</button>
+											<button type="submit" class="btn btn-primary">保存</button>
 											<button type="reset" class="btn btn-default" onclick="javascript:window.history.back();">取消</button>
 										</div>
                                     </div>

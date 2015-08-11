@@ -154,4 +154,111 @@ class Site extends MY_Controller {
 		echo $affect;
 	}
 	
+	/**
+	 * 模板设置
+	 */
+	public function templet() {
+		$data['data'] = 1;
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_templet',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 信息统计
+	 */
+	public function statistic() {
+		//获取统计信息
+		$data['record'] = getStatis('record');
+		$data['comment'] = getStatis('comment');
+		$data['contact'] = getStatis('contact');
+		$data['links'] = getStatis('links');
+		$data['view'] = getStatis('log');
+		
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_statistic',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 数据备份
+	 */
+	public function backup() {
+		$data['data'] = 1;
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_backup',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 错误日志
+	 */
+	public function error() {
+		$data['data'] = 1;
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_log_error',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 缓存
+	 */
+	public function cache() {
+		$data['data'] = 1;
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_cache',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * notice
+	 */
+	public function notice() {
+		$data['data'] = 1;
+		//分页执行
+		$pageId = $this->input->get('page');
+		$arr = $this->public_model->getPage("notice",'site/notice?',$pageId);
+		//执行查询
+		$data['notice'] = $this->site_model->getNotice($arr['start'],$arr['pagenum']);
+		
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_notice',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 删除notice
+	 */
+	public function delNotice() {
+		$sId = sg($_POST['id']);
+		//将获取到的值进行拆分，重组
+		$aId = explode(",",trim($sId,','));
+		//遍历删除
+		$affects = 0;
+		for($i=0;$i<count($aId);$i++) {
+			$affect = $this->site_model->delNotice($aId[$i]);
+			$affects+=$affect;
+		}
+		echo $affects;
+	}
+	
+	/**
+	 * 修改notice
+	 */
+	public function updNotice() {
+		$sId = sg($_POST['id']);
+		//将获取到的值进行拆分，重组
+		$aId = explode(",",trim($sId,','));
+		//遍历删除
+		$affects = 0;
+		for($i=0;$i<count($aId);$i++) {
+			$affect = $this->site_model->updNotice($aId[$i]);
+			$affects+=$affect;
+		}
+		echo $affects;
+	}
 }

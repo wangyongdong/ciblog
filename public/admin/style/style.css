@@ -729,7 +729,7 @@ header .header-data .hdata em{
   width:100%; 
   margin:0 auto; 
   position: absolute;
-  z-index: 50;	/* update 15.07.22 */
+  z-index: 60;
 }
 
 .sidebar #nav li i{
@@ -861,8 +861,6 @@ header .header-data .hdata em{
 	color: #333;
 }
 
-
-
 /* Page head */
 
 .mainbar .page-head{
@@ -876,6 +874,7 @@ header .header-data .hdata em{
   padding: 8px 20px;
   border-bottom: 1px solid #fff;
   box-shadow: inset 0px 1px 1px #fff;
+  margin-top:-22px;
 }
 
 .mainbar .page-head h2{

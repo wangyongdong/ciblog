@@ -55,14 +55,14 @@
 	      	<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">         
 	        	<ul class="nav navbar-nav">
 	          		<li class="dropdown">
-	            		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	            		<a href="<?=site_url('site/cache')?>" class="dropdown-toggle">
 	            			<span class="label label-success"><i class="icon-random"></i></span> 
 							更新缓存
 						</a>
 					</li>
 					<!-- Sync to server link -->
 					<li class="dropdown">
-	            		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	            		<a href="<?=site_url('site/backup')?>" class="dropdown-toggle">
 	            			<span class="label label-danger"><i class="icon-refresh"></i></span> 同步数据库
 						</a>
 	          		</li>
@@ -104,47 +104,80 @@
 	        	<div class="col-md-4">
 	          		<ul class="nav nav-pills">
 	            		<li class="dropdown dropdown-big">
-	              			<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon-comments"></i> 评论 <span class="label label-info">6</span></a>
+	              			<a class="dropdown-toggle" href="#" data-toggle="dropdown">
+	              				<i class="icon-comments"></i> 评论 
+	              				<?php 
+	              				$comment_num = dynamicCou('comment');
+	              				if(!empty($comment_num)) {
+	              				?>
+	              				<span class="label label-info"><?=$comment_num?></span>
+	              				<?php 
+	              				}
+	              				?>
+	              			</a>
 	                		<ul class="dropdown-menu">
+	                			<?php 
+	                			$comment = getDynamic('comment');
+	                			foreach($comment as $comment):
+	                			?>
 	                  			<li>
-				                    <h6><a href="#">你好 :)</a> <span class="label label-warning pull-right">10:42</span></h6><div class="clearfix"></div><hr />
+				                    <h6><a href="#"><?=cutShes($comment['content'],10)?></a> 
+				                    <span class="label label-warning pull-right"><?=timeTran($comment['datetime'])?></span></h6><div class="clearfix"></div><hr />
 	                  			</li>
-	                  			<li>
-				                    <h6><a href="#">你怎么样?</a> <span class="label label-warning pull-right">20:42</span></h6><div class="clearfix"></div><hr />
-	                  			</li>
-	                  			<li>
-				                    <h6><a href="#">你在干撒呢?</a> <span class="label label-warning pull-right">14:42</span></h6><div class="clearfix"></div><hr />
-	                  			</li>                  
-	                  			<li><div class="drop-foot"><a href="#">查看所有</a></div></li>                                    
-	                		</ul>
+	                  			<?php endforeach;?>
+	                  			<li><div class="drop-foot"><a href="<?=site_url('comment')?>">查看所有</a></div></li>
+	                  		</ul>
 	            		</li>
 	            		<!-- Message button with number of latest messages count-->
 	            		<li class="dropdown dropdown-big">
-	              			<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon-envelope-alt"></i> 留言 <span class="label label-primary">6</span></a>
+	              			<a class="dropdown-toggle" href="#" data-toggle="dropdown">
+	              				<i class="icon-envelope-alt"></i> 留言 
+	              				<?php 
+	              				$contact_num = dynamicCou('contact');
+	              				if(!empty($contact_num)) {
+	              				?>
+	              				<span class="label label-primary"><?=$contact_num?></span>
+	              				<?php 
+	              				}
+	              				?>
+	              			</a>
 	                		<ul class="dropdown-menu">
+	                			<?php 
+	                			$contact = getDynamic('contact');
+	                			foreach($contact as $contact):
+	                			?>
 		                  		<li>
-				                    <h6><a href="#">你好啊?</a></h6><p>最近咋样啊...</p><hr />
+				                    <h6><a href="#"><?=cutShes($contact['content'],10)?></a> 
+				                    <span class="label label-warning pull-right"><?=timeTran($contact['datetime'])?></span></h6><div class="clearfix"></div><hr />
 		                  		</li>
-		                  		<li>
-				                    <h6><a href="#">今天很好啊?</a></h6><p>相当好...</p><hr />
-		                  		</li>
-		                  		<li><div class="drop-foot"><a href="#">查看所有</a></div></li>                                    
+		                  		<?php endforeach;?>
+		                  		<li><div class="drop-foot"><a href="<?=site_url('contact')?>">查看所有</a></div></li>
 		                	</ul>
 						</li>
 	            		<!-- Members button with number of latest members count -->
 	            		<li class="dropdown dropdown-big">
-			              	<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon-volume-up"></i> 提醒 <span class="label label-success">6</span></a>
+			              	<a class="dropdown-toggle" href="#" data-toggle="dropdown">
+			              		<i class="icon-volume-up"></i> 提醒 
+			              		<?php 
+	              				$notice_num = noticeCou();
+	              				if(!empty($notice_num)) {
+	              				?>
+	              				<span class="label label-success"><?=$notice_num?></span>
+	              				<?php 
+	              				}
+	              				?>
+			              	</a>
 	               			<ul class="dropdown-menu">
+	               				<?php 
+	                			$notices = getNotice();
+	                			foreach($notices as $notices):
+	                			?>
 	                  			<li>
-				                    <h6><a href="#">Ravi Kumar</a> <span class="label label-warning pull-right">免费</span></h6><div class="clearfix"></div><hr />
+				                    <h6><a href="#"><?=cutShes($notices['content'],10)?></a> 
+				                    <span class="label label-warning pull-right"><?=timeTran($notices['datetime'])?></span></h6><div class="clearfix"></div><hr />
 	                  			</li>
-	                  			<li>
-				                    <h6><a href="#">Balaji</a> <span class="label label-important pull-right">高级</span></h6><div class="clearfix"></div><hr />
-	                  			</li>
-	                  			<li>
-				                    <h6><a href="#">Kumarasamy</a> <span class="label label-warning pull-right">免费</span></h6><div class="clearfix"></div><hr />
-	                  			</li>                  
-	                  			<li><div class="drop-foot"><a href="#">查看所有</a></div></li>                                    
+	                  			<?php endforeach;?>                 
+	                  			<li><div class="drop-foot"><a href="<?=site_url('site/notice')?>">查看所有</a></div></li>                                    
 	                		</ul>
 	            		</li>
 	          		</ul>
@@ -155,17 +188,17 @@
 	          		<div class="header-data">
 	            		<div class="hdata">
 	              			<div class="mcol-left"><i class="icon-signal bred"></i></div>
-	              			<div class="mcol-right"><p><a href="#">7000</a> <em>访问</em></p></div>
+	              			<div class="mcol-right"><p><a href="#"><?=getStatis('log')?></a> <em>访问</em></p></div>
 	              			<div class="clearfix"></div>
 	            		</div>
 	            		<div class="hdata">
 			              	<div class="mcol-left"><i class="icon-user bblue"></i></div>
-			              	<div class="mcol-right"><p><a href="#">3000</a> <em>用户</em></p></div>
+			              	<div class="mcol-right"><p><a href="#"><?=getStatis('member')?></a> <em>用户</em></p></div>
 			              	<div class="clearfix"></div>
 			            </div>
 			            <div class="hdata">
 			              	<div class="mcol-left"><i class="icon-file-alt bgreen"></i></div>
-			              	<div class="mcol-right"><p><a href="#">5000</a><em>文章</em></p></div>
+			              	<div class="mcol-right"><p><a href="#"><?=getStatis('article')?></a><em>文章</em></p></div>
 			              	<div class="clearfix"></div>
 			            </div>
 	          		</div>

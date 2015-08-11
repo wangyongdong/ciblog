@@ -90,10 +90,43 @@ class Site_model extends CI_Model  {
     }
     
     /**
-     * 执行删除
+     * 执行menu删除
      */
     function delMenu($id) {
     	$affect = $this->db->delete('menu',array('id'=>$id));
+    	return $affect;
+    }
+    
+    /**
+     * 获取notice列表
+     */
+    function getNotice($iStart=0,$iPageNum=10) {
+    	$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
+    	$sql = 'SELECT
+    				*
+    			FROM
+    				blog_notice
+    			ORDER BY
+    				datetime DESC
+    			'.$sLimit;
+    	$res = $this->db->query($sql);
+    	$aList = $res->result_array();
+    	return $aList;
+    }
+    /**
+     * 执行删除notice
+     */
+    function delNotice($iNotice) {
+    	return $this->db->delete('notice',array('id'=>$iNotice));
+    }
+    /**
+     * 修改notice状态
+     */
+    function updNotice($iNotice) {
+    	$data = array();
+    	$data['status'] = 'read';
+    	$this->db->update('notice',$data,array('id'=>$iNotice));
+    	$affect = $this->db->affected_rows();
     	return $affect;
     }
     

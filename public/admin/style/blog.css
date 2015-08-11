@@ -1,4 +1,24 @@
 @CHARSET "UTF-8";
+.btn-margin {
+	margin-left:65px;
+}
+.rad-margin {
+	margin-right:15px;
+}
+.min-win {
+	width:50%;
+}
+.min-tit {
+	left: 17%;
+}
+/* header start */
+.nav .dropdown-toggle img {
+	background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    padding: 1px;
+	margin-right: 3px;
+}
+/* header end */
 
 /* Page start */
 .pagination .page-bor a {
@@ -40,6 +60,9 @@
     z-index: 1997;
 	display:none;
 }
+.un-weld {
+	font-weight:bold;
+}
 /* Comment end */
 
 /* Record start */
@@ -55,6 +78,8 @@
 }
 .chat-content img {
 	border: 0px solid #fff !important;
+	max-width:300px;
+	max-height:150px;
 }
 .btn-record {
 	margin-top: 10px;
@@ -67,5 +92,24 @@
 }
 /* record end */
 
-
- */
+/* contact start */
+.recent-meta {
+    font-size: 11px !important;
+}
+.recent-ctn {
+    font-size: 12px !important;
+    padding: 3px 0 3px 0 !important;
+}
+/* contact end */
+/* site start */
+.referrer .table-striped .tab-cen i {
+    font-size: 17px;
+    text-align: center;
+}
+.referrer .table-striped .tab-cen {
+    text-align: center;
+}
+.task .uni {
+	margin-left:5px;
+}
+/* site end */

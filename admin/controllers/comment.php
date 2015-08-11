@@ -21,6 +21,9 @@ class Comment extends MY_Controller {
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
+		//标记已读
+		$this->comment_model->doRead();
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('comment/comment_list',$data);
 		$this->load->view('public/footer',$data);
@@ -96,8 +99,8 @@ class Comment extends MY_Controller {
 	 * 删除操作
 	 */
 	public function doDel() {
-		$iContact = sg($_POST['id']);
-		$affect = $this->comment_model->doDel($iContact);
+		$iComment = sg($_POST['id']);
+		$affect = $this->comment_model->doDel($iComment);
 		echo $affect;
 	}
 	
@@ -112,6 +115,22 @@ class Comment extends MY_Controller {
 		$affects = 0;
 		for($i=0;$i<count($aId);$i++) {
 			$affect = $this->comment_model->doDel($aId[$i]);
+			$affects+=$affect;
+		}
+		echo $affects;
+	}
+	
+	/**
+	 * 标记隐藏状态
+	 */
+	public function doHide() {
+		$sId = sg($_POST['id']);
+		//将获取到的值进行拆分，重组
+		$aComment = explode(",",trim($sId,','));
+		//遍历删除
+		$affects = 0;
+		for($i=0;$i<count($aComment);$i++) {
+			$affect = $this->comment_model->doHide($aComment[$i]);
 			$affects+=$affect;
 		}
 		echo $affects;

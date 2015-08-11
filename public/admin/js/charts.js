@@ -83,5 +83,6 @@ $("#todayspark5").sparkline([3,6,3,9,9,5,4,6,5,6,4,9,7,9,7,4,6,8,9,5,6,7,8,6,7,2
     fillColor: '#e5f3f9'});
 
 
+
 /* Sparkline plugin section ends */
 

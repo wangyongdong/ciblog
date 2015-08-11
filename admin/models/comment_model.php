@@ -97,4 +97,31 @@ class Comment_model extends CI_Model {
 		$res = $this->db->query($sql);
 	}
 	
+	/**
+	 * 标记已读状态
+	 */
+	function doRead() {
+		$sql = 'UPDATE
+    				blog_comment
+    			SET
+    				is_read="Y"
+    			WHERE
+    				is_read="N"';
+		$res = $this->db->query($sql);
+		return $res;
+	}
+	
+	/**
+	 * 标记隐藏状态
+	 */
+	function doHide($iComment) {
+		$sql = 'UPDATE
+    				blog_comment
+    			SET
+    				 status="hide"
+    			WHERE
+    				id='.$iComment;
+		$res = $this->db->query($sql);
+		return $res;
+	}
 }

@@ -1,5 +1,452 @@
 ﻿<?php
 /**
+ * 文章编辑器定制
+ */
+function ArticleUedit($sContent='') {
+	$sUedit = '
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
+			<script type="text/javascript">
+				SyntaxHighlighter.all();
+				//SyntaxHighlighter.highlight();
+			</script>
+    		<script type="text/javascript">
+			    var ue = UE.getEditor("editor",{
+	    			maximumWords:50000,
+			    	//编辑器宽高设置
+					initialFrameWidth : null,
+					initialFrameHeight: 400
+	    		});
+			</script>
+			<script id="editor" name="content" type="text/plain">
+			'.$sContent.'		
+			</script>';
+	echo $sUedit;
+}
+/**
+ * 说说编辑器定制
+ */
+function RecordUedit($sContent='') {
+	$sUedit = '
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
+			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
+			<script type="text/javascript">
+				SyntaxHighlighter.all();
+				//SyntaxHighlighter.highlight();
+			</script>
+    		<script type="text/javascript">
+			    var ue = UE.getEditor("editor",{
+					toolbars: [
+						[
+							"emotion", 		//表情
+				       		"insertimage", 	//多图上传
+				       		"music", 		//音乐
+							"insertvideo", 	//视频
+						]
+					],
+					//编辑器宽高设置
+					initialFrameWidth : null,
+					initialFrameHeight: 80,
+					wordCount:false
+		    	});
+			</script>
+			<script id="editor" name="content" type="text/plain">
+			'.$sContent.'
+			</script>';
+	echo $sUedit;
+}
+/**
+ * 获取token
+ * @param string $tokentype
+ * @return string
+ */
+function getToken($tokentype) {
+	$CI =& get_instance();
+	$CI->load->library('token');
+	$tokenvalue = $CI->token->granteToken($tokentype);
+	return $tokenvalue;
+}
+/**
+ * token验证
+ * @param string $token
+ * @param string $tokentype
+ * @return string
+ */
+function checkToken($token,$tokentype) {
+	$CI =& get_instance();
+	$info = '';
+	$CI->load->library('token');
+	$token_result = $CI->token->checkValidateToken($token,$tokentype);
+	$referer = $_SERVER['HTTP_REFERER'];
+	if(Token::TOKECHECK_EXTERNSUBMIT == $token_result){
+		$info = '禁止从外部网站提交数据，请检查...';
+		headers($referer,'error_e',$info);
+	} elseif(Token::TOKECHECK_DUPLICATESUBMIT == $token_result){
+		$info = '请不要重复提交，请检查...';
+		headers($referer,'error_e',$info);
+	}
+	return $info;
+}
+/**
+ * 验证数据是否为空，并提示
+ * @param array $arr 需要验证的数据
+ * @param int 	$id
+ * @param string $firstUrl  用户新建表单返回地址
+ * @param string $secondURl 用户修改表单返回地址
+ */
+function checkEmpty($arr,$id,$firstUrl='',$secondURl='',$info='数据为空') {
+	if(!empty($arr)) {
+		$res = 0;
+		for($i=0;$i<=count($arr)-1;$i++) {
+			if(empty($arr[$i])) {
+				$res = 1;
+			}
+		}
+	} else {
+		$res = 1;
+	}
+	if($res>0) {
+		if(empty($id)) {
+			headers(site_url($firstUrl),'error_e',$info);
+		} else {
+			headers(site_url($secondURl.$id.''),'error_e',$info);
+		}
+	}
+}
+/**
+ * 获取用户信息
+ */
+function getUser($iUser,$type='list') {
+	if($type == 'list') {
+		$sql = 'SELECT * FROM blog_member WHERE id='.$iUser;
+	} else {
+		$sql = 'SELECT '.$type.' FROM blog_member WHERE id='.$iUser;
+	}
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	if($type == "list") {
+		return $list;
+	} else {
+		return $list[$type];
+	}
+}
+/**
+ * 获取用户名
+ */
+function beName($iUser) {
+	$db = DB('default');
+	$sql = 'SELECT username FROM blog_member WHERE id='.$iUser;
+	$res = $db->query($sql);
+	$aList = $res->row_array();
+	return $aList['username'];
+}
+/**
+ * 获取登录用户ID
+ */
+function UserId() {
+	return $_SESSION['uid'] ? $_SESSION['uid'] : '1';
+}
+/**
+ * 获取登录用户名
+ */
+function UserName() {
+	$iUser = UserId();
+	return getUser($iUser,'username');
+}
+/**
+ * 获取用户权限状态
+ */
+function getRole($id,$type='list') {
+	if(empty($id)) {
+		return;
+	}
+	if($type == 'list') {
+		$sql = 'SELECT * FROM blog_role WHERE id='.$id;
+	} else {
+		$sql = 'SELECT '.$type.' FROM blog_role WHERE id='.$id;
+	}
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	if($type == "list") {
+		return $list;
+	} else {
+		return $list[$type];
+	}
+}
+/**
+ * 获取权限名
+ */
+function roleName($name) {
+	switch ($name) {
+		case 'admin':
+			$str = "管理员";break;
+		case 'super':
+			$str = "超级管理员";break;
+		case 'ban':
+			$str = "禁止用户";break;
+		default: $str = "普通用户";
+	}
+	return $str;
+}
+/**
+ * 根据用户id获取用户所发文章数量
+ */
+function getArticleNums($uid) {
+	$db = DB('default');
+	$sql = "SELECT count(*) as nums FROM blog_article WHERE uid='$uid'";
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	return $list['nums'];
+}
+/**
+ * 获取文章标题
+ */
+function getTitle($iArticle) {
+	$sql = 'SELECT title FROM blog_article WHERE id='.$iArticle;
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	return $list['title'];
+}
+/**
+ * 获取文章所属分类
+ */
+function getArticleField($iArticle,$sField) {
+	$db = DB('default');
+	$sql = 'SELECT '.$sField.' FROM blog_article WHERE id='.$iArticle;
+	$res = $db->query($sql);
+	$aList = $res->row_array();
+	return $aList[$sField];
+}
+/**
+ * 获取分类名
+ */
+function beSort($iSort) {
+	$db = DB('default');
+	$sql = 'SELECT name FROM blog_sort WHERE id='.$iSort;
+	$res = $db->query($sql);
+	$aList = $res->row_array();
+	return $aList['name'];
+}
+/**
+ * 获取置顶方式
+ */
+function beTop($sType) {
+	switch ($sType) {
+		case 'home':
+			$name = '首页';
+			break;
+		case 'sort':
+			$name = '分类';
+			break;
+		default:
+			$name = '无';
+			break;
+	}
+	return $name;
+}
+/**
+ * 生成文章配图
+ */
+function LinkArticle($sName) {
+	return '/public/upload/article/'.$sName;
+}
+/**
+ * 生成用户头像
+ */
+function LinkAvatar($uid) {
+	$sql = 'SELECT picname FROM blog_member WHERE id='.$uid;
+	$db = DB('default');
+	$res = $db->query($sql);
+	$picname = $res->row_array();
+	if(!empty($picname)) {
+		$url = UPLOAD_PUBLIC.'user/'.$picname;
+	} else {
+		$url = ADMIN_PUBLIC.'images/common/avatar.jpg';
+	}
+	return $url;
+}
+/**
+ * 添加httpd
+ */
+function addHttpd($str) {
+	if (!preg_match("/^(http|ftp):/",$str)){
+		$str = 'http://'.$str;
+	}
+	return $str;
+}
+/**
+ * 过滤用户输入的数据
+ */
+function sg($str,$fit='') {
+	if(!is_array($str)) {
+		$str = trim($str);
+		$str = addslashes($str);
+	}
+	return empty($str) ? $fit : $str;
+}
+/**
+ * 截取函数
+ */
+function cutStr($str,$length,$dot = '...') {
+	$len = mb_strlen($str,'utf8');
+	$str = mb_substr($str,0,$length,'UTF-8');
+	if($len>$length) {
+		return $str.$dot;
+	} else {
+		return $str;
+	}
+}
+/**
+ * 获取数据总条数（用户分页）
+ */
+function getPageCount($table,$sFilter='') {
+	$sQuery = 'SELECT
+                    count(*) as num
+               FROM
+					blog_'.$table.'
+               WHERE
+                    1 = "1" ';
+	if (!empty($sFilter)) {
+		$sQuery .= $sFilter;
+	}
+	$db = DB('default');
+	$res = $db->query($sQuery);
+	$list = $res->row_array();
+	return $list['num'];
+}
+/**
+ * 数据信息统计
+ */
+function getStatis($table,$sWhere='') {
+	$sql = 'SELECT count(*) as num FROM blog_'.$table.' '.$sWhere;
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	return $list['num'];
+}
+/**
+ * 未读信息统计
+ */
+function dynamicCou($sTable) {
+	$sql = 'SELECT count(*) as num FROM blog_'.$sTable.' WHERE reply_id = 0 AND is_read = "N"';
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	return $list['num'];
+}
+/**
+ * 未读提醒统计
+ */
+function noticeCou() {
+	$sql = 'SELECT count(*) as num FROM blog_notice WHERE status = "unread"';
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	return $list['num'];
+}
+/**
+ * 获取未浏览前几条动态
+ */
+function getDynamic($sTable) {
+	$sql = 'SELECT 
+				content,datetime 
+			FROM 
+				blog_'.$sTable.' 
+			WHERE 
+				reply_id = 0 
+				AND is_read = "N"
+			ORDER BY
+				datetime DESC
+			LIMIT 3';
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->result_array();
+	return $list;
+}
+/**
+ * 获取未读消息前几条
+ */
+function getNotice() {
+	$sql = 'SELECT
+				content,datetime
+			FROM
+				blog_notice
+			WHERE
+				status = "unread"
+			ORDER BY
+				datetime DESC
+			LIMIT 3';
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->result_array();
+	return $list;
+}
+/**
+ * 简单截取+过滤
+ */
+function cutShes($str,$length) {
+	$str = preg_replace("/<img.*?>/si","",$str);
+	return cutStr($str,$length);
+}
+/**
+ * 验证密码
+ */
+function checkPass($val1,$val2) {
+	if(empty($val1) || empty($val2)) {
+		return '1';//数据为空
+	}
+	if($val1 !== $val2) {
+		return '2';//两次密码不一致
+	}
+}
+/**
+ * 时间转换函数
+ */
+function timeTran($sTime) {
+	$now_time = date("Y-m-d H:i:s", time());
+	$now_time = strtotime($now_time);
+	$show_time = strtotime($sTime);
+	$dur = $now_time - $show_time;
+	if ($dur < 0) {
+		return date("Y-m-d",$show_time);
+	} else {
+		if ($dur < 60) {
+			return $dur . '秒前';
+		} else {
+			if ($dur < 3600) {
+				return floor($dur / 60) . '分钟前';
+			} else {
+				if ($dur < 86400) {
+					return floor($dur / 3600) . '小时前';
+				} else {
+					if ($dur < 259200) {		//3天内
+						return floor($dur / 86400) . '天前';
+					} else {
+						return date("Y-m-d",$show_time);
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+/**
+ * 页面跳转
+ */
+function headers($sUrl,$act,$info) {
+	header("Location:".$sUrl."?".$act."=1&i=".$info);
+	exit;
+}
+/**
  * 文件上传函数
  * @param array  $upfile 	上传文件信息： 如：$_FILES['filename']
  * @param string $path 		上传文件的存储路径： 如："./uploads";
@@ -70,7 +517,6 @@ function uploadFile($upfile,$path,$typelist = array(),$maxsize=0) {
 	}
 	return $res;
 }
-
 /**
  * 加载图片上传插件
  */
@@ -116,297 +562,6 @@ function Uploadify() {
 	return $str;
 }
 /**
- * 文章编辑器定制
- */
-function ArticleUedit($sContent='') {
-	$sUedit = '
-    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
-    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
-			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
-			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
-			<script type="text/javascript">
-				SyntaxHighlighter.all();
-				//SyntaxHighlighter.highlight();
-			</script>
-    		<script type="text/javascript">
-			    var ue = UE.getEditor("editor",{
-	    			maximumWords:50000,
-			    	//编辑器宽高设置
-					initialFrameWidth : null,
-					initialFrameHeight: 400
-	    		});
-			</script>
-			<script id="editor" name="content" type="text/plain">
-			'.$sContent.'		
-			</script>';
-	echo $sUedit;
-}
-/**
- * 文章编辑器定制
- */
-function RecordUedit($sContent='') {
-	$sUedit = '
-    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
-    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
-			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
-			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
-			<script type="text/javascript">
-				SyntaxHighlighter.all();
-				//SyntaxHighlighter.highlight();
-			</script>
-    		<script type="text/javascript">
-			    var ue = UE.getEditor("editor",{
-					toolbars: [
-						[
-							"emotion", 		//表情
-				       		"simpleupload", //单图上传
-				       		"insertimage", 	//多图上传
-				       		"music", 		//音乐
-							"insertvideo", 	//视频
-						]
-					],
-					//编辑器宽高设置
-					initialFrameWidth : null,
-					initialFrameHeight: 80,
-					wordCount:false
-		    	});
-			</script>
-			<script id="editor" name="content" type="text/plain">
-			'.$sContent.'
-			</script>';
-	echo $sUedit;
-}
-/**
- * 说说编辑器定制
- */
-function getUeditForRecord() {
-	$editorInfo = '
-		<!-- 加载编辑器的容器 -->
-	    <script id="container" name="content" type="text/plain">
-	    </script>
-	    <!-- 实例化编辑器 -->
-	    <script type="text/javascript">
-			var ue = UE.getEditor("container",{
-				toolbars: [
-					[
-			       		"simpleupload", //单图上传
-			       		"insertimage", 	//多图上传
-			       		"link", 		//超链接
-			       		"emotion", 		//表情
-			       		"map", 			//Baidu地图
-			       		"insertvideo", 	//视频
-			       		"forecolor", 	//字体颜色
-			       		"attachment", 	//附件
-			       		"music", 		//音乐
-					]
-				],
-				//编辑器宽高设置
-				initialFrameWidth : 600,
-				initialFrameHeight: 80,
-				wordCount:false
-			});
-	    </script>
-	';
-	return $editorInfo;
-}
-/**
- * 获取token
- * @param string $tokentype
- * @return string
- */
-function getToken($tokentype) {
-	$CI =& get_instance();
-	$CI->load->library('token');
-	$tokenvalue = $CI->token->granteToken($tokentype);
-	return $tokenvalue;
-}
-
-/**
- * token验证
- * @param string $token
- * @param string $tokentype
- * @return string
- */
-function checkToken($token,$tokentype) {
-	$CI =& get_instance();
-	$info = '';
-	$CI->load->library('token');
-	$token_result = $CI->token->checkValidateToken($token,$tokentype);
-	$referer = $_SERVER['HTTP_REFERER'];
-	if(Token::TOKECHECK_EXTERNSUBMIT == $token_result){
-		$info = '禁止从外部网站提交数据，请检查...';
-		headers($referer,'error_e',$info);
-	} elseif(Token::TOKECHECK_DUPLICATESUBMIT == $token_result){
-		$info = '请不要重复提交，请检查...';
-		headers($referer,'error_e',$info);
-	}
-	return $info;
-}
-
-/**
- * 验证数据是否为空，并提示
- * @param array $arr 需要验证的数据
- * @param int 	$id
- * @param string $firstUrl  用户新建表单返回地址
- * @param string $secondURl 用户修改表单返回地址
- */
-function checkEmpty($arr,$id,$firstUrl='',$secondURl='',$info='数据为空') {
-	if(!empty($arr)) {
-		$res = 0;
-		for($i=0;$i<=count($arr)-1;$i++) {
-			if(empty($arr[$i])) {
-				$res = 1;
-			}
-		}
-	} else {
-		$res = 1;
-	}
-	if($res>0) {
-		if(empty($id)) {
-			headers(site_url($firstUrl),'error_e',$info);
-		} else {
-			headers(site_url($secondURl.$id.''),'error_e',$info);
-		}
-	}
-}
-
-/**
- * 获取用户信息
- */
-function getUser($iUser,$type='list') {
-	if($type == 'list') {
-		$sql = 'SELECT * FROM blog_member WHERE id='.$iUser;
-	} else {
-		$sql = 'SELECT '.$type.' FROM blog_member WHERE id='.$iUser;
-	}
-	$db = DB('default');
-	$res = $db->query($sql);
-	$list = $res->row_array();
-	if($type == "list") {
-		return $list;
-	} else {
-		return $list[$type];
-	}
-}
-
-/**
- * 根据用户id获取用户所发文章数量
- */
-function getArticleNums($uid) {
-	$db = DB('default');
-	$sql = "SELECT count(*) as nums FROM blog_article WHERE uid='$uid'";
-	$res = $db->query($sql);
-	$list = $res->row_array();
-	return $list['nums'];
-}
-
-/**
- * 获取分类名
- */
-function beSort($iSort) {
-	$db = DB('default');
-	$sql = 'SELECT name FROM blog_sort WHERE id='.$iSort;
-	$res = $db->query($sql);
-	$aList = $res->row_array();
-	return $aList['name'];
-}
-/**
- * 获取用户名
- */
-function beName($iUser) {
-	$db = DB('default');
-	$sql = 'SELECT username FROM blog_member WHERE id='.$iUser;
-	$res = $db->query($sql);
-	$aList = $res->row_array();
-	return $aList['username'];
-}
-/**
- * 获取置顶方式
- */
-function beTop($sType) {
-	switch ($sType) {
-		case 'home':
-			$name = '首页';
-			break;
-		case 'sort':
-			$name = '分类';
-			break;
-		default:
-			$name = '无';
-			break;
-	}
-	return $name;
-}
-/**
- * 获取文章所属分类
- */
-function getArticleField($iArticle,$sField) {
-	$db = DB('default');
-	$sql = 'SELECT '.$sField.' FROM blog_article WHERE id='.$iArticle;
-	$res = $db->query($sql);
-	$aList = $res->row_array();
-	return $aList[$sField];
-}
-/**
- * 获取用户权限状态
- */
-function getRole($id,$type='list') {
-	if(empty($id)) {
-		return;
-	}
-	if($type == 'list') {
-		$sql = 'SELECT * FROM blog_role WHERE id='.$id;
-	} else {
-		$sql = 'SELECT '.$type.' FROM blog_role WHERE id='.$id;
-	}
-	$db = DB('default');
-	$res = $db->query($sql);
-	$list = $res->row_array();
-	if($type == "list") {
-		return $list;
-	} else {
-		return $list[$type];
-	}
-}
-
-/**
- * 获取权限名
- */
-function roleName($name) {
-	switch ($name) {
-		case 'admin':
-			$str = "管理员";break;
-		case 'super':
-			$str = "超级管理员";break;
-		case 'ban':
-			$str = "禁止用户";break;
-		default: $str = "普通用户";
-	}
-	return $str;
-}
-/**
- * 生成文章配图
- */
-function LinkArticle($sName) {
-	return '/public/upload/article/'.$sName;
-}
-/**
- * 生成用户头像
- */
-function LinkAvatar($uid) {
-	$sql = 'SELECT picname FROM blog_member WHERE id='.$uid;
-	$db = DB('default');
-	$res = $db->query($sql);
-	$list = $res->result_array();
-	$picname = $list['0']['picname'];
-	if(!empty($picname)) {
-		$url = UPLOAD_PUBLIC.'user/'.$picname;
-	} else {
-		$url = ADMIN_PUBLIC.'images/common/avatar.jpg';
-	}
-	return $url;
-}
-/**
  * 生成作品上传文件链接
  */
 function LinkWorks($str) {
@@ -415,133 +570,5 @@ function LinkWorks($str) {
 	}
 	return UPLOAD_PUBLIC.'works/'.$str;
 }
-/**
- * 添加httpd
- */
-function addHttpd($str) {
-	if (!preg_match("/^(http|ftp):/",$str)){
-		$str = 'http://'.$str;
-	}
-	return $str;
-}
-/**
- * 过滤用户输入的数据
- */
-function sg($str,$fit='') {
-	if(!is_array($str)) {
-		$str = trim($str);
-		$str = addslashes($str);
-	}
-	return empty($str) ? $fit : $str;
-}
-/**
- * 截取函数
- */
-function cutStr($str,$length,$dot = '......') {
-	$len = mb_strlen($str,'utf8');
-	$str = mb_substr($str,0,$length,'UTF-8');
-	if($len>$length) {
-		return $str.$dot;
-	} else {
-		return $str;
-	}
-}
-/**
- * 页面跳转
- */
-function headers($sUrl,$act,$info) {
-	header("Location:".$sUrl."?".$act."=1&i=".$info);
-	exit;
-}
-/**
- * 获取数据总条数
- */
-function getPageCount($table,$sFilter='') {
-	$sQuery = 'SELECT
-                    count(*) as num
-               FROM
-					blog_'.$table.'
-               WHERE
-                    1 = "1" ';
-	if (!empty($sFilter)) {
-		$sQuery .= $sFilter;
-	}
-	$db = DB('default');
-	$res = $db->query($sQuery);
-	$list = $res->row_array();
-	return $list['num'];
-}
-
-/**
- * 信息统计
- */
-function getStatis($table,$sWhere='') {
-	$sql = 'SELECT count(*) as num FROM blog_'.$table.' '.$sWhere;
-	$db = DB('default');
-	$res = $db->query($sql);
-	$list = $res->row_array();
-	return $list['num'];
-}
-/**
- * 获取文章标题
- */
-function getTitle($iArticle) {
-	$sql = 'SELECT title FROM blog_article WHERE id='.$iArticle;
-	$db = DB('default');
-	$res = $db->query($sql);
-	$list = $res->row_array();
-	return $list['title'];
-}
-/**
- * 获取登录用户ID
- */
-function UserId() {
-	return $_SESSION['uid'] ? $_SESSION['uid'] : '1';
-}
-/**
- * 获取登录用户名
- */
-function UserName() {
-	$iUser = UserId();
-	return getUser($iUser,'username');
-}
-
-/**
- * 验证密码
- */
-function checkPasss($val1,$val2) {
-	if(empty($val1) || empty($val2)) {
-		return '1';//数据为空
-	}
-	if($val1 !== $val2) {
-		return '2';//两次密码不一致
-	}
-	
-	$UserInfo = getUser(UserId());
-	
-	$this->load->library('encrypt');
-	$newPass = $this->encrypt->encryptcode($UserInfo['password'],$UserInfo['uniquely']);
-	if($newPass != $UserInfo['password']) {
-		return '3'; //旧密码输入不正确
-	}
-	return $newPass;
-}
-//新建用户生成密码
-function checkPass($val1,$val2) {
-	if(empty($val1) || empty($val2)) {
-		return '1';//数据为空
-	}
-	if($val1 !== $val2) {
-		return '2';//两次密码不一致
-	}
-	/* $data['uniquely'] = rand(1,100);
-	$this->load->library('encrypt');
-	$data['newpass'] = $this->encrypt->encryptcode($val1,$data['uniquely']);
-	return $data; */
-}
-
-
-
-
 
 

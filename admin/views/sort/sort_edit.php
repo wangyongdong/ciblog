@@ -4,9 +4,9 @@
     <div class="page-head">
       	<h2 class="pull-left"><i class="icon-home"></i> 文章分类</h2>
     	<div class="bread-crumb pull-right">
-          	<a href="index.html"><i class="icon-home"></i> 首页</a> 
+          	<a href="/admin"><i class="icon-home"></i> 首页</a> 
           	<span class="divider">/</span> 
-          	<a href="#" class="bread-current">控制台</a>
+          	<a href="<?=site_url('site/web')?>" class="bread-current">控制台</a>
     	</div>
     	<div class="clearfix"></div>
     </div>

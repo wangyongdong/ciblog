@@ -4,7 +4,7 @@
  * 定义后台素材文件为常量
  */
 $host = "http://".$_SERVER['SERVER_NAME'];
-
+define("HOST", $host);
 define("ADMIN_PUBLIC","/public/admin/"); 		//后台素材文件路径
 define("_PLUGIN_","/public/plugin/"); 			//后台插件路径
 define("PLUGIN_UEDITOR",$host."/public/plugin/ueditor/"); 	//编辑器插件

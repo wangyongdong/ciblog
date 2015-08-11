@@ -4,9 +4,9 @@
     <div class="page-head">
       	<h2 class="pull-left"><i class="icon-home"></i> 用户留言</h2>
     	<div class="bread-crumb pull-right">
-          	<a href="index.html"><i class="icon-home"></i> 首页</a> 
+          	<a href="/admin"><i class="icon-home"></i> 首页</a> 
           	<span class="divider">/</span> 
-          	<a href="#" class="bread-current">控制台</a>
+          	<a href="<?=site_url('site/web')?>" class="bread-current">控制台</a>
     	</div>
     	<div class="clearfix"></div>
     </div>
@@ -57,7 +57,7 @@
 									<div class="form-group">
 										<label class="col-lg-4 control-label">状态</label>
 										<div class="col-lg-8">
-											<label class="radio-inline">
+											<label class="radio-inline rad-margin">
 												<input id="optionsRadios1" type="radio" value="Y" name="status" <?php if($list['status']=='Y'){echo 'checked="checked"';}?>>
 												<span class="label label-success">已回复</span>
 											</label>
@@ -69,8 +69,8 @@
 									</div>
                                   	<div class="form-group">
 									 	<div class="col-lg-offset-2 col-lg-9">
-									 		<button type="submit" class="btn btn-success">保存</button>
-									 		<button type="submit" class="btn btn-primary">回复</button>
+									 		<button type="submit" class="btn btn-primary">保存</button>
+									 		<button type="submit" class="btn btn-warning">回复</button>
 											<button type="reset" class="btn btn-default" onclick="javascript:window.history.back();">取消</button>
 									 	</div>
                                   	</div>
@@ -112,7 +112,7 @@
                                   	</div>
                                   	<div class="form-group">
 									 	<div class="col-lg-offset-2 col-lg-9">
-											<button type="submit" class="btn btn-success">保存</button>
+											<button type="submit" class="btn btn-primary">保存</button>
 									 	</div>
                                   	</div>
                               	</form>

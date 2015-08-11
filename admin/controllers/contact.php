@@ -22,6 +22,9 @@ class Contact extends MY_Controller {
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
+		//标记已读
+		$this->contact_model->doRead();
+
 		$this->load->view('public/header',$data);
 		$this->load->view('contact/contact_list',$data);
 		$this->load->view('public/footer',$data);
@@ -69,8 +72,9 @@ class Contact extends MY_Controller {
 			$data['id'] = sg($_POST['id']);
 		}
 		$data['reply_id'] = sg($_POST['reply_id']);				//回复id
-		$data['userid'] = $_SESSION['uid'];						//userid
-		$data['author'] = getUser($_SESSION['uid'],'username');	//用户名
+		$data['userid'] = 1;									//userid
+		//$data['author'] = getUser($_SESSION['uid'],'username');	//用户名
+		$data['author'] = '王永东';	//用户名
 		$data['content'] = sg($_POST['content']);				//内容
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
@@ -94,4 +98,5 @@ class Contact extends MY_Controller {
 		$affect = $this->contact_model->doDel($iContact);
 		echo $affect;
 	}
+	
 }

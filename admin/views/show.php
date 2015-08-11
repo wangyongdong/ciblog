@@ -4,8 +4,8 @@
 	<div class="page-head">
 		<h2 class="pull-left"><i class="icon-home"></i> 首页</h2>
         <div class="bread-crumb pull-right">
-	    	<a href="index.html"><i class="icon-home"></i> 首页</a> <span class="divider">/</span> 
-	        <a href="#" class="bread-current">控制台</a>
+	    	<a href="/admin"><i class="icon-home"></i> 首页</a> <span class="divider">/</span> 
+	        <a href="<?=site_url('site/web')?>" class="bread-current">控制台</a>
         </div>
         <div class="clearfix"></div>
 	</div>
@@ -14,6 +14,42 @@
 	<div class="matter">
     	<div class="container">
 			<div class="col-md-8">
+				<a href="#myModal" class="btn btn-info" data-toggle="modal">更新</a>     
+				<!-- Modal -->
+				<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h4 class="modal-title">&nbsp;</h4>
+							</div>
+							<div class="modal-body">
+								<p>One fine body…</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="myModals" class="modal fade in" style="display: block;">
+					<div class="modal-dialog">
+						<div class="modal-content min-win">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h4 class="modal-title">&nbsp;</h4>
+							</div>
+							<div class="modal-body">
+								<p>One fine body…</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
               	<div class="widget">
                 	<div class="widget-head">
                   		<div class="pull-left">欢迎登录</div>
@@ -47,69 +83,69 @@
                   		<div class="clearfix"></div>
                 	</div>
                 	<div class="widget-content">
-                  	<div class="padd">
-                        <div class="support-contact">
-                        	<!-- Phone, email and address with font awesome icon -->
-			                            <p><i class="icon-phone"></i> Phone<strong>:</strong> 13148491143</p>
-			                            <hr />
-			                            <p><i class="icon-envelope-alt"></i> Email<strong>:</strong> wydchn@gmail.com</p>
-			                            <hr />
-			                            <p><i class="icon-home"></i> Address<strong>:</strong> 北京市朝阳区</p>
-			                        </div>
-			                  	</div>
-			                </div>
-						</div>
-					</div>
-					<div class="col-md-10">
-          				<div class="widget">
-            				<div class="widget-head">
-              					<div class="pull-left">系统信息</div>
-				                <div class="widget-icons pull-right">
-									<a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-				                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-				                </div>
-								<div class="clearfix"></div>
-            				</div>
-            				<div class="widget-content">
-							<table class="table table-striped table-bordered table-hover">
-								<tr>
-				                    <td>网站地址</td>
-				                	<td colspan="3">sitedomain.com</td>
-				                </tr>
-			                    <tr>
-			                      	<td>服务器版本</td>
-			                      	<td>Apache/2.2.17</td>
-			                      	<td>操作系统</td>
-			                    	<td>WINNT</td>
-			                    </tr>
-			                    <tr>
-			                      	<td>PHP版本号</td>
-			                      	<td>5.1.1</td>
-			                      	<td>MySql版本</td>
-			                    	<td>10</td>
-			                    </tr>
-								<tr>
-			                      	<td>远程文件获取</td>
-			                      	<td>支持</td>
-			                      	<td>GDLibrary</td>
-			                    	<td>支持</td>
-			                    </tr>
-								<tr>
-			                      	<td>最大执行时间</td>
-			                      	<td>300秒</td>
-			                      	<td>最大上传限制</td>
-			                    	<td>10M</td>
-			                	</tr>
-			                </table>
-							<div class="widget-foot">
-			                	<p>Vivamus diam diam, fermentum sed dapibus eget, consectetur adipiscing elit.</p>
+                  		<div class="padd">
+                        	<div class="support-contact">
+                        		<!-- Phone, email and address with font awesome icon -->
+								<p><i class="icon-phone"></i> Phone<strong>:</strong> 13148491143</p>
+			                    <hr />
+			                    <p><i class="icon-envelope-alt"></i> Email<strong>:</strong> wydchn@gmail.com</p>
+			                    <hr />
+			                    <p><i class="icon-home"></i> Address<strong>:</strong> 北京市朝阳区</p>
 			            	</div>
-            			</div>
-          			</div>
-        		</div>
+			        	</div>
+			    	</div>
+				</div>
 			</div>
-		</div><!-- Matter ends -->
-   		<!-- Mainbar ends -->
-	<div class="clearfix"></div>
+			<div class="col-md-10">
+          		<div class="widget">
+            		<div class="widget-head">
+              			<div class="pull-left">系统信息</div>
+				        <div class="widget-icons pull-right">
+							<a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+				            <a href="#" class="wclose"><i class="icon-remove"></i></a>
+						</div>
+						<div class="clearfix"></div>
+            		</div>
+            		<div class="widget-content">
+						<table class="table table-striped table-bordered table-hover">
+							<tr>
+				            	<td>网站地址</td>
+				                <td colspan="3">sitedomain.com</td>
+							</tr>
+			                <tr>
+			                    <td>服务器版本</td>
+			                    <td><?=$arr['sysos']?></td>
+			                    <td>服务器时间</td>
+			                    <td><?=$arr['systemtime']?></td>
+			                </tr>
+			                <tr>
+			                    <td>PHP版本号</td>
+			                    <td><?=$arr['php']?></td>
+			                    <td>MySql版本</td>
+			                    <td><?=$arr['mysql']?></td>
+			                </tr>
+							<tr>
+			                    <td>远程文件获取</td>
+			                    <td><?=$arr['allowurl']?></td>
+			                    <td>GDLibrary</td>
+			                    <td><?=$arr['gdinfo']?></td>
+			                </tr>
+							<tr>
+								<td>最大执行时间</td>
+			                    <td><?=$arr['max_ex_time']?></td>
+			                    <td>最大上传限制</td>
+			                    <td><?=$arr['max_upload']?></td>
+			                </tr>
+						</table>
+						<div class="widget-foot">
+			            	<p>System support information is automatically acquired by running server.</p>
+			            </div>
+            		</div>
+          		</div>
+        	</div>
+		</div>
+	</div><!-- Matter ends -->
+   	<!-- Mainbar ends -->
+<div class="clearfix"></div>
 </div>
 <!-- Content ends -->
