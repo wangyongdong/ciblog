@@ -43,15 +43,12 @@
 	<body>
 	<div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
 	    <div class="conjtainer">
-			<!-- Menu button for smallar screens -->
 			<div class="navbar-header">
 				<button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
 					<span>菜单</span>
 			  	</button>
-			  	<!-- Site name for smallar screens -->
 			  	<a href="index.html" class="navbar-brand hidden-lg">首页</a>
 			</div>
-	      	<!-- Navigation starts -->
 	      	<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">         
 	        	<ul class="nav navbar-nav">
 	          		<li class="dropdown">
@@ -60,20 +57,18 @@
 							更新缓存
 						</a>
 					</li>
-					<!-- Sync to server link -->
 					<li class="dropdown">
 	            		<a href="<?=site_url('site/backup')?>" class="dropdown-toggle">
 	            			<span class="label label-danger"><i class="icon-refresh"></i></span> 同步数据库
 						</a>
 	          		</li>
 	        	</ul>
-		        <!-- Search form -->
 		        <form class="navbar-form navbar-left" role="search">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search">
+						<input class="form-control" type="text" placeholder="文章快速搜索" name="keyword" id="s_keyword" value="<?=sg($aFilter['keyword'])?>">
+						<a class="search-btn ts" href="javascript:void(0)" onclick="searchF('<?=site_url('article')?>');"><i class="icon-search"></i></a>
 					</div>
 				</form>
-	        	<!-- Links -->
 	        	<ul class="nav navbar-nav pull-right">
 	          		<li class="dropdown pull-right">            
 	            		<a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -89,18 +84,14 @@
 	      	</nav>
 		</div>
 	</div>
-	<!-- Header starts -->
 	<header>
 		<div class="container">
 			<div class="row">
-	        	<!-- Logo section -->
 	        	<div class="col-md-4">
 	          		<div class="logo">
 						<h1><a href="#">Mac<span class="bold"></span></a></h1><p class="meta">后台管理系统</p>
 	          		</div>
 	        	</div>
-				<!-- Logo ends -->
-	        	<!-- News section -->
 	        	<div class="col-md-4">
 	          		<ul class="nav nav-pills">
 	            		<li class="dropdown dropdown-big">
@@ -128,7 +119,6 @@
 	                  			<li><div class="drop-foot"><a href="<?=site_url('comment')?>">查看所有</a></div></li>
 	                  		</ul>
 	            		</li>
-	            		<!-- Message button with number of latest messages count-->
 	            		<li class="dropdown dropdown-big">
 	              			<a class="dropdown-toggle" href="#" data-toggle="dropdown">
 	              				<i class="icon-envelope-alt"></i> 留言 
@@ -154,7 +144,6 @@
 		                  		<li><div class="drop-foot"><a href="<?=site_url('contact')?>">查看所有</a></div></li>
 		                	</ul>
 						</li>
-	            		<!-- Members button with number of latest members count -->
 	            		<li class="dropdown dropdown-big">
 			              	<a class="dropdown-toggle" href="#" data-toggle="dropdown">
 			              		<i class="icon-volume-up"></i> 提醒 
@@ -182,8 +171,6 @@
 	            		</li>
 	          		</ul>
 	        	</div>
-				<!-- News section end -->
-	        	<!-- Data section -->
 	        	<div class="col-md-4">
 	          		<div class="header-data">
 	            		<div class="hdata">
@@ -203,18 +190,13 @@
 			            </div>
 	          		</div>
 	        	</div>
-				<!-- Data section end -->
 	      	</div>
 		</div>
+		<div class="pop_tips"></div>
 	</header>
-	<!-- Header ends -->
-	
-	<!-- Main content starts -->
 	<div class="content">
-	  	<!-- Sidebar -->
 	    <div class="sidebar">
 	        <div class="sidebar-dropdown"><a href="#">导航</a></div>
-	        <!--- Sidebar navigation -->
 	        <ul id="nav">
 	          	<li>
 	          		<a href="/admin" class="open"><i class="icon-home"></i> 首页</a>
@@ -261,4 +243,3 @@
 	          	</li>
 	        </ul>
 		</div>
-	    <!-- Sidebar ends -->

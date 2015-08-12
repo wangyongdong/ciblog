@@ -60,34 +60,8 @@ class Site extends MY_Controller {
 			$data['comment_nums'] = sg($_POST['comment_nums']);
 		}
 		
-		$affect = $this->site_model->doSiteWeb($data);
-		if($affect) {
-			echo 'success';
-		}
-		//headers(site_url('site/web_site'),'active_s','操作成功');
-		
-	}
-	
-	/**
-	 * 获取SEO设置页面
-	 */
-	public function seo_site() {
-		$data['list'] = $this->site_model->getSiteSeo();
-		$this->load->view('site/seo_site',$data);
-	}
-	
-	/**
-	 * 执行SEO信息修改
-	 */
-	public function seoUpdate() {
-		$site_list = array();
-		$site_list['site_title'] = sg($_POST['site_title']);
-		$site_list['site_key'] = sg($_POST['site_key']);
-		$site_list['site_description'] = sg($_POST['site_description']);
-	
-		$affect = $this->site_model->updateSiteWeb($site_list);
-		headers(site_url('site/seo_site'),'active_s','操作成功');
-		
+		$this->site_model->doSiteWeb($data);
+		succes(site_url('site/web'));
 	}
 	
 	/**
@@ -134,15 +108,12 @@ class Site extends MY_Controller {
 		$data['menu_desc'] = sg($_POST['desc']);
 		$data['status'] = sg($_POST['status']);
 		
-		//输入数据验证
-		//$arr = array($data['menu_name'],$data['menu_alias']);
-		//checkEmpty($arr,$data['id'],'site/menu_site','site/updateMenu/');
+		//数据验证
+		$arr = array($data['menu_name'],$data['menu_alias']);
+		checkEmpty($arr);
 		
-		$affect = $this->site_model->doMenu($data);
-		if($affect) {
-			//headers(site_url('site/menu_site'),'active_s','操作成功');
-			echo 'success';
-		}
+		$this->site_model->doMenu($data);
+		succes(site_url('site/menu'));
 	}
 	
 	/**

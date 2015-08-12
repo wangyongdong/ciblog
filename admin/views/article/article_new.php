@@ -1,6 +1,5 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-	<!-- Page heading -->
 	<div class="page-head">
 		<h2 class="pull-left"><i class="icon-home"></i> 发布文章</h2>
 		<div class="bread-crumb pull-right">
@@ -10,8 +9,6 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	<!-- Page heading ends -->
-	<!-- Matter -->
 	<div class="matter">
 		<div class="container">
 			<div class="col-md-12">
@@ -27,7 +24,7 @@
         			<div class="widget-content">
           				<div class="padd">
               				<div class="form quick-post">
-                              	<form class="form-horizontal" method="post" action="<?=site_url('article/doArticle')?>">
+                              	<form class="form-horizontal" method="post" action="<?=site_url('article/doArticle')?>" onsubmit="return checkFormA()">
                                   	<div class="form-group">
                                     	<label class="control-label col-lg-3" for="title">标题</label>
                                     	<div class="col-lg-9"> 
@@ -36,7 +33,7 @@
                                   	</div>
                                   	<div class="form-group">
                                     	<label class="control-label col-lg-3" for="content">内容</label>
-                                    	<div class="col-lg-9"> 
+                                    	<div class="col-lg-9">
                                       		<?=ArticleUedit();?>
                                     	</div>
                                   	</div>
@@ -55,7 +52,7 @@
                                   	<div class="form-group">
 	                                  	<label class="col-lg-4 control-label">分类</label>
 	                                  	<div class="col-lg-9">
-		                                    <select class="form-control" name="sortid">
+		                                    <select class="form-control" name="sortid" id="sortid">
 		                                    	<?php foreach($sort as $slist):?>
 						                    	<option value="<?=$slist['id']?>"><?=$slist['name']?></option>
 						                    	<?php endforeach;?>
@@ -83,11 +80,11 @@
 										<label class="col-lg-4 control-label">状态</label>
 										<div class="col-lg-9">
 											<label class="radio-inline">
-												<input id="status" type="radio"  value="show" name="status" checked="checked">
+												<input id="status" type="radio" value="show" name="status" checked="checked">
 												<span class="label label-success">显 示</span>
 											</label>
 											<label class="radio-inline">
-												<input id="status" type="radio"  value="hide" name="status">
+												<input id="status" type="radio" value="hide" name="status">
 												<span class="label label-danger">隐 藏</span>
 											</label>
 										</div>
@@ -101,15 +98,12 @@
                               	</form>
                             </div>
           				</div>
-						<div class="widget-foot">
-		                    <!-- Footer goes here -->
-		                </div>
+						<div class="widget-foot"></div>
         			</div>
       			</div> 
     		</div>
 		</div>
 	</div>
-	<!-- Matter ends -->
 </div>
 <!-- Mainbar ends -->
 <div class="clearfix"></div>

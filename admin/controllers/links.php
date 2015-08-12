@@ -16,7 +16,7 @@ class Links extends MY_Controller {
 	public function index() {
 		//分页执行
 		$pageId = $this->input->get('page');
-		$arr = $this->public_model->getPage("links",'links/index?',$pageId);
+		$arr = $this->public_model->getPage("links",'links?',$pageId);
 		//执行查询
 		$data['list'] = $this->links_model->getLinksList($arr['start'],$arr['pagenum']);
 		//token
@@ -39,7 +39,6 @@ class Links extends MY_Controller {
 		$this->load->view('public/header',$data);
 		$this->load->view('links/links_edit',$data);
 		$this->load->view('public/footer',$data);
-		
 	}
 	
 	/**
@@ -58,16 +57,14 @@ class Links extends MY_Controller {
 		$data['status'] = sg($_POST['status']);
 		
 		//数据验证
-		//$arr = array($data['sitename'],$data['siteurl'],$data['description']);
-		//checkEmpty($arr,$data['id'],'links/llist','links/update/');
+		$arr = array($data['sitename'],$data['siteurl']);
+		checkEmpty($arr);
 		
 		//token验证
 		checkToken($_POST['token'],$this->tokentype);
 		
-		$affect = $this->links_model->doLinks($data);
-		if($affect) {
-			//headers(site_url('links/llist'),'active_s','操作成功');
-		}
+		$this->links_model->doLinks($data);
+		succes(site_url('links'));
 	}
 	
 	/**

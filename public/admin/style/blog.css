@@ -5,12 +5,31 @@
 .rad-margin {
 	margin-right:15px;
 }
-.min-win {
-	width:50%;
+.search-btn {
+	float:right;
+	margin-top: -23px;
+	position: relative;
 }
-.min-tit {
-	left: 17%;
+.ts {
+	margin-top: -28px;
 }
+/* 弹出窗 start */
+.win-min {
+	width:400px;
+	padding-top: 2px;
+}
+.win-header {
+	padding:0px !important;
+}
+.win-header button {
+	padding:3px 3px 0px 0px !important;
+}
+.win-footer {
+	border-top: 1px solid #ffffff;
+	padding: 0 15px;
+}
+/* 弹出窗 end */
+
 /* header start */
 .nav .dropdown-toggle img {
 	background: #fff none repeat scroll 0 0;

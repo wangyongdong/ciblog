@@ -1,6 +1,5 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-	<!-- Page heading -->
 	<div class="page-head">
 		<h2 class="pull-left"><i class="icon-home"></i> 首页</h2>
         <div class="bread-crumb pull-right">
@@ -9,47 +8,9 @@
         </div>
         <div class="clearfix"></div>
 	</div>
-	<!-- Page heading ends -->
-    <!-- Matter -->
 	<div class="matter">
     	<div class="container">
 			<div class="col-md-8">
-				<a href="#myModal" class="btn btn-info" data-toggle="modal">更新</a>     
-				<!-- Modal -->
-				<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-								<h4 class="modal-title">&nbsp;</h4>
-							</div>
-							<div class="modal-body">
-								<p>One fine body…</p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="myModals" class="modal fade in" style="display: block;">
-					<div class="modal-dialog">
-						<div class="modal-content min-win">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-								<h4 class="modal-title">&nbsp;</h4>
-							</div>
-							<div class="modal-body">
-								<p>One fine body…</p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div>
-						</div>
-					</div>
-				</div>
               	<div class="widget">
                 	<div class="widget-head">
                   		<div class="pull-left">欢迎登录</div>
@@ -85,7 +46,6 @@
                 	<div class="widget-content">
                   		<div class="padd">
                         	<div class="support-contact">
-                        		<!-- Phone, email and address with font awesome icon -->
 								<p><i class="icon-phone"></i> Phone<strong>:</strong> 13148491143</p>
 			                    <hr />
 			                    <p><i class="icon-envelope-alt"></i> Email<strong>:</strong> wydchn@gmail.com</p>
@@ -144,7 +104,7 @@
           		</div>
         	</div>
 		</div>
-	</div><!-- Matter ends -->
+	</div>
    	<!-- Mainbar ends -->
 <div class="clearfix"></div>
 </div>

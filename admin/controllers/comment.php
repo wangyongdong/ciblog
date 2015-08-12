@@ -13,11 +13,21 @@ class Comment extends MY_Controller {
 	 * 获取评论列表
 	 */
 	public function index() {
+		$data['aFilter']['keyword'] = sg($this->input->get('s'));
 		//分页执行
 		$pageId = $this->input->get('page');
-		$arr = $this->public_model->getPage("comment",'comment/index?',$pageId);
+		//搜索条件
+		$sFilter = '';
+		if(!empty($data['aFilter']['keyword'])) {
+			if(is_numeric($data['aFilter']['keyword'])) {
+				$sFilter = ' AND comment_id = '.$data['aFilter']['keyword'];
+			} else {
+				$sFilter = ' AND author LIKE"%'.$data['aFilter']['keyword'].'%"';
+			}
+		}
+		$arr = $this->public_model->getPage("comment",'comment?',$pageId,$sFilter);
 		//文章评论
-		$data['list'] = $this->comment_model->getComment($arr['start'],$arr['pagenum']);
+		$data['list'] = $this->comment_model->getComment($arr['start'],$arr['pagenum'],$data['aFilter']);
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
@@ -55,14 +65,15 @@ class Comment extends MY_Controller {
 		$data['url'] = sg($_POST['url']);			//url
 		$data['content'] = sg($_POST['content']);	//内容
 		$data['status'] = sg($_POST['status']);		//状态
+		
 		//数据验证
+		$arr = array($data['content']);
+		checkEmpty($arr);
 		//token验证
 		checkToken($_POST['token'],$this->tokentype);
 	
-		$affect = $this->comment_model->doComment($data);
-		if($affect) {
-			//headers(site_url($successHref),'active_s','文章操作成功');
-		}
+		$this->comment_model->doComment($data);
+		succes(site_url('comment'));
 	}
 	/**
 	 * 添加回复
@@ -86,14 +97,13 @@ class Comment extends MY_Controller {
 		$data['datetime'] = date("Y-m-d H:i:s",time());
 	
 		//数据验证
+		$arr = array($data['content']);
+		checkEmpty($arr);
 		//token验证
 		checkToken($_POST['token'],$this->tokentype);
 	
-		$affect = $this->comment_model->doReply($data);
-		if($affect) {
-			//headers(site_url($successHref),'active_s','文章操作成功');
-		}
-	
+		$this->comment_model->doReply($data);
+		succes(site_url('comment'));
 	}
 	/**
 	 * 删除操作

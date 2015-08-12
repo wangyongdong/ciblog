@@ -6,18 +6,6 @@
 class Show extends MY_Controller {
 	
 	/**
-	 * 加载后台
-	 */
-	/* public function index() {
-		$this->load->library('access');
-		$data['data'] = $this->access->getAccessMenu();
-		//获取未读消息数量
-		$data['notices'] = $this->public_model->countNotices();
-		
-		$this->load->view('show',$data);
-	} */
-	
-	/**
 	 * 加载首页
 	 */
 	public function index() {
@@ -54,5 +42,18 @@ class Show extends MY_Controller {
 		$this->load->view('public/header',$data);
 		$this->load->view('show',$data);
 		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 错误页
+	 */
+	public function error() {
+		$sInfo = $this->uri->segment(3);
+		$data['info'] = urldecode($sInfo);
+		$data['refer'] = sg($_SERVER['HTTP_REFERER'],'/admin');
+		$this->load->view('public/header',$data);
+		$this->load->view('public/common',$data);
+		$this->load->view('public/footer',$data);
+	
 	}
 }

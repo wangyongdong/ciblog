@@ -8,15 +8,18 @@ class Contact_model extends CI_Model {
     /**
      * 获取留言
      */
-    function getContact($type,$iStart=0,$iPageNum=10) {
+    function getContact($type,$iStart=0,$iPageNum=10,$aFilter='') {
     	$sLimit = ' LIMIT '.$iStart.','.$iPageNum;
     	$sql = 'SELECT
     				*
     			FROM
     				blog_contact
     			WHERE
-    				reply_id=0
-    			ORDER BY
+    				reply_id=0 ';
+    	if(!empty($aFilter['keyword'])) {
+    		$sql .= ' AND author LIKE"%'.$aFilter['keyword'].'%"';
+    	}
+    	$sql .= ' ORDER BY
     				id DESC '.$sLimit;
     	$res = $this->db->query($sql);
     	$list = $res->result_array();

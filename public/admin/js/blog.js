@@ -105,35 +105,26 @@ function doStatus(url) {
 		}
 	})
 }
-
-
-// 增加新页面
-function newPage() {
-	var main_new = document.getElementById("new_page");
-	if(main_new.style.display=='none') {
-		main_new.style.display='block';
-	} else {
-		main_new.style.display='none';
-	}
-	$("#new_page input[type='text'],textarea").each(function() {
-		$(this).val("");
-	});
+//弹出提示框
+function popTips(val) {
+	var win_str = '<div id="myModal" class="modal fade in" style="display: block;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog win-min"><div class="modal-content"><div class="modal-header win-header"><button type="button" class="close" onclick="close_pop();">×</button><h4 class="modal-title">&nbsp;</h4></div><div class="modal-body"><p class="center">'+val+'</p></div><div class="modal-footer win-footer"></div></div></div></div><div class="modal-backdrop fade in"></div>';
+	$(document.body).addClass("modal-open");
+	$(".pop_tips").append(win_str);
+	return false;
 }
-/* site menu */
-function menuC(id) {
-	var c_class = $("#ch"+id).attr("class");
-	if(c_class == 'imgcheck') {
-		//修改为开启
-		var status = 'show';
-		$.post(__A+'site/ajaxMenu', {id:id,status:status});
-		$("#ch"+id).attr("class","imgcheck-on");
-	}
-	if(c_class == 'imgcheck-on') {
-		//修改问关闭
-		var status = 'hide';
-		$.post(__A+'site/ajaxMenu', {id:id,status:status});
-		$("#ch"+id).attr("class","imgcheck");
-	}
+//关闭提示框
+function close_pop() {
+	$(document.body).addClass("");
+	$(".pop_tips").html("");
+}
+
+//sort条件搜索
+function searchSort(val,url) {
+	window.location = url+'?sort='+val;
+}
+// user条件搜索
+function searchUser(val,url) {
+	window.location = url+'?author='+val;
 }
 //改变sort
 function changeSort(val) {
@@ -162,99 +153,114 @@ function changeTop(val) {
 				window.location.reload();
 			} else {
 				alert("置顶修改失败");
-			} 
-		}
-	})
-}
-
-
-
-function updNotice() {
-	id = getCheckbox();
-	$.ajax({
-		url:__A+'other/updNotice',
-		data:'id='+id,
-		type:'post',
-		success:function(data){
-			if(data){
-				window.location.reload();
 			}
 		}
 	})
 }
-// sort条件搜索
-function searchSort(val) {
-	window.location = __A+'search/index?sort='+val;
-}
-// user条件搜索
-function searchUser(val) {
-	window.location = __A+'search/index?user='+val;
-}
-// keyword 条件搜索
-function searchKeyWord() {
-	var q = $("#search_input").val();
-	window.location = __A+'search/index?q='+q;
-}
-
-// 文章密码显示
-$(function(){
-   $(".rad").click(function(){
-	  	if($(this).attr("value")=="0") {
-	  		$("#password").show();
-		} else {
-			$("#password").hide();
-		}
-   });
-});
-/* record */
-// 加载
-$(function () {
-	$(".record_re").toggle(
-		function() {
-        	tid = $(this).attr('id');
-       		$.post(__A+'record/getComment', {id:tid}, function(data){
-       			$("#r_" + tid).html(data);
-        		$("#rp_"+tid).show();
-			});
-		},
-      	function() {
-        	tid = $(this).attr('id');
-        	$("#r_" + tid).html('');
-        	$("#rp_"+tid).hide();
-    	}
-	);
-});
-// 删除评论
-function delComment(cid,id){
-    if(confirm('你确定要删除该条回复吗？')) {
-    	$.post(__A+'record/delComment', {'cid':cid,'id':id}, function(data) {
-            var cnum = $("#"+id+" span").text();
-            $("#"+id+" span").text(cnum-1);
-			$("#reply_"+cid).hide("slow");
-		})
-	} else {
-		return;
+//数据验证
+function checkFormA() {
+	var title = $("#title").val();
+	var keyword = $("#keyword").val();
+	var content = UE.getEditor('editor').getContent();
+	
+	if(title.length == 0) {
+		popTips('请输入标题');
+		return false;
 	}
+	if(content.length == 0) {
+		popTips('请输入内容');
+		return false;
+	}
+	if(keyword.length == 0) {
+		popTips('请输入关键词');
+		return false;
+	}
+	return true;
 }
-// 评论说说
-function addComment(id){
-    var comment = $("#rp_"+id+" textarea").val();
-	$.post(__A+'record/doComment', {'id':id,'comment':comment}, function(data){
-		data = $.trim(data);
-		if (data == 'err1'){
-            $(".huifu span").text('回复长度需在140个字内');
-		} else {
-    		//$("#r_"+id).append(data);	//插入尾部
-    		$(data).prependTo("#r_"+id);//插入开头
-    		var cnum = Number($("#"+id+" span").text());
-    		$("#"+id+" span").text(cnum+1);
-    		$(".huifu span").text('');
-    		$(".rcon").attr("value","");
-    	}
+function checkFormC() {
+	var content = $("#content").text();
+	
+	if(content.length == 0) {
+		popTips('请输入内容');
+		return false;
+	}
+	return true;
+}
+function checkFormL() {
+	var name = $("#name").val();
+	var url = $("#url").val();
+	
+	if(name.length == 0) {
+		popTips('请输入名称');
+		return false;
+	}
+	if(url.length == 0) {
+		popTips('请输入url');
+		return false;
+	}
+	return true;
+}
+function checkFormM() {
+	var name = $("#name").val();
+	if(name.length == 0) {
+		popTips('请输入用户名');
+		return false;
+	}
+	return true;
+}
+function checkFormS() {
+	var name = $("#name").val();
+	var alias = $("#alias").val();
+	
+	if(name.length == 0) {
+		popTips('请输入名称');
+		return false;
+	}
+	if(alias.length == 0) {
+		popTips('请输入别名');
+		return false;
+	}
+	return true;
+}
+function checkPopL() {
+	var name = $("#name").val();
+	var url = $("#url").val();
+	if(name.length == 0) {
+		$("#name").addClass('form-pop');
+		return false;
+	}
+	if(url.length == 0) {
+		$("#url").addClass('form-pop');
+		return false;
+	}
+	return true;
+}
+function checkPopC(id) {
+	var content = $("#content"+id).text();
+	
+	if(content.length == 0) {
+		$("#content"+id).addClass('form-pop');
+		return false;
+	}
+	return true;
+}
+function checkPopS() {
+	var name = $("#name").val();
+	var alias = $("#alias").val();
+	
+	if(name.length == 0) {
+		$("#name").addClass('form-pop');
+		return false;
+	}
+	if(alias.length == 0) {
+		$("#alias").addClass('form-pop');
+		return false;
+	}
+	return true;
+}
+//消除警示
+$(function() {
+	$(".form-horizontal input,.form-horizontal textarea").focus(function() {
+		$(this).removeClass('form-pop');
 	});
-}
-// 回复评论
-function reply(id, rp){
-    $("#rp_"+id+" textarea").val(rp);
-    $("#rp_"+id+" textarea").focus();
-}
+})

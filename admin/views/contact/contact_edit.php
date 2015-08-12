@@ -1,6 +1,5 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-    <!-- Page heading -->
     <div class="page-head">
       	<h2 class="pull-left"><i class="icon-home"></i> 用户留言</h2>
     	<div class="bread-crumb pull-right">
@@ -10,8 +9,6 @@
     	</div>
     	<div class="clearfix"></div>
     </div>
-    <!-- Page heading ends -->
-    <!-- Matter -->
     <div class="matter">
     	<div class="container">
       		<div class="col-md-7">
@@ -27,7 +24,7 @@
         			<div class="widget-content">
           				<div class="padd">
               				<div class="form quick-post">
-                              	<form class="form-horizontal" method="post" action="<?=site_url('contact/doContact')?>">
+                              	<form class="form-horizontal" method="post" action="<?=site_url('contact/doContact')?>" onsubmit="return checkFormC()">
 									<input type="hidden" name="id" value="<?=$list['id']?>" >
 									<input type="hidden" name="token" value="<?=$token?>" >
 									<div class="form-group">
@@ -118,9 +115,7 @@
                               	</form>
                             </div>
           				</div>
-						<div class="widget-foot">
-		                    <!-- Footer goes here -->
-		                </div>
+						<div class="widget-foot"></div>
         			</div>
       			</div> 
     		</div>
@@ -130,7 +125,6 @@
     		?>
 		</div>
 	</div>
-	<!-- Matter ends -->
 </div>
 <!-- Mainbar ends -->
 <div class="clearfix"></div>

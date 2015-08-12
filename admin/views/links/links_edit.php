@@ -1,19 +1,14 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-	<!-- Page heading -->
 	<div class="page-head">
 		<h2 class="pull-left"><i class="icon-home"></i> 友情链接</h2>
-        <!-- Breadcrumb -->
         <div class="bread-crumb pull-right">
 	    	<a href="/admin"><i class="icon-home"></i> 首页</a> 
-	        <!-- Divider -->
 	        <span class="divider">/</span> 
 	        <a href="<?=site_url('site/web')?>" class="bread-current">控制台</a>
         </div>
         <div class="clearfix"></div>
 	</div>
-	<!-- Page heading ends -->
-	<!-- Matter -->
 	<div class="matter">
 		<div class="container">
 			<div class="col-md-8">
@@ -29,8 +24,7 @@
                 	<div class="widget-content">
                   		<div class="padd">
                       		<div class="form quick-post">
-                            	<!-- Edit profile form (not working)-->
-                                <form class="form-horizontal" method="post" action="<?=site_url('links/doLinks')?>">
+                                <form class="form-horizontal" method="post" action="<?=site_url('links/doLinks')?>" onsubmit="return checkFormL()">
                                 	<input type="hidden" name="id" value="<?=$list['id']?>" >
 									<input type="hidden" name="token" value="<?=$token?>" >
 									<div class="form-group">
@@ -64,7 +58,6 @@
 											</label>
 										</div>
 									</div>
-                                    <!-- Buttons -->
                                     <div class="form-group">
 										<div class="col-lg-offset-2 col-lg-9">
 											<button type="submit" class="btn btn-primary">保存</button>
@@ -74,14 +67,12 @@
 								</form>
 							</div>
 						</div>
-						<div class="widget-foot">
-		                    <!-- Footer goes here -->
-		                </div>
+						<div class="widget-foot"></div>
 					</div>
 				</div> 
 			</div>
 		</div>
-	</div><!-- Matter ends -->
+	</div>
 </div>
 <!-- Mainbar ends -->
 <div class="clearfix"></div>

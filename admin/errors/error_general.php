@@ -2,22 +2,25 @@
 <html lang="en">
 <head>
 <title>Error</title>
-<meta http-equiv="refresh" content="2;url=<?=base_url().$message;?>" />
 <style type="text/css">
+
 ::selection{ background-color: #E13300; color: white; }
 ::moz-selection{ background-color: #E13300; color: white; }
 ::webkit-selection{ background-color: #E13300; color: white; }
+
 body {
 	background-color: #fff;
 	margin: 40px;
 	font: 13px/20px normal Helvetica, Arial, sans-serif;
 	color: #4F5155;
 }
+
 a {
 	color: #003399;
 	background-color: transparent;
 	font-weight: normal;
 }
+
 h1 {
 	color: #444;
 	background-color: transparent;
@@ -27,6 +30,7 @@ h1 {
 	margin: 0 0 14px 0;
 	padding: 14px 15px 10px 15px;
 }
+
 code {
 	font-family: Consolas, Monaco, Courier New, Courier, monospace;
 	font-size: 12px;
@@ -37,11 +41,13 @@ code {
 	margin: 14px 0 14px 0;
 	padding: 12px 10px 12px 10px;
 }
+
 #container {
 	margin: 10px;
 	border: 1px solid #D0D0D0;
 	-webkit-box-shadow: 0 0 8px #D0D0D0;
 }
+
 p {
 	margin: 12px 15px 12px 15px;
 }
@@ -49,11 +55,8 @@ p {
 </head>
 <body>
 	<div id="container">
-		<h1><?php echo $heading;?></h1>
-		<?php if(!empty($message)) {echo $message;}?>
-		<?php if(!empty($url)) {?>
-		<p>如果您的页面没有发生跳转，请<?php echo anchor($url,'点击这里');?>...</p>
-		<?php }?>
+		<h1><?php echo $heading; ?></h1>
+		<?php echo $message; ?>
 	</div>
 </body>
 </html>

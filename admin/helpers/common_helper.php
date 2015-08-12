@@ -60,6 +60,19 @@ function RecordUedit($sContent='') {
 	echo $sUedit;
 }
 /**
+ * 生成密码
+ * @param string $sPass
+ * @param string $sUnique
+ * @return string
+ */
+function buildPass($sPass,$sUnique) {
+	$CI =& get_instance();
+	$CI->load->library('encrypt');
+	$newPass = $CI->encrypt->encryptcode($sPass,$sUnique);
+	
+	return $newPass;
+}
+/**
  * 获取token
  * @param string $tokentype
  * @return string
@@ -78,27 +91,23 @@ function getToken($tokentype) {
  */
 function checkToken($token,$tokentype) {
 	$CI =& get_instance();
-	$info = '';
 	$CI->load->library('token');
 	$token_result = $CI->token->checkValidateToken($token,$tokentype);
 	$referer = $_SERVER['HTTP_REFERER'];
-	if(Token::TOKECHECK_EXTERNSUBMIT == $token_result){
+	if(Token::TOKECHECK_EXTERNSUBMIT == $token_result) {
 		$info = '禁止从外部网站提交数据，请检查...';
-		headers($referer,'error_e',$info);
-	} elseif(Token::TOKECHECK_DUPLICATESUBMIT == $token_result){
+		errors($info);
+	} elseif(Token::TOKECHECK_DUPLICATESUBMIT == $token_result) {
 		$info = '请不要重复提交，请检查...';
-		headers($referer,'error_e',$info);
+		errors($info);
 	}
-	return $info;
 }
 /**
  * 验证数据是否为空，并提示
- * @param array $arr 需要验证的数据
- * @param int 	$id
- * @param string $firstUrl  用户新建表单返回地址
- * @param string $secondURl 用户修改表单返回地址
+ * @param array  $arr 	需要验证的数据
+ * @param string $sInfo	提示信息
  */
-function checkEmpty($arr,$id,$firstUrl='',$secondURl='',$info='数据为空') {
+function checkEmpty($arr,$sInfo='数据为空') {
 	if(!empty($arr)) {
 		$res = 0;
 		for($i=0;$i<=count($arr)-1;$i++) {
@@ -110,12 +119,34 @@ function checkEmpty($arr,$id,$firstUrl='',$secondURl='',$info='数据为空') {
 		$res = 1;
 	}
 	if($res>0) {
-		if(empty($id)) {
-			headers(site_url($firstUrl),'error_e',$info);
-		} else {
-			headers(site_url($secondURl.$id.''),'error_e',$info);
-		}
+		errors($sInfo);
 	}
+}
+/**
+ * 验证密码
+ */
+function checkPass($val1,$val2) {
+	if(empty($val1) || empty($val2)) {
+		errors('密码字段为空');
+	}
+	if($val1 !== $val2) {
+		errors('两次密码不一致');
+	}
+}
+/**
+ * 跳转到错误页
+ */
+function errors($sInfo) {
+	$sInfo = urlencode($sInfo);
+	header("Location:".site_url('show/error/'.$sInfo));
+	exit;
+}
+/**
+ * 跳转成功
+ */
+function succes($sUrl) {
+	header("Location:".$sUrl);
+	exit;
 }
 /**
  * 获取用户信息
@@ -284,8 +315,8 @@ function addHttpd($str) {
 /**
  * 过滤用户输入的数据
  */
-function sg($str,$fit='') {
-	if(!is_array($str)) {
+function sg(&$str,$fit='') {
+	if(!is_array($str) && !empty($str)) {
 		$str = trim($str);
 		$str = addslashes($str);
 	}
@@ -294,14 +325,42 @@ function sg($str,$fit='') {
 /**
  * 截取函数
  */
-function cutStr($str,$length,$dot = '...') {
-	$len = mb_strlen($str,'utf8');
-	$str = mb_substr($str,0,$length,'UTF-8');
-	if($len>$length) {
-		return $str.$dot;
+function cutStr($string,$length,$dot='…') {
+	$len = mb_strlen($string,'utf8');
+	$string = mb_substr($string,0,$length,'UTF-8');
+	if($len > $length) {
+		return $string.$dot;
 	} else {
-		return $str;
+		return $string;
 	}
+}
+/**
+ * 简单截取+过滤
+ * 去掉img标签并截取
+ */
+function cutShes($string,$length) {
+	$string = preg_replace("/<img.*?>/si","",$string);
+	return cutStr($string,$length);
+}
+/**
+ * 字符串切割
+ *
+ * 功能：截取字符串（支持中文），如果字符串中包括html标签，截取的字符串则会保留完整的html标签
+ * 如果截取的字符串中包含不完整的html标签，则从字符串位置0开始截取到html标签前
+ *
+ * @param string $string
+ * @param unknown $length
+ * @param string $replace
+ * @return string
+ */
+function cutTab($string, $length, $replace = '…') {
+	$_lenth = mb_strlen($string, "utf-8"); //统计字符串长度（中、英文都算一个字符）
+	if($_lenth <= $length) {
+		return $string;    // 传入的字符串长度小于截取长度，原样返回
+	}
+	
+	
+	
 }
 /**
  * 获取数据总条数（用户分页）
@@ -389,24 +448,6 @@ function getNotice() {
 	return $list;
 }
 /**
- * 简单截取+过滤
- */
-function cutShes($str,$length) {
-	$str = preg_replace("/<img.*?>/si","",$str);
-	return cutStr($str,$length);
-}
-/**
- * 验证密码
- */
-function checkPass($val1,$val2) {
-	if(empty($val1) || empty($val2)) {
-		return '1';//数据为空
-	}
-	if($val1 !== $val2) {
-		return '2';//两次密码不一致
-	}
-}
-/**
  * 时间转换函数
  */
 function timeTran($sTime) {
@@ -438,14 +479,6 @@ function timeTran($sTime) {
 }
 
 
-
-/**
- * 页面跳转
- */
-function headers($sUrl,$act,$info) {
-	header("Location:".$sUrl."?".$act."=1&i=".$info);
-	exit;
-}
 /**
  * 文件上传函数
  * @param array  $upfile 	上传文件信息： 如：$_FILES['filename']

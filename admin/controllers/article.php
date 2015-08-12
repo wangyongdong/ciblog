@@ -15,15 +15,29 @@ class Article extends MY_Controller {
 	 * 文章列表页
 	 */
 	public function index() {
+		$data['aFilter']['keyword'] = sg($this->input->get('s'));
+		$data['aFilter']['sort'] = sg($this->input->get('sort'));
+		$data['aFilter']['author'] = sg($this->input->get('author'));
+		
 		$data['sort'] = $this->sort_model->getSortList();
 		$data['member'] = $this->member_model->getMemberList();
 		
 		//分页执行
 		$pageId = $this->input->get('page');
-		$arr = $this->public_model->getPage("article",'article/index?',$pageId);
+		$sFilter = '';
+		if(!empty($data['aFilter']['keyword'])) {
+			$sFilter = ' AND title LIKE"%'.$data['aFilter']['keyword'].'%" ';
+		}
+		if(!empty($data['aFilter']['sort'])) {
+			$sFilter = ' AND sortid = '.$data['aFilter']['sort'];
+		}
+		if(!empty($data['aFilter']['author'])) {
+			$sFilter = ' AND uid = '.$data['aFilter']['author'];
+		}
+		$arr = $this->public_model->getPage("article",'article?',$pageId,$sFilter);
 		
 		//执行查询
-		$data['list'] = $this->article_model->getArticleList($arr['start'],$arr['pagenum']);
+		$data['list'] = $this->article_model->getArticleList($arr['start'],$arr['pagenum'],$data['aFilter']);
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_list',$data);
@@ -76,17 +90,15 @@ class Article extends MY_Controller {
 		$data['img'] = '';								//配图
 		$data['topway'] = sg($_POST['topway']);			//置顶方式
 		$data['status'] = sg($_POST['status']);			//显示状态
+		
+		//数据验证
+		$arr = array($data['title'],$data['content']);
+		checkEmpty($arr);
 		//token验证
-		//checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);
 		
-		//输入数据验证
-		//$arr = array($data['uid'],$data['title'],$data['content']);
-		//checkEmpty($arr,$data['id'],'article/anew','article/update/');
-		
-		$affect = $this->article_model->doArticle($data);
-		if($affect) {
-			//headers(site_url('article/alist'),'active_s','文章操作成功');
-		}
+		$this->article_model->doArticle($data);
+		succes(site_url('article'));
 	}
 	
 	/**

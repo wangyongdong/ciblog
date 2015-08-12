@@ -1,6 +1,5 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-	<!-- Page heading -->
     <div class="page-head">
       	<h2 class="pull-left"><i class="icon-home"></i> 文章分类</h2>
     	<div class="bread-crumb pull-right">
@@ -10,8 +9,6 @@
     	</div>
     	<div class="clearfix"></div>
     </div>
-    <!-- Page heading ends -->
-	<!-- Matter -->
 	<div class="matter">
 		<div class="container">
 			<div class="row">
@@ -81,7 +78,7 @@
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 								<h4 class="modal-title"> &nbsp;</h4>
 							</div>
-							<form class="form-horizontal" method="post" action="<?=site_url('sort/doSort')?>">
+							<form class="form-horizontal" method="post" action="<?=site_url('sort/doSort')?>" onsubmit="return checkPopS()">
 								<div class="modal-body">
 			          				<div class="padd">
 				                    	<div class="form quick-post">
@@ -117,7 +114,7 @@
 				</div>
           	</div>
         </div>
-	</div><!-- Matter ends -->
+	</div>
 </div>
 <!-- Mainbar ends -->
 <div class="clearfix"></div>

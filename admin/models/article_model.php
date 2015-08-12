@@ -10,15 +10,25 @@ class Article_model extends CI_Model {
     /**
      * 获取文章列表
      */
-    function getArticleList($iStart=0,$iPageNum=10) {
+    function getArticleList($iStart=0,$iPageNum=10,$aFilter='') {
     	$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
     	$sql = 'SELECT
     				*
     			FROM
     				blog_article
-    			ORDER BY
-    				id DESC
-    			'.$sLimit;
+    			WHERE
+    				1 = 1 ';
+    	if(!empty($aFilter['keyword'])) {
+    		$sql .= ' AND title LIKE"%'.$aFilter['keyword'].'%"';
+    	}
+    	if(!empty($aFilter['sort'])) {
+    		$sql .= ' AND sortid = '.$aFilter['sort'];
+    	}
+    	if(!empty($aFilter['author'])) {
+    		$sql .= ' AND uid = '.$aFilter['author'];
+    	}
+    	$sql .= ' ORDER BY
+    				id DESC '.$sLimit;
     	$res = $this->db->query($sql);
     	$aList = $res->result_array();
     	return $aList;

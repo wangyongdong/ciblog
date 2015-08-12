@@ -1,7 +1,6 @@
 <!-- Main bar -->
 <div class="mainbar">  
-	<!-- Page heading -->
-	<div class="page-head">
+	<div class="page-head" style="margin-top:0px;">
 		<h2 class="pull-left"><i class="icon-home"></i> 编辑文章</h2>
 		<div class="bread-crumb pull-right">
 			<a href="/admin"><i class="icon-home"></i> 首页</a> 
@@ -10,8 +9,6 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	<!-- Page heading ends -->
-	<!-- Matter -->
 	<div class="matter">
 		<div class="container">
 			<div class="col-md-12">
@@ -27,7 +24,7 @@
         			<div class="widget-content">
           				<div class="padd">
               				<div class="form quick-post">
-                              	<form class="form-horizontal" method="post" action="<?=site_url('article/doArticle')?>">
+                              	<form class="form-horizontal" method="post" action="<?=site_url('article/doArticle')?>" onsubmit="return checkFormA()">
                                   	<input type="hidden" name="id" value="<?=$list['id']?>" >
 									<input type="hidden" name="token" value="<?=$token?>" >
                                   	<div class="form-group">
@@ -103,15 +100,12 @@
                               	</form>
                             </div>
           				</div>
-						<div class="widget-foot">
-		                    <!-- Footer goes here -->
-		                </div>
+						<div class="widget-foot"></div>
         			</div>
       			</div> 
     		</div>
 		</div>
 	</div>
-	<!-- Matter ends -->
 </div>
 <!-- Mainbar ends -->
 <div class="clearfix"></div>

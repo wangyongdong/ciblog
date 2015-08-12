@@ -9,8 +9,6 @@
     	</div>
     	<div class="clearfix"></div>
     </div>
-    <!-- Page heading ends -->
-    <!-- Matter -->
     <div class="matter">
     	<div class="container">
       		<div class="col-md-12" id="list-box">
@@ -26,14 +24,22 @@
     				<div class="widget-content medias">
     					<div class="widget-head">
 	                      	<div class="uni pull-left">
-								<a class="btn btn-default" href="#">
+								<a class="btn btn-default" href="<?=site_url('contact')?>">
 									<i class="icon-ok-sign"></i>查看全部
 								</a>
 	                      	</div>
 	                        <div class="widget-icons pull-right">
 	                    		<div class="form-group">
-									<input class="form-control search" type="text" placeholder="用户名、文章ID">
+	                    			<input class="form-control search" type="text" placeholder="用户名、文章ID" name="keyword" id="s_keyword" value="<?=$aFilter['keyword']?>">
+									<a class="search-btn" href="javascript:void(0)" onclick="searchF('<?=site_url('comment')?>');"><i class="icon-search"></i></a>
 								</div>
+								<script>
+								//搜索表单提交
+								function searchF(url) {
+									var keyword = $("#s_keyword").val();
+									window.location = url+'?s='+keyword;
+								}
+								</script>
 	                  		</div>
 	                      <div class="clearfix"></div>
 						</div>
@@ -41,9 +47,7 @@
 	                    	<thead>
 	                        	<tr>
 	                          		<th>
-	                            		<span class="uni">
-	                              			<input type='checkbox' id="checkall" />
-	                            		</span>
+	                            		<span class="uni"><input type='checkbox' id="checkall" /></span>
 	                          		</th>
 									<th>ID</th>
 									<th>父ID</th>
@@ -80,7 +84,7 @@
 														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 														<h4 class="modal-title"> &nbsp;</h4>
 													</div>
-													<form class="form-horizontal" method="post" action="<?=site_url('comment/doReply')?>">
+													<form class="form-horizontal" method="post" action="<?=site_url('comment/doReply')?>" onsubmit="return checkPopC(<?=$list['id']?>)">
 														<div class="modal-body">
 									          				<div class="padd">
 									              				<div class="form quick-post">
@@ -88,9 +92,9 @@
 								                              		<input type="hidden" name="reply_id" value="<?=$list['id']?>" >
 																	<input type="hidden" name="token" value="<?=$token?>" >
 								                                  	<div class="form-group">
-								                                    	<label class="control-label col-lg-3" for="content">回复内容</label>
+								                                    	<label class="control-label col-lg-3" for="content<?=$list['id']?>">回复内容</label>
 								                                    	<div class="col-lg-9">
-								                                      		<textarea class="form-control" id="content" name="content"></textarea>
+								                                      		<textarea class="form-control" id="content<?=$list['id']?>" name="content"></textarea>
 								                                    	</div>
 								                                  	</div>
 									                            </div>
@@ -134,7 +138,7 @@
 				<div class="z-cover"></div>
 			</div>
 		</div>
-	</div><!-- Matter ends -->
+	</div>
 </div>
 <!-- Mainbar ends -->
 <div class="clearfix"></div>

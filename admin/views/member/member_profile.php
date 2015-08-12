@@ -1,7 +1,6 @@
 <!-- Main bar -->
 <div class="mainbar">  
-	<!-- Page heading -->
-	<div class="page-head">
+	<div class="page-head" style="margin-top:0px;">
 		<h2 class="pull-left"><i class="icon-home"></i> 个人资料</h2>
         <div class="bread-crumb pull-right">
 	    	<a href="/admin"><i class="icon-home"></i> 首页</a> 
@@ -10,8 +9,6 @@
         </div>
 		<div class="clearfix"></div>
 	</div>
-	<!-- Page heading ends -->
-    <!-- Matter -->
 	<div class="matter">
 		<div class="container">
 			<div class="col-md-7">
@@ -61,11 +58,14 @@
                 	<div class="widget-content">
                   		<div class="padd">
                       		<div class="form quick-post">
-								<form class="form-horizontal">
+								<form class="form-horizontal" method="post" action="<?=site_url('member/doProfile')?>">
+                                	<input type="hidden" name="id" value="<?=$list['id']?>">
+									<input type="hidden" name="token" value="<?=$token?>">
+									<input type="hidden" name="type" value="about">
                                     <div class="form-group">
 		                            	<label class="control-label col-lg-3" for="content">关于我</label>
 		                                <div class="col-lg-9">
-		                                	<textarea class="form-control" id="content" name="content"></textarea>
+		                                	<textarea class="form-control" id="content" name="content"><?=$list['about_me']?></textarea>
 										</div>
 		                            </div>
 									<div class="form-group">
@@ -95,16 +95,16 @@
                 	<div class="widget-content">
                   		<div class="padd">
                     		<div class="form quick-post">
-                            	<form class="form-horizontal" method="post" action="<?=site_url('member/doUser')?>">
+                            	<form class="form-horizontal" method="post" action="<?=site_url('member/doProfile')?>" onsubmit="return checkFormM()">
 									<input type="hidden" name="id" value="<?=$list['id']?>">
 									<input type="hidden" name="token" value="<?=$token?>">
+									<input type="hidden" name="type" value="data">
                                 	<div class="form-group">
                                     	<label class="control-label col-lg-3" for="name">用户名</label>
                                         <div class="col-lg-9">
                                         	<input type="text" class="form-control" id="name" name="name" value="<?=$list['username']?>">
 										</div>
 									</div>
-									
 									<div class="form-group">
                                     	<label class="control-label col-lg-3" for="email">邮箱</label>
                                         <div class="col-lg-9"> 
@@ -170,7 +170,10 @@
                 	<div class="widget-content">
                   		<div class="padd">
                       		<div class="form quick-post">
-                            	<form class="form-horizontal">
+                            	<form class="form-horizontal" method="post" action="<?=site_url('member/doProfile')?>">
+                                	<input type="hidden" name="id" value="<?=$list['id']?>">
+									<input type="hidden" name="token" value="<?=$token?>">
+									<input type="hidden" name="type" value="pass">
                                 	<div class="form-group">
 										<label class="col-lg-4 control-label">密码</label>
 										<div class="col-lg-8">
@@ -191,16 +194,12 @@
 								</form>
 							</div>
                   		</div>
-						<div class="widget-foot">
-				        	<!-- Footer goes here -->
-				        </div>
+						<div class="widget-foot"></div>
                 	</div>
               	</div> 
             </div>
-			
 		</div>
 	</div>
-	<!-- Matter ends -->
 </div>
 <!-- Mainbar ends -->
 <div class="clearfix"></div>

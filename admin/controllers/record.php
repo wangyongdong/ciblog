@@ -18,7 +18,7 @@ class Record extends MY_Controller {
 		//分页执行
 		$pageId = $this->input->get('page');
 		$sFilter = ' AND reply_id=0 ';
-		$arr = $this->public_model->getPage("record",'record/index?',$pageId,$sFilter);
+		$arr = $this->public_model->getPage("record",'record?',$pageId,$sFilter);
 		//执行查询
 		$data['list'] = $this->record_model->getRecordList($arr['start'],$arr['pagenum']);
 		
@@ -35,12 +35,12 @@ class Record extends MY_Controller {
 		$data['uid'] = 1;
 		$data['content'] = sg($_POST['content']);
 		$data['datetime'] = date("Y-m-d H:i:s",time());
-		//输入数据验证
-		//$arr = array($data['uid'],$data['content']);
-		//checkEmpty($arr,'','record/rnew','record/rnew/');
+		//数据验证
+		$arr = array($data['uid'],$data['content']);
+		checkEmpty($arr);
 		$affect = $this->record_model->doRecord($data);
 		if($affect) {
-			//header("Location:".$_SERVER["HTTP_REFERER"]);
+			succes(site_url('record'));
 		}
 	}
 	

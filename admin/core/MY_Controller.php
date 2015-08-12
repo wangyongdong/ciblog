@@ -9,9 +9,8 @@ class MY_Controller extends CI_Controller {
 		parent::__construct();
 		
 		//$this->checkLogin();
-		$this->loadAccess();
+		$this->CheckAccess();
 		$this->loadModel();
-		$this->loadView();
 	}
 	//登陆验证
 	private function checkLogin(){
@@ -23,32 +22,24 @@ class MY_Controller extends CI_Controller {
 		}
 	}
 	//权限验证
-	private function loadAccess() {
+	private function CheckAccess() {
 		/* //权限验证
 		$cname = $this->uri->segment(1);
 		//echo $cname;
 		$this->load->library('access');
 		$this->access->checkAccess($cname); */
 	}
-	//加载页面
-	private function loadView() {
-		//$this->load->view('public/header.php');
-		//$this->load->view('public/footer.php');
-	}
 	//实例化model
-	private function loadModel(){
+	private function loadModel() {
+		$this->load->model('record_model');
 		$this->load->model('article_model');
-		$this->load->model('comment_model');
 		$this->load->model('sort_model');
-		$this->load->model('public_model');
-		$this->load->model('member_model');
 		$this->load->model('comment_model');
 		$this->load->model('contact_model');
-		$this->load->model('site_model');
-		$this->load->model('record_model');
-		$this->load->model('works_model');
 		$this->load->model('links_model');
+		$this->load->model('member_model');
+		$this->load->model('site_model');
+		$this->load->model('public_model');
 		$this->load->model('login_model');
-		$this->load->model('setting_model');
 	}
 }

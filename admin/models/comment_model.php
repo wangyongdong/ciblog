@@ -8,13 +8,22 @@ class Comment_model extends CI_Model {
     /**
      * 获取评论
      */
-    function getComment($iStart=0,$iPageNum=10) {
+    function getComment($iStart=0,$iPageNum=10,$aFilter='') {
     	$sLimit = ' LIMIT '.$iStart.','.$iPageNum;
     	$sql = 'SELECT
     				*
     			FROM
     				blog_comment
-    			ORDER BY
+    			WHERE
+    				1=1 ';
+    	if(!empty($aFilter['keyword'])) {
+    		if(is_numeric($aFilter['keyword'])) {
+    			$sql .= ' AND comment_id = '.$aFilter['keyword'];
+    		} else {
+    			$sql .= ' AND author LIKE"%'.$aFilter['keyword'].'%"';
+    		}
+    	}
+    	$sql .= ' ORDER BY
     				id DESC '.$sLimit;
     	$res = $this->db->query($sql);
     	$list = $res->result_array();

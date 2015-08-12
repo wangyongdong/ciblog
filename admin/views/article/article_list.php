@@ -29,13 +29,13 @@
                 			<div class="widget-head">
 				            	<div class="uni pull-left">
 									<a href="<?=site_url('article')?>">全部</a>
-									<select name="bysort" onchange="searchSort(this.value);">
+									<select name="bysort" onchange="searchSort(this.value,'<?=site_url('article')?>');">
 				                    	<option value=''>按分类查看</option>
 				                    	<?php foreach($sort as $slist):?>
 				                    	<option value="<?=$slist['id']?>"><?=$slist['name']?></option>
 				                    	<?php endforeach;?>
 									</select> | 
-									<select name="byuser" onchange="searchUser(this.value);">
+									<select name="byuser" onchange="searchUser(this.value,'<?=site_url('article')?>');">
 				                        <option value=''>按作者查看</option>
 				                        <?php foreach($member as $member):?>
 				                    	<option value="<?=$member['id']?>"><?=$member['username']?></option>
@@ -44,7 +44,8 @@
 								</div>
 				                <div class="widget-icons pull-right">
 				                	<div class="form-group">
-										<input class="form-control search" type="text" placeholder="Search">
+				                		<input class="form-control search" type="text" placeholder="Search" name="keyword" id="s_keyword" value="<?=$aFilter['keyword']?>">
+										<a class="search-btn" href="javascript:void(0)" onclick="searchF('<?=site_url('article')?>');"><i class="icon-search"></i></a>
 									</div>
 				                </div>
 								<div class="clearfix"></div>

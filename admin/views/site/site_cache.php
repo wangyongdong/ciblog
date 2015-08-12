@@ -1,6 +1,5 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-	<!-- Page heading -->
 	<div class="page-head">
 		<h2 class="pull-left"><i class="icon-home"></i> 缓存更新</h2>
 		<div class="bread-crumb pull-right">
@@ -10,7 +9,6 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	<!-- Page heading ends -->
 	<div class="matter">
 		<div class="container">
 			<div class="row">
@@ -158,8 +156,6 @@
 						</div>
 					</div>
 				</div>
-				
-				
 				<hr />
 			</div>
 		</div>

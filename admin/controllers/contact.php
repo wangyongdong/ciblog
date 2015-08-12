@@ -14,11 +14,13 @@ class Contact extends MY_Controller {
 	 * 获取留言列表
 	 */
 	public function index() {
+		$data['aFilter']['keyword'] = sg($this->input->get('s'));
 		//分页执行
 		$pageId = $this->input->get('page');
-		$arr = $this->public_model->getPage("contact",'contact/index?',$pageId);
+		$sFilter = ' AND author LIKE"%'.$data['aFilter']['keyword'].'%"';
+		$arr = $this->public_model->getPage("contact",'contact?',$pageId,$sFilter);
 		//留言信息
-		$data['list'] = $this->contact_model->getContact('contact',$arr['start'],$arr['pagenum']);
+		$data['list'] = $this->contact_model->getContact('contact',$arr['start'],$arr['pagenum'],$data['aFilter']);
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
@@ -54,14 +56,15 @@ class Contact extends MY_Controller {
 		$data['url'] = sg($_POST['url']);			//url
 		$data['content'] = sg($_POST['content']);	//内容
 		$data['status'] = sg($_POST['status']);		//状态
+		
 		//数据验证
+		$arr = array($data['content']);
+		checkEmpty($arr);
 		//token验证
 		checkToken($_POST['token'],$this->tokentype);
 		
-		$affect = $this->contact_model->doContact($data);
-		if($affect) {
-			//headers(site_url($successHref),'active_s','文章操作成功');
-		}
+		$this->contact_model->doContact($data);
+		succes(site_url('contact'));
 	}
 	/**
 	 * 添加回复
@@ -81,14 +84,13 @@ class Contact extends MY_Controller {
 		$data['datetime'] = date("Y-m-d H:i:s",time());
 		
 		//数据验证
+		$arr = array($data['author'],$data['content']);
+		checkEmpty($arr);
 		//token验证
 		checkToken($_POST['token'],$this->tokentype);
 	
-		$affect = $this->contact_model->doReply($data);
-		if($affect) {
-			//headers(site_url($successHref),'active_s','文章操作成功');
-		}
-	
+		$this->contact_model->doReply($data);
+		succes(site_url('contact'));
 	}
 	/**
 	 * 删除操作
