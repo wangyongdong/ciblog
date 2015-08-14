@@ -67,7 +67,6 @@
                                   	<div class="form-group">
 									 	<div class="col-lg-offset-2 col-lg-9">
 									 		<button type="submit" class="btn btn-primary">保存</button>
-									 		<button type="submit" class="btn btn-warning">回复</button>
 											<button type="reset" class="btn btn-default" onclick="javascript:window.history.back();">取消</button>
 									 	</div>
                                   	</div>

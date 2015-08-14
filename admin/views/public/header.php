@@ -29,7 +29,7 @@
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/style.css">
 		<!-- Widgets stylesheet -->
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/widgets.css">   
-		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/blog.css">   
+		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/blog.css">
 		<!-- HTML5 Support for IE -->
 		<!--[if lt IE 9]>
 		<script src="<?=ADMIN_PUBLIC?>js/html5shim.js"></script>
@@ -72,12 +72,12 @@
 	        	<ul class="nav navbar-nav pull-right">
 	          		<li class="dropdown pull-right">            
 	            		<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-							<img alt="" src="<?=ADMIN_PUBLIC?>img/avatar_small.jpg">管理员 <b class="caret"></b>
+							<img alt="" src="<?=ADMIN_PUBLIC?>img/avatar_small.jpg"><?=getRole(UserId(),'name');?> <b class="caret"></b>
 	            		</a>
 	            		<ul class="dropdown-menu">
 			              	<li><a href="<?=site_url('member/profile')?>"><i class="icon-user"></i> 资料</a></li>
 			              	<li><a href="#"><i class="icon-cogs"></i> 设置</a></li>
-			              	<li><a href="login.html"><i class="icon-off"></i> 退出</a></li>
+			              	<li><a href="<?=site_url('login/loginOut')?>"><i class="icon-off"></i> 退出</a></li>
 	            		</ul>
 	          		</li>
 	        	</ul>
@@ -201,34 +201,106 @@
 	          	<li>
 	          		<a href="/admin" class="open"><i class="icon-home"></i> 首页</a>
 				</li>
+				<?php 
+				if(roleMenu('record','select')) {
+				?>
 	          	<li>
 	          		<a href="<?=site_url('record')?>"><i class="icon-bullhorn"></i> 碎言碎语 </a>
 	          	</li>
+	          	<?php 
+	          	}
+	          	?>
+	          	<?php 
+	          	if(roleMenu('article','select') || roleMenu('article','update') || roleMenu('sort','select')) {
+	          	?>
 	          	<li class="has_sub">
 	          		<a href="#"><i class="icon-file-alt"></i> 学无止境 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
+		            	<?php 
+						if(roleMenu('article','update')) {
+						?>
 		              	<li><a href="<?=site_url('article/create')?>">发布文章</a></li>
+		              	<?php 
+		              	}
+		              	if(roleMenu('article','select')) {
+		              	?>
 		              	<li><a href="<?=site_url('article')?>">文章列表</a></li>
+		              	<?php 
+		              	}
+		              	if(roleMenu('sort','select')) {
+		              	?>
 		              	<li><a href="<?=site_url('sort')?>">文章分类</a></li>
+		              	<?php 
+		              	}
+		              	?>
 		            </ul>
 	          	</li>
+	          	<?php 
+	          	}
+	          	?>
+	          	<?php 
+	          	if(roleMenu('comment','select') || roleMenu('contact','select')) {
+	          	?>
 	          	<li class="has_sub">
 	          		<a href="#"><i class="icon-comment"></i> 评论留言 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
+		            	<?php 
+						if(roleMenu('comment','select')) {
+						?>
 		              	<li><a href="<?=site_url('comment')?>">文章评论</a></li>
+		              	<?php 
+		              	}
+		              	if(roleMenu('contact','select')) {
+		              	?>
 		              	<li><a href="<?=site_url('contact')?>">用户留言</a></li>
+		              	<?php 
+		              	}
+		              	?>
 		            </ul>
 	          	</li>
+	          	<?php 
+	          	}
+	          	?>
+	          	<?php 
+				if(roleMenu('links','select')) {
+				?>
 				<li>
 	          		<a href="<?=site_url('links')?>"><i class="icon-link"></i> 友情链接 </a>
 	          	</li>
+	          	<?php 
+	          	}
+	          	?>
+	          	<?php 
+				if(roleMenu('member','select')) {
+				?>
 				<li class="has_sub">
 	          		<a href="#"><i class="icon-user"></i> 用户管理 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
+		            	<?php 
+						if(roleMenu('member','update')) {
+						?>
 		              	<li><a href="<?=site_url('member/create')?>">添加用户</a></li>
+		              	<?php 
+		              	}
+		              	if(roleMenu('member','select')) {
+		              	?>
 		              	<li><a href="<?=site_url('member')?>">用户列表</a></li>
+		              	<?php 
+		              	}
+		              	if(roleMenu('member','update')) {
+		              	?>
+		              	<li><a href="<?=site_url('member/role')?>">用户角色</a></li>
+		              	<?php 
+		              	}
+		              	?>
 		            </ul>
 	          	</li>
+	          	<?php 
+	          	}
+	          	?>
+	          	<?php 
+				if(roleMenu('site','select')) {
+				?>
 				<li class="has_sub">
 	          		<a href="#"><i class="icon-cogs"></i> 控制中心 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
@@ -237,9 +309,12 @@
 		              	<li><a href="<?=site_url('site/templet')?>">模板设置</a></li>
 						<li><a href="<?=site_url('site/statistic')?>">信息统计</a></li>
 						<li><a href="<?=site_url('site/backup')?>">数据备份</a></li>
-						<li><a href="<?=site_url('site/error')?>">错误日志</a></li>
+						<li><a href="<?=site_url('site/action')?>">操作日志</a></li>
 		              	<li><a href="<?=site_url('site/cache')?>">更新缓存</a></li>
 		            </ul>
 	          	</li>
+	          	<?php 
+	          	}
+	          	?>
 	        </ul>
 		</div>

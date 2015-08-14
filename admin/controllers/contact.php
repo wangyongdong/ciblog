@@ -74,11 +74,10 @@ class Contact extends MY_Controller {
 		if(!empty($_POST['id'])) {
 			$data['id'] = sg($_POST['id']);
 		}
-		$data['reply_id'] = sg($_POST['reply_id']);				//回复id
-		$data['userid'] = 1;									//userid
-		//$data['author'] = getUser($_SESSION['uid'],'username');	//用户名
-		$data['author'] = '王永东';	//用户名
-		$data['content'] = sg($_POST['content']);				//内容
+		$data['reply_id'] = sg($_POST['reply_id']);		//回复id
+		$data['userid'] = UserId();						//userid
+		$data['author'] = UserName();					//用户名
+		$data['content'] = sg($_POST['content']);		//内容
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
 		$data['datetime'] = date("Y-m-d H:i:s",time());

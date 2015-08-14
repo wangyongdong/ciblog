@@ -166,9 +166,38 @@ class Site extends MY_Controller {
 	/**
 	 * 错误日志
 	 */
-	public function error() {
-		$data['data'] = 1;
+	public function action() {
+		$data['aFilter']['start'] = sg($this->input->get('start'));
+		$data['aFilter']['end'] = sg($this->input->get('end'));
+		
+		//分页执行
+		$pageId = $this->input->get('page');
+		$sFilter = '';
+		if(!empty($data['aFilter']['start'])) {
+			$sFilter = ' AND datetime > '.$data['aFilter']['start'];
+		}
+		if(!empty($data['aFilter']['end'])) {
+			$sFilter = ' AND datetime < '.$data['aFilter']['end'];
+		}
+		$arr = $this->public_model->getPage("action_log",'action_log?',$pageId,$sFilter);
+		//执行查询
+		$data['list'] = $this->site_model->getAction($arr['start'],$arr['pagenum']);
+		
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_log_action',$data);
+		$this->load->view('public/footer',$data);
+	}
 	
+	/**
+	 * 错误日志
+	 */
+	public function error() {
+		//分页执行
+		$pageId = $this->input->get('page');
+		$arr = $this->public_model->getPage("action_log",'action_log?',$pageId);
+		//执行查询
+		$data['list'] = $this->site_model->getAction($arr['start'],$arr['pagenum']);
+		var_dump($data['list']);
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_log_error',$data);
 		$this->load->view('public/footer',$data);

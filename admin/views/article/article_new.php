@@ -25,6 +25,7 @@
           				<div class="padd">
               				<div class="form quick-post">
                               	<form class="form-horizontal" method="post" action="<?=site_url('article/doArticle')?>" onsubmit="return checkFormA()">
+                              		<input type="hidden" name="token" value="<?=$token?>">
                                   	<div class="form-group">
                                     	<label class="control-label col-lg-3" for="title">标题</label>
                                     	<div class="col-lg-9"> 

@@ -2,8 +2,8 @@
 
 class Public_model extends CI_Model  {
     function __construct() {
-        parent::__construct();		//构造函数里面要调用父类的构造方法
-        $this->load->database();	//加载数据库,数据库名称在Config文件里面配置。
+        parent::__construct();
+        $this->load->database();
     }
     
     /**
@@ -28,4 +28,20 @@ class Public_model extends CI_Model  {
     	return $arr;
     }
     
+	/**
+	 * 添加操作log
+	 */
+	public function addActionLog($sAction,$sFunction) {
+		$data = array();
+		$data['userid'] = UserId();
+		$data['action'] = $sAction;
+		$data['function'] = $sFunction;
+		$data['ip'] = $this->input->ip_address();
+		$data['useragent'] = $this->input->user_agent();
+		$data['datetime'] = date("Y-m-d H:i:s",time());
+		
+		$this->db->insert('action_log',$data);
+		$iInsert = $this->db->insert_id();
+		return $iInsert;
+	}
 }

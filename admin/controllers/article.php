@@ -82,7 +82,7 @@ class Article extends MY_Controller {
 		} else {
 			$data['datetime'] = date("Y-m-d H:i:s",time());
 		}
-		$data['uid'] = 1;								//用户id
+		$data['uid'] = UserId();						//用户id
 		$data['title'] = sg($_POST['title']);			//标题
 		$data['content'] = sg($_POST['content']);		//内容
 		$data['keyword'] = sg($_POST['keyword']);		//关键词

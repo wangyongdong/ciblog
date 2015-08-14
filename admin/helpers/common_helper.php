@@ -180,7 +180,7 @@ function beName($iUser) {
  * 获取登录用户ID
  */
 function UserId() {
-	return $_SESSION['uid'] ? $_SESSION['uid'] : '1';
+	return sg($_SESSION['uid'],1);
 }
 /**
  * 获取登录用户名
@@ -192,38 +192,58 @@ function UserName() {
 /**
  * 获取用户权限状态
  */
-function getRole($id,$type='list') {
-	if(empty($id)) {
+function getRole($iRole,$sField='list') {
+	if(empty($iRole)) {
 		return;
 	}
-	if($type == 'list') {
-		$sql = 'SELECT * FROM blog_role WHERE id='.$id;
+	if($sField == 'list') {
+		$sql = 'SELECT * FROM blog_role WHERE id='.$iRole;
 	} else {
-		$sql = 'SELECT '.$type.' FROM blog_role WHERE id='.$id;
+		$sql = 'SELECT '.$sField.' FROM blog_role WHERE id='.$iRole;
 	}
 	$db = DB('default');
 	$res = $db->query($sql);
 	$list = $res->row_array();
-	if($type == "list") {
+	if($sField == "list") {
 		return $list;
 	} else {
-		return $list[$type];
+		return $list[$sField];
 	}
 }
 /**
- * 获取权限名
+ * 判断权限是否显示menu
+ * @param string $sPass
+ * @param string $sUnique
+ * @return string
  */
-function roleName($name) {
-	switch ($name) {
-		case 'admin':
-			$str = "管理员";break;
-		case 'super':
-			$str = "超级管理员";break;
-		case 'ban':
-			$str = "禁止用户";break;
-		default: $str = "普通用户";
+function roleMenu($sAction,$sModel) {
+	$CI =& get_instance();
+	$CI->load->library('access');
+	$result = $CI->access->getAccessMenu($sAction,$sModel);
+	if(!$result) {
+		return false;
+	} else {
+		return true;
 	}
-	return $str;
+}
+/**
+ * 获取登录信息
+ */
+function getLogin($sField='') {
+	$iUser = UserId();
+	if(empty($sField)) {
+		$sql = 'SELECT * FROM blog_login_log WHERE userid='.$iUser.' ORDER BY datetime DESC ';
+	}else {
+		$sql = 'SELECT '.$sField.' FROM blog_login_log WHERE userid='.$iUser.' ORDER BY datetime DESC ';
+	}
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	if(empty($sField)) {
+		return $list;
+	} else {
+		return $list[$sField];
+	}
 }
 /**
  * 根据用户id获取用户所发文章数量
@@ -343,23 +363,50 @@ function cutShes($string,$length) {
 	return cutStr($string,$length);
 }
 /**
- * 字符串切割
+ * 字符串切割+过滤+转换
  *
- * 功能：截取字符串（支持中文），如果字符串中包括html标签，截取的字符串则会保留完整的html标签
- * 如果截取的字符串中包含不完整的html标签，则从字符串位置0开始截取到html标签前
+ * 功能：截取字符串（支持中文）
+ * 如果截取的字符串中不包含html标签，则正常截取
+ * 如果字符串中包括img标签，则先进行过去标签，截取后，将标签位置放回,截取的字符串则会保留完整的html标签
  *
  * @param string $string
  * @param unknown $length
  * @param string $replace
  * @return string
  */
-function cutTab($string, $length, $replace = '…') {
-	$_lenth = mb_strlen($string, "utf-8"); //统计字符串长度（中、英文都算一个字符）
-	if($_lenth <= $length) {
-		return $string;    // 传入的字符串长度小于截取长度，原样返回
+function cutTab($string, $length='15', $dot = '…') {
+	$_lenth = mb_strlen($string, "utf-8");
+	$text_str = preg_replace("/<img.*?>/si","",$string);
+	$text_lenth = mb_strlen($text_str, "utf-8") - 1;
+	
+	if($text_lenth <= $length) {
+		return stripcslashes($string);
 	}
 	
+	if(strpos($string, '<img') === false){
+		$res = mb_substr($string, 0, $length, 'UTF-8');
+		return stripcslashes($res).$dot;
+	}
 	
+	//计算标签位置
+	$html_start = ceil(strpos($string, '<img') / 3);
+	$html_end = ceil(strpos($string, '/>') / 3);
+	
+	if($length < $html_start) {
+		$res = mb_substr($string, 0, $length, 'UTF-8');
+		return stripcslashes($res).$dot;
+	}
+	
+	if($length > $html_start) {
+		
+		$res_html = mb_substr($text_str, 0, $length-1, 'UTF-8');
+		
+		preg_match('/<img[^>]*\>/',$string,$result_html);
+		$before = mb_substr($res_html, 0, $html_start, 'UTF-8');
+		$after = mb_substr($res_html, $html_start, mb_strlen($res_html, "utf-8"), 'UTF-8');
+		$res = $before.$result_html[0].$after;
+		return stripcslashes($res).$dot;
+	}
 	
 }
 /**

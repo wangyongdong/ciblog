@@ -32,7 +32,7 @@ class Record extends MY_Controller {
 	 */
 	public function doRecord() {
 		$data = array();
-		$data['uid'] = 1;
+		$data['uid'] = UserId();
 		$data['content'] = sg($_POST['content']);
 		$data['datetime'] = date("Y-m-d H:i:s",time());
 		//数据验证

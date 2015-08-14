@@ -8,7 +8,7 @@ class MY_Controller extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		
-		//$this->checkLogin();
+		$this->checkLogin();
 		$this->CheckAccess();
 		$this->loadModel();
 	}
@@ -18,16 +18,15 @@ class MY_Controller extends CI_Controller {
 		$this->load->library('auth');
 		$this->auth->userLoginCheck();
 		if(empty($_SESSION['uid']) && empty($_SESSION['username'])) {
-			header("location:".site_url('login/getLogin'));
+			header("location:".site_url('login'));
 		}
 	}
 	//权限验证
 	private function CheckAccess() {
-		/* //权限验证
-		$cname = $this->uri->segment(1);
-		//echo $cname;
+		$sAname = $this->uri->segment(1);
+		$sFname = $this->uri->segment(2);
 		$this->load->library('access');
-		$this->access->checkAccess($cname); */
+		$this->access->checkAccess($sAname,$sFname);
 	}
 	//实例化model
 	private function loadModel() {
@@ -40,6 +39,5 @@ class MY_Controller extends CI_Controller {
 		$this->load->model('member_model');
 		$this->load->model('site_model');
 		$this->load->model('public_model');
-		$this->load->model('login_model');
 	}
 }

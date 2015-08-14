@@ -33,13 +33,6 @@
 	                    			<input class="form-control search" type="text" placeholder="用户名、文章ID" name="keyword" id="s_keyword" value="<?=$aFilter['keyword']?>">
 									<a class="search-btn" href="javascript:void(0)" onclick="searchF('<?=site_url('comment')?>');"><i class="icon-search"></i></a>
 								</div>
-								<script>
-								//搜索表单提交
-								function searchF(url) {
-									var keyword = $("#s_keyword").val();
-									window.location = url+'?s='+keyword;
-								}
-								</script>
 	                  		</div>
 	                      <div class="clearfix"></div>
 						</div>
@@ -68,7 +61,7 @@
 		                          	</td>
 									<td><?=$list['id']?></td>
               						<td><?=$list['reply_id']?></td>
-              						<td><?=stripcslashes($list['content'])?></td>
+              						<td><?=cutTab($list['content'],20)?></td>
               						<td><?=$list['author']?></td>
               						<td><?=$list['comment_id']?>：<?=getTitle($list['comment_id'])?></td>
               						<td><?=$list['datetime']?></td>
@@ -133,9 +126,6 @@
 						</div>
     				</div>
   				</div>
-			</div>
-			<div id="cover">
-				<div class="z-cover"></div>
 			</div>
 		</div>
 	</div>

@@ -33,26 +33,9 @@ class Site_model extends CI_Model  {
     		$this->db->update('options',$data,array('option_name'=>$key));
     		$affect = $this->db->affected_rows();
     	}
+    	//添加操作log
+    	$this->public_model->addActionLog('site_web','update');
     	return $affect;
-    }
-    /**
-     * 获取网站SEO设置
-     */
-    function getSiteSeo() {
-    	$sql = "SELECT
-    				*
-    			FROM
-    				blog_options
-    			WHERE
-    				id in('22','23','24')";
-    	$res = $this->db->query($sql);
-    	$result = $res->result_array();
-    	foreach ($result as $row) {
-    		$name = $row['option_name'];
-    		$arr[$name] = $row['option_value'];	//已name值做键
-    		$list = $arr;
-    	}
-    	return $list;
     }
     /**
      * 获取menu信息
@@ -82,8 +65,12 @@ class Site_model extends CI_Model  {
     function doMenu($data) {
     	if(!empty($data['id'])) {
     		$this->db->update('menu',$data,array('id'=>$data['id']));
+    		//添加操作log
+    		$this->public_model->addActionLog('site_menu','update');
     	} else {
     		$this->db->insert('menu',$data);
+    		//添加操作log
+    		$this->public_model->addActionLog('site_menu','add');
     	}
     	$affect = $this->db->affected_rows();
     	return $affect;
@@ -94,6 +81,8 @@ class Site_model extends CI_Model  {
      */
     function delMenu($id) {
     	$affect = $this->db->delete('menu',array('id'=>$id));
+    	//添加操作log
+    	$this->public_model->addActionLog('site_menu','delete');
     	return $affect;
     }
     
@@ -118,6 +107,8 @@ class Site_model extends CI_Model  {
      */
     function delNotice($iNotice) {
     	return $this->db->delete('notice',array('id'=>$iNotice));
+    	//添加操作log
+    	$this->public_model->addActionLog('notice','delete');
     }
     /**
      * 修改notice状态
@@ -127,7 +118,33 @@ class Site_model extends CI_Model  {
     	$data['status'] = 'read';
     	$this->db->update('notice',$data,array('id'=>$iNotice));
     	$affect = $this->db->affected_rows();
+    	//添加操作log
+    	$this->public_model->addActionLog('notice','update');
     	return $affect;
+    }
+    
+    /**
+     * 获取操作日志
+     */
+    function getAction($iStart=0,$iPageNum=10,$aFilter='') {
+    	$sLimit = ' LIMIT '.$iStart.','.$iPageNum;
+    	$sql = 'SELECT
+    				*
+    			FROM
+    				blog_action_log
+    			WHERE
+    				1=1 ';
+    	if(!empty($aFilter['start'])) {
+    		$sql .= ' AND datetime > '.$aFilter['start'];
+    	}
+    	if(!empty($aFilter['end'])) {
+    		$sql .= ' AND datetime < '.$aFilter['end'];
+    	}
+    	$sql .= ' ORDER BY
+    				id DESC '.$sLimit;
+    	$res = $this->db->query($sql);
+    	$list = $res->result_array();
+    	return $list;
     }
     
 }

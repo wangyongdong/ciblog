@@ -1,48 +1,32 @@
+/*
+ * 后台页面部分样式调整与添加
+ *
+ * @author 	wangyongdong
+ * @time	2015年8月12日18:22:21
+ *
+ */
 @CHARSET "UTF-8";
-.btn-margin {
-	margin-left:65px;
-}
-.rad-margin {
-	margin-right:15px;
-}
-.search-btn {
-	float:right;
-	margin-top: -23px;
-	position: relative;
-}
-.ts {
-	margin-top: -28px;
-}
+.btn-margin { margin-left:65px; }
+.rad-margin { margin-right:15px; }
+.search-btn { float:right; margin-top: -23px; position: relative; }
+.ts { margin-top: -28px; }
+.un-weld { font-weight:bold; }
+.hide-menu { display:none; }
+.red{ color: #ff0000; }
+
 /* 弹出窗 start */
-.win-min {
-	width:400px;
-	padding-top: 2px;
-}
-.win-header {
-	padding:0px !important;
-}
-.win-header button {
-	padding:3px 3px 0px 0px !important;
-}
-.win-footer {
-	border-top: 1px solid #ffffff;
-	padding: 0 15px;
-}
+.win-min { width:400px; padding-top: 2px; }
+.win-header { padding:0px !important; }
+.win-header button { padding:3px 3px 0px 0px !important; }
+.win-footer { border-top: 1px solid #ffffff; padding: 0 15px; }
 /* 弹出窗 end */
 
 /* header start */
-.nav .dropdown-toggle img {
-	background: #fff none repeat scroll 0 0;
-    border: 1px solid #ccc;
-    padding: 1px;
-	margin-right: 3px;
-}
+.nav .dropdown-toggle img { background: #fff none repeat scroll 0 0; border: 1px solid #ccc; padding: 1px; margin-right: 3px; }
 /* header end */
 
 /* Page start */
-.pagination .page-bor a {
-    color: #777;
-}
+.pagination .page-bor a { color: #777; }
 .pagination > .page-bor > a, .pagination > .page-bor > span {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -53,82 +37,38 @@
     position: relative;
     text-decoration: none;
 }
-.pagination .page-bor .current {
-	background: #24221d none repeat scroll 0 0;
-    color: #fff;
-}
+.pagination .page-bor .current { background: #24221d none repeat scroll 0 0; color: #fff; }
 /* Page end */
 
-/* Comment start */
-#cover {
-	width: 100%; 
-	height: 100%; 
-	position: fixed; 
-	z-index: 1996; 
-	top: 0px; 
-	left: 0px; 
-	display:none;
-	overflow: hidden;
-}
-#cover .z-cover {
-	height: 100%; 
-	background: rgb(0, 0, 0) none repeat scroll 0% 0%; 
-	opacity: 0.7;
-}
-#replay-box {
-    z-index: 1997;
-	display:none;
-}
-.un-weld {
-	font-weight:bold;
-}
-/* Comment end */
-
 /* Record start */
-.big-avatar {
-	paddint: 0 15px 0 15px;
-}
-.padd .avatar img {
-	background: #fff none repeat scroll 0 0;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-    margin-top: 5px;
-    padding: 1px;
-}
-.chat-content img {
-	border: 0px solid #fff !important;
-	max-width:300px;
-	max-height:150px;
-}
-.btn-record {
-	margin-top: 10px;
-}
-.chats .by-me .chat-meta {
-    font-size: 11px !important;
-}
-.chats .by-me .chat-content {
-    font-size: 12px;
-}
+.big-avatar { paddint: 0 15px 0 15px; }
+.padd .avatar img { background: #fff none repeat scroll 0 0; border: 1px solid #ccc; margin-right: 10px; margin-top: 5px; padding: 1px; }
+.chat-content img { border: 0px solid #fff !important; max-width:300px; max-height:150px; }
+.btn-record { margin-top: 10px; }
+.chats .by-me .chat-meta { font-size: 11px !important; }
+.chats .by-me .chat-content { font-size: 12px; }
 /* record end */
 
 /* contact start */
-.recent-meta {
-    font-size: 11px !important;
-}
-.recent-ctn {
-    font-size: 12px !important;
-    padding: 3px 0 3px 0 !important;
-}
+.recent-meta { font-size: 11px !important; }
+.recent-ctn { font-size: 12px !important; padding: 3px 0 3px 0 !important; }
 /* contact end */
+
 /* site start */
-.referrer .table-striped .tab-cen i {
-    font-size: 17px;
-    text-align: center;
-}
-.referrer .table-striped .tab-cen {
-    text-align: center;
-}
-.task .uni {
-	margin-left:5px;
-}
+.referrer .table-striped .tab-cen i { font-size: 17px; text-align: center; }
+.referrer .table-striped .tab-cen { text-align: center; }
+.task .uni { margin-left:5px; }
 /* site end */
+
+.search { height: 26px; padding: 0px 20px 0px 5px; }
+.min-size { display: inline; width: 20%; }
+.acl { float:left; padding: 0 5px 0 0; }
+.date-float { float:left; line-height: 35px; }
+#datetimepicker1 { float:left; }
+#datetimepicker3 { float:left; margin-right:10px; }
+.form-pop { border-color:red; -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 6px #dbc59e; box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 6px #dbc59e }
+
+.login-warning { float:left; padding: 2px 0 2px 3px; color:#d43f3a; }
+.form-ul { float:left; }
+.form-ul li { list-style-type:none; padding:3px 15px 3px 5px; }
+.form-ul span { font-size:16px; font-weight: bold; }

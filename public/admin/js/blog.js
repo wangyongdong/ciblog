@@ -1,4 +1,12 @@
-/* blog common js */
+/*
+ * blog common js
+ * 后台页面js调用
+ *
+ * @author 	wangyongdong
+ * @time	2015年8月12日18:22:21
+ *
+ */
+
 //jquery 实现复选框的全选和取消全选
 $("#checkall").click(function() {
 	if(this.checked) {
@@ -55,40 +63,6 @@ function doDel(id,url) {
 		})
 	}
 }
-// 留言首页添加回复
-function doContactReply(id) {
-	$("#reply_id").val('');
-	$("#reply_id").val(id);
-	var replay_box = document.getElementById("replay-box");
-	if(replay_box.style.display=='none') {
-		replay_box.style.display='block';
-	} else {
-		replay_box.style.display='none';
-	}
-}
-//添加评论回复
-function doCommentReply(reply_id,comment_id) {
-	$("#reply_id").val('');
-	$("#comment_id").val('');
-	$("#reply_id").val(reply_id);
-	$("#comment_id").val(comment_id);
-	var top = ($(window).height() - $("#replay-box").height())/2;
-    var left = ($(window).width() - $("#replay-box").width())/2;
-    var scrollTop = $(document).scrollTop();
-    var scrollLeft = $(document).scrollLeft();
-    left = $("#replay-box").width()/2;
-    top = $("#replay-box").height()/2;
-    $("#replay-box").css( { position : 'absolute', top : top + scrollTop, left : left + scrollLeft } ).show();
-	$("#replay-box .widget").show();
-	$("#cover").show();
-}
-//关闭评论回复框
-function closePop() {
-	$("#reply_id").val('');
-	$("#comment_id").val('');
-	$("#replay-box").hide();
-	$("#cover").hide();
-}
 //标记为已读，隐藏等
 function doStatus(url) {
 	id = getCheckbox();
@@ -105,34 +79,13 @@ function doStatus(url) {
 		}
 	})
 }
-//弹出提示框
-function popTips(val) {
-	var win_str = '<div id="myModal" class="modal fade in" style="display: block;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog win-min"><div class="modal-content"><div class="modal-header win-header"><button type="button" class="close" onclick="close_pop();">×</button><h4 class="modal-title">&nbsp;</h4></div><div class="modal-body"><p class="center">'+val+'</p></div><div class="modal-footer win-footer"></div></div></div></div><div class="modal-backdrop fade in"></div>';
-	$(document.body).addClass("modal-open");
-	$(".pop_tips").append(win_str);
-	return false;
-}
-//关闭提示框
-function close_pop() {
-	$(document.body).addClass("");
-	$(".pop_tips").html("");
-}
-
-//sort条件搜索
-function searchSort(val,url) {
-	window.location = url+'?sort='+val;
-}
-// user条件搜索
-function searchUser(val,url) {
-	window.location = url+'?author='+val;
-}
-//改变sort
+// 修改 sort
 function changeSort(val) {
 	id = getCheckbox();
 	$.post(
 		__A+'article/sortChange',
 		{id:id,val:val},
-		function(data){
+		function(data) {
 			if(data) {
 				window.location.reload();
 			} else {
@@ -148,14 +101,39 @@ function changeTop(val) {
 		url:__A+'article/ArticleTop',
 		data:'id='+id+'&val='+val,
 		type:'post',
-		success:function(data){
-			if(data){
+		success:function(data) {
+			if(data) {
 				window.location.reload();
 			} else {
 				alert("置顶修改失败");
 			}
 		}
 	})
+}
+//搜索提交
+function searchF(url) {
+	var keyword = $("#s_keyword").val();
+	window.location = url+'?s='+keyword;
+}
+//sort条件搜索
+function searchSort(val,url) {
+	window.location = url+'?sort='+val;
+}
+// user条件搜索
+function searchUser(val,url) {
+	window.location = url+'?author='+val;
+}
+//弹出提示框
+function popTips(val) {
+	var win_str = '<div id="myModal" class="modal fade in" style="display: block;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog win-min"><div class="modal-content"><div class="modal-header win-header"><button type="button" class="close" onclick="close_pop();">×</button><h4 class="modal-title">&nbsp;</h4></div><div class="modal-body"><p class="center">'+val+'</p></div><div class="modal-footer win-footer"></div></div></div></div><div class="modal-backdrop fade in"></div>';
+	$(document.body).addClass("modal-open");
+	$(".pop_tips").append(win_str);
+	return false;
+}
+//关闭提示框
+function close_pop() {
+	$(document.body).addClass("");
+	$(".pop_tips").html("");
 }
 //数据验证
 function checkFormA() {
@@ -178,7 +156,7 @@ function checkFormA() {
 	return true;
 }
 function checkFormC() {
-	var content = $("#content").text();
+	var content = $("#content").val();
 	
 	if(content.length == 0) {
 		popTips('请输入内容');
@@ -236,8 +214,8 @@ function checkPopL() {
 	return true;
 }
 function checkPopC(id) {
-	var content = $("#content"+id).text();
-	
+	//var content = $("#content"+id).text();
+	var content = $("#content"+id).val();
 	if(content.length == 0) {
 		$("#content"+id).addClass('form-pop');
 		return false;
@@ -258,9 +236,80 @@ function checkPopS() {
 	}
 	return true;
 }
+function checkPopR() {
+	var role = $("#role").val();
+	var name = $("#name").val();
+	if(role.length == 0) {
+		$("#role").addClass('form-pop');
+		return false;
+	}
+	if(name.length == 0) {
+		$("#name").addClass('form-pop');
+		return false;
+	}
+	return true;
+}
 //消除警示
 $(function() {
 	$(".form-horizontal input,.form-horizontal textarea").focus(function() {
 		$(this).removeClass('form-pop');
 	});
+	$("#inputEmail").focus(function() {
+		$(".login-warning").text("");
+	});
+	$("#inputPassword").focus(function() {
+		$(".login-warning").text("");
+	});
 })
+//登录
+function signIn() {
+	var email = $("#inputEmail").val();
+	var pass = $("#inputPassword").val();
+	
+	if(email.length == 0) {
+		$("#inputEmail").addClass('form-pop');
+		return false;
+	}
+	/*if (/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email) == false) {
+		$("#inputEmail").addClass('form-pop');
+		$(".login-warning").text("邮箱格式不正确，请重新填写");
+		return false;
+	}*/
+	if(pass.length == 0) {
+		$("#inputPassword").addClass('form-pop');
+		return false;
+	}
+	if(pass.length < 6 || pass.length >16) {
+		$("#inputPassword").addClass('form-pop');
+		$("#pass").text("密码合法长度为6-16个字符");
+		return false;
+	}
+	$.post(
+		__A+'login/loginIn',
+		{name:email,pass:pass},
+		function(data) {
+			if(data.success) {
+				window.location.href = __A;
+			}
+			if(data.error) {
+				if(data.status == -1) {
+					$("#inputEmail").addClass('form-pop');
+					$("#email").text(data.error);
+					return false;
+				}
+				if(data.status == -2) {
+					$("#inputPassword").addClass('form-pop');
+					$("#pass").text(data.error);
+					return false;
+				}
+				if(data.status == -3) {
+					$("#inputEmail").addClass('form-pop');
+					$("#pass").text(data.error);
+					return false;
+				}
+			}
+		},
+		"json"
+	);
+	
+}

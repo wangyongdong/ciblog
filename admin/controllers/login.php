@@ -7,13 +7,13 @@
 class login extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('login_model');		//实例化model类
+		$this->load->model('login_model');
 	}
 	
 	/**
 	 * 获取登陆页
 	 */
-	public function getLogin() {
+	public function index() {
 		$this->load->view('public/login');
 	}
 	
@@ -21,28 +21,38 @@ class login extends CI_Controller {
 	 * 执行用户登录
 	 */
 	public function loginIn() {
-		if(!empty($_POST)) {
-			$name = trim(sg($_POST['name']));
-			$pass = trim(sg($_POST['pass']));
-			
-			if(empty($name) || empty($pass)) {
-				exit('不允许为空');
-			}
-			
-			//查询用户信息
-			$res = $this->login_model->checkUserLogin($name,$pass);
-			
-			if($res < 0) {
-				echo $res;
-				exit;
-			}
-			//添加cookie
-			$this->load->library('auth');
-			$this->auth->userLoginSet($res['id'],$res['username']);
+		$name = sg($_POST['name']);
+		$pass = sg($_POST['pass']);
+		//验证
+		$arr = array($name,$pass);
+		checkEmpty($arr);
+		//查询用户信息
+		$res = $this->login_model->checkUserLogin($name,$pass);
 		
-			header("location:".base_url());
+		switch ($res) {
+			case '-1':
+				$data['status'] = -1;
+				$data['error'] = '账号不正确';
+				break;
+			case '-2':
+				$data['status'] = -2;
+				$data['error'] = '密码不正确';
+				break;
+			case '-3':
+				$data['status'] = -3;
+				$data['error'] = '用户已被锁定';
+				break;
+			default:
+				//添加cookie
+				$this->load->library('auth');
+				$this->auth->userLoginSet($res['id'],$res['username']);
+				//添加登录日志
+				$this->addLoginLog();
+				
+				$data['success'] = 'success';
+				break;
 		}
-		
+		echo json_encode($data);
 	}
 	
 	/**
@@ -52,5 +62,17 @@ class login extends CI_Controller {
 		$this->load->library('auth');
 		$this->auth->useLoginOut();
 		header("location:".base_url());
+	}
+	
+	/**
+	 * 添加登录日志
+	 */
+	public function addLoginLog() {
+		$data['userid'] = UserId();
+		$data['ip'] = $this->input->ip_address();
+		$data['useragent'] = $this->input->user_agent();
+		$data['datetime'] = date("Y-m-d H:i:s",time());
+	
+		$this->login_model->addLoginLog($data);
 	}
 }

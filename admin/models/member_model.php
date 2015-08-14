@@ -24,7 +24,7 @@ class Member_model extends CI_Model  {
     		$arr['username'] = $row['username'];
     		$arr['email'] = $row['email'];
     		$arr['nums'] = getArticleNums($row['id']);
-    		$arr['role'] = roleName(getRole($row['role_id'],'role_name'));
+    		$arr['role'] = getRole($row['role_id'],'name');
     		$list[] = $arr;
     	}
     	return $list;
@@ -36,8 +36,12 @@ class Member_model extends CI_Model  {
     function doUser($data) {
     	if(!empty($data['id'])) {
     		$this->db->update('member',$data,array('id'=>$data['id']));
+    		//添加操作log
+    		$this->public_model->addActionLog('member','update');
     	} else {
     		$this->db->insert('member',$data);
+    		//添加操作log
+    		$this->public_model->addActionLog('member','add');
     	}
     	
     	$affect = $this->db->affected_rows();
@@ -49,6 +53,72 @@ class Member_model extends CI_Model  {
      */
     function doDel($iUser) {
     	$affect = $this->db->delete('member',array('id'=>$iUser));
+    	//添加操作log
+    	$this->public_model->addActionLog('member','delete');
+    	return $affect;
+    }
+    
+    /**
+     * 获取角色列表
+     */
+    function getRoleList($iStart=0,$iPageNum=20) {
+    	$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
+    	$sql = 'SELECT
+    				*
+    			FROM
+    				blog_role
+    			ORDER BY
+    				id ASC
+    			'.$sLimit;
+    	$res = $this->db->query($sql);
+    	$list = $res->result_array();
+    	return $list;
+    }
+    
+    /**
+     * 获取角色信息
+     */
+    function getRoleInfo($iRole) {
+    	if(empty($iRole)) {
+    		return false;
+    	}
+    	$sql = 'SELECT
+    				*
+    			FROM
+    				blog_role
+    			WHERE
+    				id='.$iRole;
+    	$res = $this->db->query($sql);
+    	$list = $res->row_array();
+    	if(!empty($list['function'])) {
+    		$list['function'] = json_decode($list['function'],true);
+    	}
+    	return $list;
+    }
+    /**
+     * 执行角色添加,修改
+     */
+    function doRole($data) {
+    	if(empty($data['id'])) {
+    		$this->db->insert('role', $data);
+    		//添加操作log
+    		$this->public_model->addActionLog('role','add');
+    	} else {
+    		$this->db->update('role',$data,array('id'=>$data['id']));
+    		//添加操作log
+    		$this->public_model->addActionLog('role','update');
+    	}
+    	$affect = $this->db->affected_rows();
+    	
+    	return $affect;
+    }
+    /**
+     * 执行删除
+     */
+    function roleDel($iRole) {
+    	$affect = $this->db->delete('role',array('id'=>$iRole));
+    	//添加操作log
+    	$this->public_model->addActionLog('role','delete');
     	return $affect;
     }
 }

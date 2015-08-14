@@ -9,9 +9,6 @@ class Show extends MY_Controller {
 	 * 加载首页
 	 */
 	public function index() {
-		//$this->load->library('access');
-		//$data['data'] = $this->access->getAccessMenu();
-		
 		//系统信息
 		
 		//获取web服务器标识的字串

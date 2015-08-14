@@ -32,6 +32,8 @@ class Record_model extends CI_Model  {
     function doRecord($data) {
     	$this->db->insert('record',$data);
     	$iInsert = $this->db->insert_id();
+    	//添加操作log
+    	$this->public_model->addActionLog('record','add');
     	return $iInsert;
     }
     
@@ -40,6 +42,8 @@ class Record_model extends CI_Model  {
      */
     function doDel($iRecord) {
     	$affect = $this->db->delete('record',array('id'=>$iRecord));
+    	//添加操作log
+    	$this->public_model->addActionLog('record','delete');
     	return $affect;
     }
 }

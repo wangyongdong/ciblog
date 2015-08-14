@@ -1,7 +1,7 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
 	<div class="page-head">
-		<h2 class="pull-left"><i class="icon-home"></i> 添加用户</h2>
+		<h2 class="pull-left"><i class="icon-home"></i> 日志信息</h2>
         <div class="bread-crumb pull-right">
 	    	<a href="/admin"><i class="icon-home"></i> 首页</a> 
 	        <span class="divider">/</span> 
@@ -39,7 +39,7 @@
 				                </div>
 								<div class="date-float">
 			                      	<button class="btn btn-default">查询</button>
-									<button class="btn btn-default">全部</button>
+									<a href="<?=site_url('site/action')?>"><button class="btn btn-default">全部</button></a>
 									<button class="btn btn-default">清空日志信息</button>
 								</div>	
 							</div>
@@ -52,62 +52,41 @@
 			                        	<tr>
 			                          		<th>用户</th>
 			                          		<th>模块</th>
-			                          		<th>文件</th>
-			                          		<th>时间</th>
+			                          		<th>动作</th>
 			                          		<th>IP</th>
+			                          		<th>时间</th>
 			                        	</tr>
 					                </thead>
 									<tbody>
+										<?php foreach($list as $list):?>
 										<tr>
-											<td>1</td>
-											<td>Ashok</td>
-											<td>India</td>
-											<td>23</td>
-											<td>B.Tech</td>
+											<td><?=$list['userid']?></td>
+											<td><?=$list['action']?></td>
+											<td <?php if($list['function']=='delete'){echo 'class="red"';}?>><?=$list['function']?></td>
+											<td><?=$list['ip']?></td>
+											<td><?=$list['datetime']?></td>
 										</tr>
-										<tr>
-											<td>2</td>
-											<td>Kumarasamy</td>
-											<td>USA</td>
-											<td>22</td>
-											<td>BE</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>Babura</td>
-											<td>UK</td>
-											<td>43</td>
-											<td>PhD</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td>Ravi Kumar</td>
-											<td>China</td>
-											<td>73</td>
-											<td>PUC</td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td>Santhosh</td>
-											<td>Japan</td>
-											<td>43</td>
-											<td>M.Tech</td>
-										</tr>
-										</tbody>
-									</table>
-                    			</div>
-                  			</div>
-	                  		<div class="widget-foot">
-								只允许超级管理员查看操作日志<br/>
-								模块一分钟内多次操作只记录一次
-							</div>
-						</div>
+										<?php endforeach;?>
+									</tbody>
+								</table>
+                    		</div>
+                  		</div>
+	                  	<div class="widget-foot">
+	                  		只允许超级管理员查看操作日志<br/>
+	                  		<ul class="pagination pull-right">
+					            <?php 
+									echo $this->pagination->create_links();
+								?>
+							</ul>
+							<div class="clearfix"></div>
+	                  	</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Mainbar ends -->
-	<div class="clearfix"></div>
+</div>
+<!-- Mainbar ends -->
+<div class="clearfix"></div>
 </div>
 <!-- Content ends -->

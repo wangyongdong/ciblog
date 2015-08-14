@@ -23,11 +23,11 @@
                 	<div class="widget-content">
                   		<div class="padd">
 	                        <div class="support-contact">
-								<p>您好：王永东</p>
-		                        <p>所属角色：超级管理员</p>
+								<p>您好：<?=UserName()?></p>
+		                        <p>所属角色：<?=getRole(UserId(),'name');?></p>
 		                        <hr />
-		                        <p>上次登录时间：2015-07-13 10:02:29</p>
-		                        <p>上次登录IP：127.0.0.1</p>
+		                        <p>上次登录时间：<?=getLogin('datetime');?></p>
+		                        <p>上次登录IP：<?=getLogin('ip');?></p>
 		                    </div>
 						</div>
 	                </div>

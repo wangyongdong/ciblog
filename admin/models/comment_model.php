@@ -69,6 +69,8 @@ class Comment_model extends CI_Model {
     function doComment($data) {
     	$this->db->update('comment',$data,array('id'=>$data['id']));
     	$affect = $this->db->affected_rows();
+    	//添加操作log
+    	$this->public_model->addActionLog('comment','update');
     	return $affect;
     }
     
@@ -78,8 +80,12 @@ class Comment_model extends CI_Model {
     function doReply($data) {
     	if(empty($data['id'])) {
     		$this->db->insert('comment', $data);
+    		//添加操作log
+    		$this->public_model->addActionLog('comment','add');
     	} else {
     		$this->db->update('comment',$data,array('id'=>$data['id']));
+    		//添加操作log
+    		$this->public_model->addActionLog('comment','update');
     	}
     	$affect = $this->db->affected_rows();
     	return $affect;
@@ -90,6 +96,8 @@ class Comment_model extends CI_Model {
      */
     function doDel($iComment) {
     	$affect = $this->db->delete('comment',array('id'=>$iComment));
+    	//添加操作log
+    	$this->public_model->addActionLog('comment','delete');
     	return $affect;
     }
     

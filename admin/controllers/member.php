@@ -105,7 +105,7 @@ class Member extends MY_Controller {
 	 * 获取个人资料页
 	 */
 	public function profile() {
-		$data['list'] = getUser('1');
+		$data['list'] = getUser(UserId());
 		$data['token'] = getToken($this->tokentype);
 	
 		$this->load->view('public/header',$data);
@@ -149,5 +149,87 @@ class Member extends MY_Controller {
 		
 		$this->member_model->doUser($data);
 		succes(site_url('member/profile'));
+	}
+	
+	/**
+	 * 获取角色列表
+	 */
+	public function role() {
+		//分页执行
+		$pageId = $this->input->get('page');
+		$arr = $this->public_model->getPage("role",'role?',$pageId);
+		//执行查询
+		$data['list'] = $this->member_model->getRoleList($arr['start'],$arr['pagenum']);
+	
+		//token
+		$data['token'] = getToken($this->tokentype);
+		
+		$this->load->view('public/header',$data);
+		$this->load->view('member/member_role',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 获取角色编辑页
+	 */
+	public function updrole() {
+		$iRole = $this->uri->segment(3);
+		$data['list'] = $this->member_model->getRoleInfo($iRole);
+		//token
+		$data['token'] = getToken($this->tokentype);
+		
+		$this->load->view('public/header',$data);
+		$this->load->view('member/member_role_edit',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 编辑角色
+	 */
+	public function doRole() {
+		$data = array();
+		if(!empty($_POST['id'])) {		//修改
+			$data['id'] = sg($_POST['id']);
+		}
+		$data['role'] = sg($_POST['role']);
+		$data['name'] = sg($_POST['name']);
+		$data['function'] = sg($_POST['function']);
+	
+		//数据验证
+		$arr = array($data['role'],$data['name']);
+		checkEmpty($arr);
+	
+		//token验证
+		checkToken($_POST['token'],$this->tokentype);
+	
+		$this->member_model->doRole($data);
+		succes(site_url('member/role'));
+	}
+	
+	/**
+	 * 编辑角色
+	 */
+	public function doAcc() {
+		$data = array();
+		$data['id'] = sg($_POST['id']);
+		$select = sg($_POST['select']);
+		$update = sg($_POST['update']);
+		$data['function'] = array(
+			'select' => $select,
+			'update' => $update,
+		);
+		$data['function'] = json_encode($data['function']);
+		
+		$this->member_model->doRole($data);
+		succes(site_url('member/role'));
+	}
+	
+	/**
+	 * 删除角色
+	 */
+	public function roleDel() {
+		$iRole = sg($_POST['id']);
+		$affect = $this->member_model->roleDel($iRole);
+		echo $affect;
 	}
 }
