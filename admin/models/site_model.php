@@ -34,7 +34,7 @@ class Site_model extends CI_Model  {
     		$affect = $this->db->affected_rows();
     	}
     	//添加操作log
-    	$this->public_model->addActionLog('site_web','update');
+    	$this->site_model->addActionLog('site_web','update');
     	return $affect;
     }
     /**
@@ -66,11 +66,11 @@ class Site_model extends CI_Model  {
     	if(!empty($data['id'])) {
     		$this->db->update('menu',$data,array('id'=>$data['id']));
     		//添加操作log
-    		$this->public_model->addActionLog('site_menu','update');
+    		$this->site_model->addActionLog('site_menu','update');
     	} else {
     		$this->db->insert('menu',$data);
     		//添加操作log
-    		$this->public_model->addActionLog('site_menu','add');
+    		$this->site_model->addActionLog('site_menu','add');
     	}
     	$affect = $this->db->affected_rows();
     	return $affect;
@@ -82,7 +82,7 @@ class Site_model extends CI_Model  {
     function delMenu($id) {
     	$affect = $this->db->delete('menu',array('id'=>$id));
     	//添加操作log
-    	$this->public_model->addActionLog('site_menu','delete');
+    	$this->site_model->addActionLog('site_menu','delete');
     	return $affect;
     }
     
@@ -108,7 +108,7 @@ class Site_model extends CI_Model  {
     function delNotice($iNotice) {
     	return $this->db->delete('notice',array('id'=>$iNotice));
     	//添加操作log
-    	$this->public_model->addActionLog('notice','delete');
+    	$this->site_model->addActionLog('notice','delete');
     }
     /**
      * 修改notice状态
@@ -119,32 +119,57 @@ class Site_model extends CI_Model  {
     	$this->db->update('notice',$data,array('id'=>$iNotice));
     	$affect = $this->db->affected_rows();
     	//添加操作log
-    	$this->public_model->addActionLog('notice','update');
+    	$this->site_model->addActionLog('notice','update');
     	return $affect;
     }
     
     /**
      * 获取操作日志
      */
-    function getAction($iStart=0,$iPageNum=10,$aFilter='') {
-    	$sLimit = ' LIMIT '.$iStart.','.$iPageNum;
+    function getAction($aFilter='') {
     	$sql = 'SELECT
     				*
     			FROM
-    				blog_action_log
+    				blog_log_action
     			WHERE
     				1=1 ';
     	if(!empty($aFilter['start'])) {
-    		$sql .= ' AND datetime > '.$aFilter['start'];
+    		$sql .= ' AND datetime > "'.$aFilter['start'].'"';
     	}
     	if(!empty($aFilter['end'])) {
-    		$sql .= ' AND datetime < '.$aFilter['end'];
+    		$sql .= ' AND datetime < "'.$aFilter['end'].'"';
     	}
     	$sql .= ' ORDER BY
-    				id DESC '.$sLimit;
+    				id DESC ';
+    	echo $sql;
     	$res = $this->db->query($sql);
     	$list = $res->result_array();
     	return $list;
     }
     
+    /**
+     * 添加操作log
+     */
+    public function addActionLog($sAction,$sFunction) {
+    	$data = array();
+    	$data['userid'] = UserId();
+    	$data['action'] = $sAction;
+    	$data['function'] = $sFunction;
+    	$data['ip'] = $this->input->ip_address();
+    	$data['useragent'] = $this->input->user_agent();
+    	$data['datetime'] = date("Y-m-d H:i:s",time());
+    
+    	$this->db->insert('log_action',$data);
+    	$iInsert = $this->db->insert_id();
+    	return $iInsert;
+    }
+    
+    /**
+     * 执行删除操作日志
+     */
+    function delActionLog() {
+    	$sql = 'DELETE FROM blog_log_action';
+    	$affect = $this->db->query($sql);
+    	return 1;
+    }
 }

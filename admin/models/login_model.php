@@ -40,7 +40,7 @@ class Login_model extends CI_Model {
      * 添加登录日志
      */
     public function addLoginLog($data) {
-    	$this->db->insert('login_log', $data);
+    	$this->db->insert('log_login', $data);
     	$affect = $this->db->affected_rows();
     	return $affect;
     }

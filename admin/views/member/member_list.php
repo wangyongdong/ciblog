@@ -39,7 +39,7 @@
                     			<tr>
 				                	<td>                            
 				                    	<div class="avatar pull-left">
-                          					<img src="img/user.jpg" alt=""/>
+                          					<img alt="" src="<?=LinkAvatar($list['id'])?>" height=40 width=40>
                         				</div>
 				                    </td>
                       				<td><?=$list['role']?></td>

@@ -107,7 +107,8 @@ class Member extends MY_Controller {
 	public function profile() {
 		$data['list'] = getUser(UserId());
 		$data['token'] = getToken($this->tokentype);
-	
+		$data['footer'] = 'upload';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('member/member_profile',$data);
 		$this->load->view('public/footer',$data);
@@ -117,8 +118,6 @@ class Member extends MY_Controller {
 	 * 修改个人资料
 	 */
 	public function doProfile() {
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
 		switch ($_POST['type']) {
 			case 'data':
 				$data['id'] = sg($_POST['id']);
@@ -132,8 +131,12 @@ class Member extends MY_Controller {
 				//数据验证
 				$arr = array($data['username'],$data['email']);
 				checkEmpty($arr);
+				//token验证
+				checkToken($_POST['token'],$this->tokentype);
 				break;
 			case 'about':
+				//token验证
+				checkToken($_POST['token'],$this->tokentype);
 				$data['id'] = sg($_POST['id']);
 				$data['about_me'] = sg($_POST['content']);
 				break;
@@ -141,9 +144,17 @@ class Member extends MY_Controller {
 				$data['id'] = sg($_POST['id']);
 				//密码验证
 				checkPass($_POST['password'],$_POST['repassword']);
+				//token验证
+				checkToken($_POST['token'],$this->tokentype);
 				$UserInfo = getUser($data['id']);
 				$this->load->library('encrypt');
 				$data['password'] = buildPass($_POST['password'], $UserInfo['uniquely']);
+				break;
+			case 'img':
+				pl($_POST['picname']);
+				$data['id'] = sg($_POST['id']);
+				$data['picname'] = sg($_POST['picname']);
+				
 				break;
 		}
 		

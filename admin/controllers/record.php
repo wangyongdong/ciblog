@@ -13,7 +13,7 @@ class Record extends MY_Controller {
 	 */
 	public function index() {
 		//获取用户信息
-		$data['user'] = getUser(1);
+		$data['user'] = getUser(UserId());
 		
 		//分页执行
 		$pageId = $this->input->get('page');

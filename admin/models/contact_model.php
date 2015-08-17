@@ -66,7 +66,7 @@ class Contact_model extends CI_Model {
     	$this->db->update('contact',$data,array('id'=>$data['id']));
     	$affect = $this->db->affected_rows();
     	//添加操作log
-    	$this->public_model->addActionLog('contact','update');
+    	$this->site_model->addActionLog('contact','update');
     	return $affect;
     }
     
@@ -81,7 +81,7 @@ class Contact_model extends CI_Model {
     	}
     	$affect = $this->db->affected_rows();
     	//添加操作log
-    	$this->public_model->addActionLog('contact','add');
+    	$this->site_model->addActionLog('contact','add');
     	return $affect;
     }
     
@@ -91,7 +91,7 @@ class Contact_model extends CI_Model {
     function doDel($iContact) {
     	$affect = $this->db->delete('contact',array('id'=>$iContact));
     	//添加操作log
-    	$this->public_model->addActionLog('contact','delete');
+    	$this->site_model->addActionLog('contact','delete');
     	return $affect;
     }
     

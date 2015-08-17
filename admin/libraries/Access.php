@@ -8,11 +8,10 @@ class Access {
 	
 	//获取用户权限和角色
 	static function getUserRole() {
-		$uid = UserId();
-		$arr = array();
+		//获取用户权限信息
+		$info = getRole();
 		
-		$aInfo = getUser($uid);
-		$info = getRole($aInfo['role_id']);
+		$arr = array();
 		$arr['role_name'] = $info['role'];
 		$arr['function'] = json_decode($info['function'],true);
 		return $arr;

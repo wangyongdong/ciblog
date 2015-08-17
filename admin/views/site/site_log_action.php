@@ -26,58 +26,39 @@
 			            	<div class="uni pull-left">
 			                	<div class="date-float">操作时间：</div>
 								<div id="datetimepicker1" class="input-append">
-				                	<input data-format="yyyy-MM-dd" type="text" class="form-control dtpicker">
+				                	<input data-format="yyyy-MM-dd" type="text" class="form-control dtpicker" id="date_start" value="<?=$aFilter['start']?>">
 				                    <span class="add-on">
 				                    	<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="btn btn-info btn-lg"></i>
 				                    </span>&nbsp; ~ &nbsp;&nbsp;
 								</div>
 								<div id="datetimepicker3" class="input-append">
-									<input data-format="yyyy-MM-dd" type="text" class="form-control dtpicker">
+									<input data-format="yyyy-MM-dd" type="text" class="form-control dtpicker" id="date_end" value="<?=$aFilter['start']?>">
 				                    <span class="add-on">
 				                    	<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="btn btn-info btn-lg"></i>
 				                	</span>
 				                </div>
 								<div class="date-float">
-			                      	<button class="btn btn-default">查询</button>
+			                      	<button class="btn btn-default" onclick="searchActionLog();">查询</button>
 									<a href="<?=site_url('site/action')?>"><button class="btn btn-default">全部</button></a>
-									<button class="btn btn-default">清空日志信息</button>
+									<button class="btn btn-default" onclick="delActionLog();">清空日志信息</button>
 								</div>	
 							</div>
 				            <div class="clearfix"></div>
 						</div>
 		                <div class="padd">
 		                	<div class="error-log">
-		                    	<table class="table table-striped table-bordered table-hover">
-					            	<thead>
-			                        	<tr>
-			                          		<th>用户</th>
-			                          		<th>模块</th>
-			                          		<th>动作</th>
-			                          		<th>IP</th>
-			                          		<th>时间</th>
-			                        	</tr>
-					                </thead>
-									<tbody>
-										<?php foreach($list as $list):?>
-										<tr>
-											<td><?=$list['userid']?></td>
-											<td><?=$list['action']?></td>
-											<td <?php if($list['function']=='delete'){echo 'class="red"';}?>><?=$list['function']?></td>
-											<td><?=$list['ip']?></td>
-											<td><?=$list['datetime']?></td>
-										</tr>
-										<?php endforeach;?>
-									</tbody>
-								</table>
+								<ul>
+									<?php foreach($list as $list):?>
+			                        <li>
+			                        	<span class="green">[<?=$list['datetime']?>]</span> 
+			                        	<span class="red">[<?=$list['function']?>]</span> <?=$list['action']?>  [<?=$list['ip']?>] operation by <?=beName($list['userid'])?>
+			                        </li>
+									<?php endforeach;?>
+								</ul>
                     		</div>
                   		</div>
 	                  	<div class="widget-foot">
 	                  		只允许超级管理员查看操作日志<br/>
-	                  		<ul class="pagination pull-right">
-					            <?php 
-									echo $this->pagination->create_links();
-								?>
-							</ul>
 							<div class="clearfix"></div>
 	                  	</div>
 					</div>

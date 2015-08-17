@@ -48,7 +48,53 @@
 									<div class="form-group">
                                     	<label class="control-label col-lg-3" for="img">配图</label>
                                     	<div class="col-lg-9"> 
-										
+											<script type="text/javascript" src="<?=PLUGIN_UPLOAD?>jquery-1.8.0.min.js"></script>
+											<script type="text/javascript" src="<?=PLUGIN_UPLOAD?>jquery.uploadify.min.js"></script>
+											<link type="text/css" rel="stylesheet" href="<?=PLUGIN_UPLOAD?>uploadify.css">
+											<div id="queue"></div>
+											<input id="file_upload" name="file_upload" type="file" multiple="true">
+											<div id="image" style="float:left;margin:2px 0 0 2px">
+												<img alt="" src="<?=UPLOAD_PUBLIC?>article/<?=$list['img']?>" height=80 width=80>
+											</div>
+											<input type="hidden" id="post-img" name="img" value="<?=$list['img']?>">
+											<script type="text/javascript">
+												<?php $timestamp = time();?>
+												var img_id_upload = new Array();//初始化数组，存储已经上传的图片名
+												var i=0;//初始化数组下标
+												$(function() {
+													$('#file_upload').uploadify({
+														'formData'     : {
+															'timestamp' : '<?php echo $timestamp;?>',
+															'token'     : '<?php echo md5('unique_salt' . $timestamp);?>',
+															'type'		: 'article'
+														},
+														'swf'      : '<?=PLUGIN_UPLOAD?>uploadify.swf',
+														'uploader' : '<?=PLUGIN_UPLOAD?>uploadify.php',
+														'method' : 'post',  						//服务端可以用$_POST数组获取数据
+														'buttonText' : '选择图片',					//设置按钮文本
+														'multi':true,								//设置为true时可以上传多个文件
+														'auto': true,								//不自动上传
+														'uploadLimit' : 10,							//一次最多只允许上传10张图片
+														'fileTypeDesc' : 'Image Files',				//只允许上传图像
+														'fileTypeExts' : '*.gif; *.jpg; *.png',		//限制允许上传的图片后缀
+														'fileSizeLimit' : '2000KB',					//限制上传的图片大小
+														//文件上传失败
+														'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+															alert(file.name + '上传失败原因:' + errorString);
+														},
+														'onUploadSuccess' : function(file, data, response) { 	//每次成功上传后执行的回调函数，从服务端返回数据到前端
+															$('#image').text("");
+															$('#image').append(
+																'<img src="<?=UPLOAD_PUBLIC?>article/'+data+'" data-ke-src="<?=UPLOAD_PUBLIC?>article/'+data+'" height=80 width=80 />'
+															);
+															$('#post-img').val(data);
+															img_id_upload[i]=data;
+															i++;
+															alert(data);
+														}
+													});
+												});
+											</script>
                                   		</div>
                                   	</div>
                                   	<div class="form-group">

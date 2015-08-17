@@ -110,6 +110,19 @@ function changeTop(val) {
 		}
 	})
 }
+//保存图片
+function saveImg(val) {
+	var id = $("#id").val();
+	$.post(
+		__A+'member/doProfile',
+		{id:id,picname:val,type:'img'},
+		function(data) {
+			if(!data) {
+				alert("保存失败");
+			}
+		}
+	);
+}
 //搜索提交
 function searchF(url) {
 	var keyword = $("#s_keyword").val();
@@ -122,6 +135,28 @@ function searchSort(val,url) {
 // user条件搜索
 function searchUser(val,url) {
 	window.location = url+'?author='+val;
+}
+// 搜索操作日志
+function searchActionLog() {
+	var date_start = $("#date_start").val();
+	var date_end = $("#date_end").val();
+	window.location = __A+'site/action?ds='+date_start+'&de='+date_end;
+}
+// 删除操作日志
+function delActionLog() {
+	if(confirm("确定要清空吗？")) {
+		$.ajax({
+			url:__A+'site/delActionLog',
+			type:'post',
+			success:function(data) {
+				if(data) {
+					window.location.reload();
+				} else {
+					alert("删除失败");
+				}
+			}
+		})
+	}
 }
 //弹出提示框
 function popTips(val) {
@@ -311,5 +346,4 @@ function signIn() {
 		},
 		"json"
 	);
-	
 }

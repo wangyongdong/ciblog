@@ -15,7 +15,11 @@
 	<span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span> 
 	
 	<!-- JS -->
+	<?php if($footer !== 'upload'){ ?>
 	<script src="<?=ADMIN_PUBLIC?>js/jquery.js"></script> <!-- jQuery -->
+	<?php 
+	}
+	?>
 	<script src="<?=ADMIN_PUBLIC?>js/bootstrap.js"></script> <!-- Bootstrap -->
 	<script src="<?=ADMIN_PUBLIC?>js/jquery-ui-1.9.2.custom.min.js"></script> <!-- jQuery UI -->
 	<script src="<?=ADMIN_PUBLIC?>js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
@@ -45,6 +49,7 @@
 	<script src="<?=ADMIN_PUBLIC?>js/custom.js"></script> <!-- Custom codes -->
 	<script src="<?=ADMIN_PUBLIC?>js/charts.js"></script> <!-- Charts & Graphs -->
 	<script src="<?=ADMIN_PUBLIC?>js/blog.js"></script> <!-- My custom -->
+	
 	
 	<!-- Script for this page -->
 	<script type="text/javascript">

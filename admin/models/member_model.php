@@ -2,8 +2,8 @@
 
 class Member_model extends CI_Model  {
     function __construct() {
-        parent::__construct();		//构造函数里面要调用父类的构造方法
-        $this->load->database();	//加载数据库,数据库名称在Config文件里面配置。
+        parent::__construct();
+        $this->load->database();
     }
     /**
      * 获取用户信息
@@ -24,7 +24,7 @@ class Member_model extends CI_Model  {
     		$arr['username'] = $row['username'];
     		$arr['email'] = $row['email'];
     		$arr['nums'] = getArticleNums($row['id']);
-    		$arr['role'] = getRole($row['role_id'],'name');
+    		$arr['role'] = getRole($row['id'],'name');
     		$list[] = $arr;
     	}
     	return $list;
@@ -37,11 +37,11 @@ class Member_model extends CI_Model  {
     	if(!empty($data['id'])) {
     		$this->db->update('member',$data,array('id'=>$data['id']));
     		//添加操作log
-    		$this->public_model->addActionLog('member','update');
+    		$this->site_model->addActionLog('member','update');
     	} else {
     		$this->db->insert('member',$data);
     		//添加操作log
-    		$this->public_model->addActionLog('member','add');
+    		$this->site_model->addActionLog('member','add');
     	}
     	
     	$affect = $this->db->affected_rows();
@@ -54,7 +54,7 @@ class Member_model extends CI_Model  {
     function doDel($iUser) {
     	$affect = $this->db->delete('member',array('id'=>$iUser));
     	//添加操作log
-    	$this->public_model->addActionLog('member','delete');
+    	$this->site_model->addActionLog('member','delete');
     	return $affect;
     }
     
@@ -102,11 +102,11 @@ class Member_model extends CI_Model  {
     	if(empty($data['id'])) {
     		$this->db->insert('role', $data);
     		//添加操作log
-    		$this->public_model->addActionLog('role','add');
+    		$this->site_model->addActionLog('role','add');
     	} else {
     		$this->db->update('role',$data,array('id'=>$data['id']));
     		//添加操作log
-    		$this->public_model->addActionLog('role','update');
+    		$this->site_model->addActionLog('role','update');
     	}
     	$affect = $this->db->affected_rows();
     	
@@ -118,7 +118,7 @@ class Member_model extends CI_Model  {
     function roleDel($iRole) {
     	$affect = $this->db->delete('role',array('id'=>$iRole));
     	//添加操作log
-    	$this->public_model->addActionLog('role','delete');
+    	$this->site_model->addActionLog('role','delete');
     	return $affect;
     }
 }

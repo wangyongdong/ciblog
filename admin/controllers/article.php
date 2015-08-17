@@ -51,6 +51,7 @@ class Article extends MY_Controller {
 		$data['sort'] = $this->sort_model->getSortList();
 		//token
 		$data['token'] = getToken($this->tokentype);
+		$data['footer'] = 'upload';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_new',$data);
@@ -66,6 +67,7 @@ class Article extends MY_Controller {
 		$data['sort'] = $this->sort_model->getSortList();
 		//token
 		$data['token'] = getToken($this->tokentype);
+		$data['footer'] = 'upload';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_edit',$data);
@@ -87,7 +89,7 @@ class Article extends MY_Controller {
 		$data['content'] = sg($_POST['content']);		//内容
 		$data['keyword'] = sg($_POST['keyword']);		//关键词
 		$data['sortid'] = sg($_POST['sortid']);			//类型
-		$data['img'] = '';								//配图
+		$data['img'] = sg($_POST['img']);				//配图
 		$data['topway'] = sg($_POST['topway']);			//置顶方式
 		$data['status'] = sg($_POST['status']);			//显示状态
 		

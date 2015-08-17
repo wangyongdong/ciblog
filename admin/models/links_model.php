@@ -50,11 +50,11 @@ class Links_model extends CI_Model  {
     	if(empty($data['id'])) {
     		$this->db->insert('links', $data);
     		//添加操作log
-    		$this->public_model->addActionLog('links','add');
+    		$this->site_model->addActionLog('links','add');
     	} else {
     		$this->db->update('links',$data,array('id'=>$data['id']));
     		//添加操作log
-    		$this->public_model->addActionLog('links','update');
+    		$this->site_model->addActionLog('links','update');
     	}
     	$affect = $this->db->affected_rows();
     	return $affect;
@@ -66,7 +66,7 @@ class Links_model extends CI_Model  {
     function doDel($iLinks) {
     	$affect = $this->db->delete('links',array('id'=>$iLinks));
     	//添加操作log
-    	$this->public_model->addActionLog('links','delete');
+    	$this->site_model->addActionLog('links','delete');
     	return $affect;
     }
     

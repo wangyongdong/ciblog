@@ -72,3 +72,7 @@
 .form-ul { float:left; }
 .form-ul li { list-style-type:none; padding:3px 15px 3px 5px; }
 .form-ul span { font-size:16px; font-weight: bold; }
+.avatar { float:left; }
+.post-avatar { float:none !important; margin-left:130px;}
+#file_upload { margin-top:20px; }
+

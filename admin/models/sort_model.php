@@ -46,11 +46,11 @@ class Sort_model extends CI_Model  {
     	if(empty($data['id'])) {
     		$this->db->insert('sort', $data);
     		//添加操作log
-    		$this->public_model->addActionLog('sort','add');
+    		$this->site_model->addActionLog('sort','add');
     	} else {
     		$this->db->update('sort',$data,array('id'=>$data['id']));
     		//添加操作log
-    		$this->public_model->addActionLog('sort','update');
+    		$this->site_model->addActionLog('sort','update');
     	}
     	$affect = $this->db->affected_rows();
     	return $affect;
@@ -62,7 +62,7 @@ class Sort_model extends CI_Model  {
     function doDel($iSort) {
     	$affect = $this->db->delete('sort',array('id'=>$iSort));
     	//添加操作log
-    	$this->public_model->addActionLog('sort','delete');
+    	$this->site_model->addActionLog('sort','delete');
     	return $affect;
     }
     

@@ -72,11 +72,17 @@
 	        	<ul class="nav navbar-nav pull-right">
 	          		<li class="dropdown pull-right">            
 	            		<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-							<img alt="" src="<?=ADMIN_PUBLIC?>img/avatar_small.jpg"><?=getRole(UserId(),'name');?> <b class="caret"></b>
+							<img alt="" src="<?=LinkAvatar()?>" height="40px" width="40px"><?=getRole(UserId(),'name');?> <b class="caret"></b>
 	            		</a>
 	            		<ul class="dropdown-menu">
 			              	<li><a href="<?=site_url('member/profile')?>"><i class="icon-user"></i> 资料</a></li>
-			              	<li><a href="#"><i class="icon-cogs"></i> 设置</a></li>
+			              	<?php 
+			              		if(getRole(UserId(),'role') == 'super') {
+			              	?>
+			              	<li><a href="<?=site_url('site/web')?>"><i class="icon-cogs"></i> 设置</a></li>
+			              	<?php 
+			              	}
+			              	?>
 			              	<li><a href="<?=site_url('login/loginOut')?>"><i class="icon-off"></i> 退出</a></li>
 	            		</ul>
 	          		</li>
@@ -306,10 +312,9 @@
 		            <ul>
 		              	<li><a href="<?=site_url('site/web')?>">网站设置</a></li>
 		              	<li><a href="<?=site_url('site/menu')?>">导航管理</a></li>
-		              	<li><a href="<?=site_url('site/templet')?>">模板设置</a></li>
 						<li><a href="<?=site_url('site/statistic')?>">信息统计</a></li>
-						<li><a href="<?=site_url('site/backup')?>">数据备份</a></li>
 						<li><a href="<?=site_url('site/action')?>">操作日志</a></li>
+						<li><a href="<?=site_url('site/backup')?>">数据备份</a></li>
 		              	<li><a href="<?=site_url('site/cache')?>">更新缓存</a></li>
 		            </ul>
 	          	</li>

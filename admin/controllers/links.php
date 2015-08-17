@@ -19,6 +19,7 @@ class Links extends MY_Controller {
 		$arr = $this->public_model->getPage("links",'links?',$pageId);
 		//执行查询
 		$data['list'] = $this->links_model->getLinksList($arr['start'],$arr['pagenum']);
+
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
@@ -52,7 +53,7 @@ class Links extends MY_Controller {
 			$data['datetime'] =  date("Y-m-d H:i:s",time());
 		}
 		$data['sitename'] = sg($_POST['name']);
-		$data['siteurl'] = addHttpd(sg($_POST['url']));
+		$data['siteurl'] = prep_url(sg($_POST['url']));
 		$data['description'] = sg($_POST['description']);
 		$data['status'] = sg($_POST['status']);
 		

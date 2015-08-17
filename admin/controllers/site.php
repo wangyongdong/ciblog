@@ -126,17 +126,6 @@ class Site extends MY_Controller {
 	}
 	
 	/**
-	 * 模板设置
-	 */
-	public function templet() {
-		$data['data'] = 1;
-	
-		$this->load->view('public/header',$data);
-		$this->load->view('site/site_templet',$data);
-		$this->load->view('public/footer',$data);
-	}
-	
-	/**
 	 * 信息统计
 	 */
 	public function statistic() {
@@ -153,35 +142,13 @@ class Site extends MY_Controller {
 	}
 	
 	/**
-	 * 数据备份
-	 */
-	public function backup() {
-		$data['data'] = 1;
-	
-		$this->load->view('public/header',$data);
-		$this->load->view('site/site_backup',$data);
-		$this->load->view('public/footer',$data);
-	}
-	
-	/**
-	 * 错误日志
+	 * 操作日志
 	 */
 	public function action() {
-		$data['aFilter']['start'] = sg($this->input->get('start'));
-		$data['aFilter']['end'] = sg($this->input->get('end'));
-		
-		//分页执行
-		$pageId = $this->input->get('page');
-		$sFilter = '';
-		if(!empty($data['aFilter']['start'])) {
-			$sFilter = ' AND datetime > '.$data['aFilter']['start'];
-		}
-		if(!empty($data['aFilter']['end'])) {
-			$sFilter = ' AND datetime < '.$data['aFilter']['end'];
-		}
-		$arr = $this->public_model->getPage("action_log",'action_log?',$pageId,$sFilter);
+		$data['aFilter']['start'] = sg($this->input->get('ds'));
+		$data['aFilter']['end'] = sg($this->input->get('de'));
 		//执行查询
-		$data['list'] = $this->site_model->getAction($arr['start'],$arr['pagenum']);
+		$data['list'] = $this->site_model->getAction($data['aFilter']);
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_log_action',$data);
@@ -189,29 +156,11 @@ class Site extends MY_Controller {
 	}
 	
 	/**
-	 * 错误日志
+	 * 删除操作日志
 	 */
-	public function error() {
-		//分页执行
-		$pageId = $this->input->get('page');
-		$arr = $this->public_model->getPage("action_log",'action_log?',$pageId);
-		//执行查询
-		$data['list'] = $this->site_model->getAction($arr['start'],$arr['pagenum']);
-		var_dump($data['list']);
-		$this->load->view('public/header',$data);
-		$this->load->view('site/site_log_error',$data);
-		$this->load->view('public/footer',$data);
-	}
-	
-	/**
-	 * 缓存
-	 */
-	public function cache() {
-		$data['data'] = 1;
-	
-		$this->load->view('public/header',$data);
-		$this->load->view('site/site_cache',$data);
-		$this->load->view('public/footer',$data);
+	public function delActionLog() {
+		$affect = $this->site_model->delActionLog();
+		return $affect;
 	}
 	
 	/**
@@ -261,4 +210,27 @@ class Site extends MY_Controller {
 		}
 		echo $affects;
 	}
+	
+	/**
+	 * 缓存
+	 */
+	public function cache() {
+		$data['data'] = 1;
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_cache',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 数据备份
+	 */
+	public function backup() {
+		$data['data'] = 1;
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_backup',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
 }

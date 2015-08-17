@@ -3,15 +3,18 @@
  * 文章编辑器定制
  */
 function ArticleUedit($sContent='') {
-	$sUedit = '
-    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
-    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
+	$ss = '
 			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
 			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
 			<script type="text/javascript">
 				SyntaxHighlighter.all();
 				//SyntaxHighlighter.highlight();
 			</script>
+			';
+	$sUedit = '
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
+    		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
+			
     		<script type="text/javascript">
 			    var ue = UE.getEditor("editor",{
 	    			maximumWords:50000,
@@ -192,14 +195,15 @@ function UserName() {
 /**
  * 获取用户权限状态
  */
-function getRole($iRole,$sField='list') {
-	if(empty($iRole)) {
-		return;
+function getRole($iUser='',$sField='list') {
+	if(empty($iUser)) {
+		$iUser = UserId();
 	}
+	$aUserInfo = getUser($iUser);
 	if($sField == 'list') {
-		$sql = 'SELECT * FROM blog_role WHERE id='.$iRole;
+		$sql = 'SELECT * FROM blog_role WHERE id='.$aUserInfo['role_id'];
 	} else {
-		$sql = 'SELECT '.$sField.' FROM blog_role WHERE id='.$iRole;
+		$sql = 'SELECT '.$sField.' FROM blog_role WHERE id='.$aUserInfo['role_id'];
 	}
 	$db = DB('default');
 	$res = $db->query($sql);
@@ -232,9 +236,9 @@ function roleMenu($sAction,$sModel) {
 function getLogin($sField='') {
 	$iUser = UserId();
 	if(empty($sField)) {
-		$sql = 'SELECT * FROM blog_login_log WHERE userid='.$iUser.' ORDER BY datetime DESC ';
+		$sql = 'SELECT * FROM blog_log_login WHERE userid='.$iUser.' ORDER BY datetime DESC ';
 	}else {
-		$sql = 'SELECT '.$sField.' FROM blog_login_log WHERE userid='.$iUser.' ORDER BY datetime DESC ';
+		$sql = 'SELECT '.$sField.' FROM blog_log_login WHERE userid='.$iUser.' ORDER BY datetime DESC ';
 	}
 	$db = DB('default');
 	$res = $db->query($sql);
@@ -303,34 +307,22 @@ function beTop($sType) {
 	return $name;
 }
 /**
- * 生成文章配图
- */
-function LinkArticle($sName) {
-	return '/public/upload/article/'.$sName;
-}
-/**
  * 生成用户头像
  */
-function LinkAvatar($uid) {
-	$sql = 'SELECT picname FROM blog_member WHERE id='.$uid;
+function LinkAvatar($iUser='') {
+	if(empty($iUser)) {
+		$iUser = UserId();
+	}
+	$sql = 'SELECT picname FROM blog_member WHERE id='.$iUser;
 	$db = DB('default');
 	$res = $db->query($sql);
-	$picname = $res->row_array();
-	if(!empty($picname)) {
-		$url = UPLOAD_PUBLIC.'user/'.$picname;
+	$list = $res->row_array();
+	if(!empty($list['picname'])) {
+		$url = UPLOAD_PUBLIC.'user/'.$list['picname'];
 	} else {
-		$url = ADMIN_PUBLIC.'images/common/avatar.jpg';
+		$url = UPLOAD_PUBLIC.'user/avatar.jpg';
 	}
 	return $url;
-}
-/**
- * 添加httpd
- */
-function addHttpd($str) {
-	if (!preg_match("/^(http|ftp):/",$str)){
-		$str = 'http://'.$str;
-	}
-	return $str;
 }
 /**
  * 过滤用户输入的数据
@@ -524,7 +516,16 @@ function timeTran($sTime) {
 		}
 	}
 }
-
+/**
+ * 打印数据信息
+ */
+function pl($var) {
+	$value = print_r($var, TRUE);
+	$fileName = 'ciblog_admin.'.date('Ymd').'.run.log';
+	$file = LOG.$fileName;
+	$prefix = '[' . date('c') . '] ';
+	@file_put_contents($file, $prefix . $value . "\n", FILE_APPEND);
+}
 
 /**
  * 文件上传函数
