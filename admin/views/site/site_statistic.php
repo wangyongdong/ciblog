@@ -16,23 +16,23 @@
 	              	<ul class="today-datas">
 	                	<li>
 		                  	<div><span id="todayspark1" class="spark"></span></div>
-		                  	<div class="datas-text">12,000 visitors/day</div>
+		                  	<div class="datas-text"><?=$data['Pageviews']?> Pageviews/day</div>
 	                	</li>
 	                	<li>
 	                  		<div><span id="todayspark2" class="spark"></span></div>
-	                  		<div class="datas-text">30,000 Pageviews</div>
+	                  		<div class="datas-text"><?=$data['VisitorsDay']?> visitors/day</div>
 	                	</li>
 	                	<li>
 	                  		<div><span id="todayspark3" class="spark"></span></div>
-	                  		<div class="datas-text">15.66% Bounce Rate</div>
+	                  		<div class="datas-text"><?=$data['VisitorsMonth']?> visitors/month</div>
 	                	</li>
 	                	<li>
 	                  		<div><span id="todayspark4" class="spark"></span></div>
-	                  		<div class="datas-text">$12,000 Revenue/Day</div>
+	                  		<div class="datas-text"><?=$data['NewVisits']?> New Visits/month</div>
 	                	</li>
 	                	<li>
 	                  		<div><span id="todayspark5" class="spark"></span></div>
-	                  		<div class="datas-text">15,000000 visitors till date</div>
+	                  		<div class="datas-text"><?=$data['total']?> visitors till date</div>
 	                	</li>
 	              	</ul> 
 				</div>
@@ -52,38 +52,38 @@
 	                  		<table class="table table-striped table-bordered table-hover">
 			                    <tr>
 			                      	<th><center>#</center></th>
-			                      	<th>Browsers</th>
-			                      	<th>Visits</th>
+			                      	<th>Modular</th>
+			                      	<th>Number</th>
 			                    </tr>
 			                    <tr>
 			                      	<td class="tab-cen"><i class="icon-user"></i>
 			                      	<td>用户</td>
-			                      	<td>3,005</td>
+			                      	<td><?=getStatis('member');?></td>
 			                    </tr> 
 			                    <tr>
 			                      	<td class="tab-cen"><i class="icon-file-alt"></i>
 			                      	<td>文章</td>
-			                      	<td>2,505</td>
+			                      	<td><?=getStatis('article');?></td>
 			                    </tr> 
 			                    <tr>
 			                      	<td class="tab-cen"><i class="icon-bullhorn"></i>
 			                      	<td>说说</td>
-			                      	<td>1,405</td>
+			                      	<td><?=getStatis('record');?></td>
 			                    </tr> 
 			                    <tr>
 			                      	<td class="tab-cen"><i class="icon-comment"></i>
 			                      	<td>评论</td>
-			                      	<td>4,005</td>
+			                      	<td><?=getStatis('comment');?></td>
 			                    </tr> 
 			                    <tr>
 			                      	<td class="tab-cen"><i class="icon-pencil"></i>
 			                      	<td>留言</td>
-			                      	<td>505</td>
+			                      	<td><?=getStatis('contact');?></td>
 			                    </tr>
 			                    <tr>
 			                      	<td class="tab-cen"><i class="icon-link"></i>
 			                      	<td>友链</td>
-			                      	<td>505</td>
+			                      	<td><?=getStatis('links');?></td>
 			                    </tr>
 							</table>
 	                  		<div class="widget-foot"></div>
@@ -102,30 +102,26 @@
                 		</div>
 			            <div class="widget-content">
 			            	<div class="padd">
-			                	<!-- Visitors, pageview, bounce rate, etc., Sparklines plugin used -->
 			                    <ul class="current-status">
+			                    	<li>
+			                        	<span id="status4"></span> <span class="bold">home : <?=$arr['homeViews']?></span>
+			                      	</li>
 				                	<li>
-				                    	<span id="status1"></span> <span class="bold">Visits : 2000</span>
+				                    	<span id="status1"></span> <span class="bold">article : <?=$arr['articleViews']?></span>
 				                    </li>
-			                      	<li>
-			                        	<span id="status2"></span> <span class="bold">Unique Visitors : 1,345</span>
+				                    <li>
+			                        	<span id="status6"></span> <span class="bold">cms : <?=$arr['cmsViews']?></span>
 			                      	</li>
 			                      	<li>
-			                        	<span id="status3"></span> <span class="bold">Pageviews : 2000</span>
+			                        	<span id="status2"></span> <span class="bold">record : <?=$arr['recordViews']?></span>
 			                      	</li>
 			                      	<li>
-			                        	<span id="status4"></span> <span class="bold">Pages / Visit : 2000</span>
+			                        	<span id="status3"></span> <span class="bold">contact : <?=$arr['contactViews']?></span>
 			                      	</li>
 			                      	<li>
-			                        	<span id="status5"></span> <span class="bold">Avg. Visit Duration : 2000</span>
+			                        	<span id="status5"></span> <span class="bold">about : <?=$arr['aboutViews']?></span>
 			                      	</li>
-			                      	<li>
-			                        	<span id="status6"></span> <span class="bold">Bounce Rate : 2000</span>
-			                      	</li>   
-			                      	<li>
-			                        	<span id="status7"></span> <span class="bold">% New Visits : 2000</span>
-			                      	</li>                                                                                                            
-			                    </ul>
+								</ul>
 							</div>
 						</div>
 					</div>

@@ -24,9 +24,9 @@
 					<div class="widget-content">
 						<div class="padd">
 							<div class="avatar pull-left big-avatar">
-								<img src="<?=ADMIN_PUBLIC?>img/user.jpg" alt=""/>
+								<img src="<?=LinkAvatar()?>" height=80 width=80/>
 							</div>
-							<div class="chat-content" style="width: 85%;padding-left:70px;">
+							<div class="chat-content" style="width: 85%;padding-left:90px;">
 								<form class="form-horizontal" method="post" action="<?=site_url('record/doRecord')?>">
 									<?=RecordUedit()?>
 									<div class="buttons">
@@ -46,7 +46,7 @@
 								<?php foreach($list as $list):?>
 								<li class="by-me">
 									<div class="avatar pull-left">
-										<img src="<?=ADMIN_PUBLIC?>img/user.jpg" alt=""/>
+										<img src="<?=LinkAvatar()?>" height=40 width=40/>
 									</div>
 									<div class="chat-content">
 										<div class="chat-meta">

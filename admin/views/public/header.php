@@ -3,7 +3,6 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<!-- Title and other stuffs -->
 		<title>Mac风格响应式后台管理模版演示 - 源码之家</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="author" content="">
@@ -12,19 +11,10 @@
 		<!-- Font awesome icon -->
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/font-awesome.css"> 
 		<!-- jQuery UI -->
-		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/jquery-ui.css"> 
-		<!-- Calendar -->
-		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/fullcalendar.css">
 		<!-- prettyPhoto -->
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/prettyPhoto.css">  
-		<!-- Star rating -->
-		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/rateit.css">
 		<!-- Date picker -->
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/bootstrap-datetimepicker.min.css">
-		<!-- CLEditor -->
-		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/jquery.cleditor.css"> 
-		<!-- Bootstrap toggle -->
-		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/bootstrap-switch.css">
 		<!-- Main stylesheet -->
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/style.css">
 		<!-- Widgets stylesheet -->
@@ -34,7 +24,6 @@
 		<!--[if lt IE 9]>
 		<script src="<?=ADMIN_PUBLIC?>js/html5shim.js"></script>
 		<![endif]-->
-		<!-- Favicon -->
 		<link rel="shortcut icon" href="<?=ADMIN_PUBLIC?><?=ADMIN_PUBLIC?>img/favicon/favicon.png">
 		<script type="text/javascript">
 			var __A = "<?php echo base_url(); ?>";

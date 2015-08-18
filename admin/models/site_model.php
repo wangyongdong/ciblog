@@ -141,7 +141,6 @@ class Site_model extends CI_Model  {
     	}
     	$sql .= ' ORDER BY
     				id DESC ';
-    	echo $sql;
     	$res = $this->db->query($sql);
     	$list = $res->result_array();
     	return $list;
@@ -172,4 +171,182 @@ class Site_model extends CI_Model  {
     	$affect = $this->db->query($sql);
     	return 1;
     }
+    
+    /**
+     * 获取访问统计
+     */
+    public function getVisitStatistic() {
+    	$today = date("Y-m-d");
+    	$month = date("Y-m");
+    	//Pageviews 今天所有页面访问数量
+    	$sql = 'SELECT count(*) as num FROM blog_log WHERE datetime>"'.$today.'"';
+    	$res = $this->db->query($sql);
+    	$Pageviews = $res->row_array();
+    	//visitors 当天访问独立人数
+    	$sql = 'SELECT count(*) as num FROM (SELECT * FROM blog_log WHERE datetime>"'.$today.'" GROUP BY ip) as a';
+    	$res = $this->db->query($sql);
+    	$VisitorsDay = $res->row_array();
+    	//visitors 当月访问独立人数
+    	$sql = 'SELECT count(*) as num FROM (SELECT * FROM blog_log WHERE datetime>"'.$month.'" GROUP BY ip) as a';
+    	$res = $this->db->query($sql);
+    	$VisitorsMonth = $res->row_array();
+    	//New Visits 新增独立访问人数
+    	$sql = 'SELECT
+    				count(*) as num
+    			FROM
+    				blog_log
+    			WHERE
+    				ip not in (SELECT ip FROM blog_log WHERE datetime<"'.$month.'")
+    				AND datetime>"'.$month.'"';
+    	$res = $this->db->query($sql);
+    	$NewVisits = $res->row_array();
+    	//visitors till date
+    	$sql = 'SELECT count(*) as num FROM (SELECT * FROM blog_log GROUP BY ip) as a';
+    	$res = $this->db->query($sql);
+    	$total = $res->row_array();
+    	 
+    	$arr['Pageviews'] = sg($Pageviews['num'],0);
+    	$arr['VisitorsDay'] = sg($VisitorsDay['num'],0);
+    	$arr['VisitorsMonth'] = sg($VisitorsMonth['num'],0);
+    	$arr['NewVisits'] = sg($NewVisits['num'],0);
+    	$arr['total'] = sg($total['num'],0);
+    	
+    	return $arr;
+    }
+    /**
+     * 获取模块统计
+     */
+    public function getmoduleStatistic() {
+    	$today = date("Y-m-d");
+    	//Pageviews 今天首页访问数量
+    	$sql = 'SELECT count(*) as num FROM blog_log WHERE url like "%home%" AND datetime>"'.$today.'"';
+    	$res = $this->db->query($sql);
+    	$homeViews = $res->row_array();
+    	
+    	//Pageviews 今天article访问数量
+    	$sql = 'SELECT count(*) as num FROM blog_log WHERE url like "%article%" AND datetime>"'.$today.'"';
+    	$res = $this->db->query($sql);
+    	$articleViews = $res->row_array();
+    	
+    	//Pageviews 今天cms访问数量
+    	$sql = 'SELECT count(*) as num FROM blog_log WHERE url like "%cms%" AND datetime>"'.$today.'"';
+    	$res = $this->db->query($sql);
+    	$cmsViews = $res->row_array();
+    	
+    	//Pageviews 今天record访问数量
+    	$sql = 'SELECT count(*) as num FROM blog_log WHERE url like "%record%" AND datetime>"'.$today.'"';
+    	$res = $this->db->query($sql);
+    	$recordViews = $res->row_array();
+    	
+    	//Pageviews 今天contact访问数量
+    	$sql = 'SELECT count(*) as num FROM blog_log WHERE url like "%contact%" AND datetime>"'.$today.'"';
+    	$res = $this->db->query($sql);
+    	$contactViews = $res->row_array();
+    	
+    	//Pageviews 今天about访问数量
+    	$sql = 'SELECT count(*) as num FROM blog_log WHERE url like "%about%" AND datetime>"'.$today.'"';
+    	$res = $this->db->query($sql);
+    	$aboutViews = $res->row_array();
+    	
+    	$arr['homeViews'] = sg($homeViews['num'],0);
+    	$arr['articleViews'] = sg($articleViews['num'],0);
+    	$arr['cmsViews'] = sg($cmsViews['num'],0);
+    	$arr['recordViews'] = sg($recordViews['num'],0);
+    	$arr['contactViews'] = sg($contactViews['num'],0);
+    	$arr['aboutViews'] = sg($aboutViews['num'],0);
+    	
+    	return $arr;
+    }
+    
+    /**
+     * 数据库备份
+     */
+    public function dbBackup($sPath='') {
+    	header("Content-type:text/html;charset=utf-8");
+    	//配置信息
+    	$cfg_dbhost = 'localhost';
+    	$cfg_dbname = 'ciblog';
+    	$cfg_dbuser = 'root';
+    	$cfg_dbpwd = '123456';
+    	$cfg_db_language = 'utf8';
+    	$to_file_name = $sPath."ciblog_backup.sql";
+    	//END 配置
+    	
+    	//链接数据库
+    	$link = mysql_connect($cfg_dbhost,$cfg_dbuser,$cfg_dbpwd);
+    	mysql_select_db($cfg_dbname);
+    	//选择编码
+    	mysql_query("set names ".$cfg_db_language);
+    	
+    	//数据库中有哪些表
+    	$tables = mysql_query("SHOW TABLES FROM $cfg_dbname");
+    	//将这些表记录到一个数组
+    	$tabList = array();
+    	while($row = mysql_fetch_row($tables)) {
+    		$tabList[] = $row[0];
+    	}
+		$sqldump = '';
+    	//echo "运行中，请耐心等待...<br/>";
+    	$info = "-- ----------------------------\r\n";
+    	$info .= "-- 日期：".date("Y-m-d H:i:s",time())."\r\n";
+    	$info .= "-- Power by 王永东博客(http://www.wangyongdong.com)\r\n";
+    	$info .= "-- 仅用于测试和学习,本程序不适合处理超大量数据\r\n";
+    	$info .= "-- ----------------------------\r\n\r\n";
+    	//file_put_contents($to_file_name,$info,FILE_APPEND);
+    	$sqldump .= $info;
+    	
+    	//将每个表的表结构导出到文件
+    	foreach($tabList as $val){
+    		$sql = "show create table ".$val;
+    		$res = mysql_query($sql,$link);
+    		$row = mysql_fetch_array($res);
+    		$info = "-- ----------------------------\r\n";
+    		$info .= "-- Table structure for `".$val."`\r\n";
+    		$info .= "-- ----------------------------\r\n";
+    		$info .= "DROP TABLE IF EXISTS `".$val."`;\r\n";
+    		$sqlStr = $info.$row[1].";\r\n\r\n";
+    		//追加到文件
+    		//file_put_contents($to_file_name,$sqlStr,FILE_APPEND);
+    		$sqldump .= $sqlStr;
+    		//释放资源
+    		mysql_free_result($res);
+    	}
+    	
+    	//将每个表的数据导出到文件
+    	foreach($tabList as $val){
+    		$sql = "select * from ".$val;
+    		$res = mysql_query($sql,$link);
+    		//如果表中没有数据，则继续下一张表
+    		if(mysql_num_rows($res)<1) continue;
+    		//
+    		$info = "-- ----------------------------\r\n";
+    		$info .= "-- Records for `".$val."`\r\n";
+    		$info .= "-- ----------------------------\r\n";
+    		$sqldump .= $info;
+    		//file_put_contents($to_file_name,$info,FILE_APPEND);
+    		//读取数据
+    		while($row = mysql_fetch_row($res)){
+    			$sqlStr = "INSERT INTO `".$val."` VALUES (";
+    			foreach($row as $zd){
+    				$sqlStr .= "'".$zd."', ";
+    			}
+    			//去掉最后一个逗号和空格
+    			$sqlStr = substr($sqlStr,0,strlen($sqlStr)-2);
+    			$sqlStr .= ");\r\n";
+    			$sqldump .= $sqlStr;
+    			//file_put_contents($to_file_name,$sqlStr,FILE_APPEND);
+    		}
+    		//释放资源
+    		mysql_free_result($res);
+    		$sqldump .= '\r\n';
+    		//file_put_contents($to_file_name,"\r\n",FILE_APPEND);
+    	}
+    	
+    	$filename = 'ciblog_'. date('Ymd_His', time()).'.sql';
+    	header('Content-Type: text/x-sql');
+    	header("Content-Disposition:attachment;filename=".$filename);
+    	
+    	echo $sqldump;
+    }
+    
 }

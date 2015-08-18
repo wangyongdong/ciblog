@@ -22,7 +22,6 @@ class Site extends MY_Controller {
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_web',$data);
 		$this->load->view('public/footer',$data);
-		
 	}
 	
 	/**
@@ -136,6 +135,9 @@ class Site extends MY_Controller {
 		$data['links'] = getStatis('links');
 		$data['view'] = getStatis('log');
 		
+		$data['data'] = $this->site_model->getVisitStatistic();
+		$data['arr'] = $this->site_model->getmoduleStatistic();
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_statistic',$data);
 		$this->load->view('public/footer',$data);
@@ -212,17 +214,6 @@ class Site extends MY_Controller {
 	}
 	
 	/**
-	 * 缓存
-	 */
-	public function cache() {
-		$data['data'] = 1;
-	
-		$this->load->view('public/header',$data);
-		$this->load->view('site/site_cache',$data);
-		$this->load->view('public/footer',$data);
-	}
-	
-	/**
 	 * 数据备份
 	 */
 	public function backup() {
@@ -230,6 +221,31 @@ class Site extends MY_Controller {
 	
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_backup',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 执行备份
+	 */
+	public function doBackup() {
+		$module = sg($_POST['module']);
+		$path = sg($_POST['path']);
+		//if($module == 'data') {
+			$this->site_model->dbBackup();
+		//}
+		
+		
+	}
+	
+	
+	/**
+	 * 缓存
+	 */
+	public function cache() {
+		$data['data'] = 1;
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/site_cache',$data);
 		$this->load->view('public/footer',$data);
 	}
 	

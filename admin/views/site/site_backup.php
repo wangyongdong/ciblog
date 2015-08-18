@@ -26,21 +26,39 @@
 		                  	<div class="padd">
 			                    <h5>数据备份</h5>
 			                    <div class="alert alert-warning">
-			                      Oh snap! Change a few things up and try submitting again.
+			                      	备份数据库，数据库备份文件将会被下载到本地.
 			                    </div>
-			                    <a href="#myModal" class="btn btn-info" data-toggle="modal">Launch demo modal</a>
+			                    <a href="<?=site_url('site/doBackup')?>" class="btn btn-info">点击备份</a>
 			                    <hr />
 			                    
 			                    <h5>资源备份</h5>
 			                    <div class="alert alert-success">
-			                      Well done! You successfully read this important alert message.
+			                      	上传的图片.
 			                    </div>
 			                    <a href="#myModal" class="btn btn-info" data-toggle="modal">Launch demo modal</a>
+			                    <!-- Modal -->
+								<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+												<h4 class="modal-title">&nbsp;</h4>
+											</div>
+											<div class="modal-body">
+												<p></p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
+												<button type="button" class="btn btn-primary">确定</button>
+											</div>
+										</div>
+									</div>
+								</div>
 			                    <hr />
 			                    
 			                    <h5>代码备份</h5>
 			                    <div class="alert alert-info">
-			                      Heads up! This alert needs your attention, but it's not super important.
+			                      	备份整站代码和插件
 			                    </div>
 			                    <a href="#myModal" class="btn btn-info" data-toggle="modal">Launch demo modal</a>                                     
 			                    <hr />

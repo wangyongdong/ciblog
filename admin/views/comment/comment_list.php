@@ -81,13 +81,39 @@
 														<div class="modal-body">
 									          				<div class="padd">
 									              				<div class="form quick-post">
+									              				<script src="<?=ADMIN_PUBLIC?>js/jquery.js"></script> <!-- jQuery -->
+									              				<script type="text/javascript" src="<?=PLUGIN_QQFACE?>browser.js"></script>
+									              				<script type="text/javascript" src="<?=PLUGIN_QQFACE?>jquery.qqFace.js"></script>
+									              					<script type="text/javascript">
+																		//表情js
+																		$(function(){
+																			$('.emotion').qqFace({
+																				id : 'facebox', //表情盒子的ID
+																				assign:'content', //给那个控件赋值
+																				path:'../../public/plugin/qqface/face/'	//表情存放的路径
+																			});
+																			$(".sub_btn").click(function(){
+																				var str = $("#saytext").val();
+																				$("#show").html(replace_em(str));
+																			});
+																		});
+																		//查看结果
+																		function replace_em(str){
+																			str = str.replace(/\</g,'&lt;');
+																			str = str.replace(/\>/g,'&gt;');
+																			str = str.replace(/\n/g,'<br/>');
+																			str = str.replace(/\[em_([0-9]*)\]/g,'<img src="<?=PLUGIN_QQFACE?>face/$1.gif" border="0" />');
+																			return str;
+																		}
+																	</script>
 								                              		<input type="hidden" name="comment_id" value="<?=$list['comment_id']?>">
 								                              		<input type="hidden" name="reply_id" value="<?=$list['id']?>" >
 																	<input type="hidden" name="token" value="<?=$token?>" >
 								                                  	<div class="form-group">
-								                                    	<label class="control-label col-lg-3" for="content<?=$list['id']?>">回复内容</label>
+								                                    	<label class="control-label col-lg-3" for="content">回复内容</label>
 								                                    	<div class="col-lg-9">
-								                                      		<textarea class="form-control" id="content<?=$list['id']?>" name="content"></textarea>
+								                                      		<textarea class="form-control" id="content" name="content"></textarea>
+								                                    		<span class="emotion"></span>
 								                                    	</div>
 								                                  	</div>
 									                            </div>

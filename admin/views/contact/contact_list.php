@@ -69,9 +69,9 @@
 								                              		<input type="hidden" name="reply_id" value="<?=$list['id']?>" >
 																	<input type="hidden" name="token" value="<?=$token?>" >
 								                                  	<div class="form-group">
-								                                    	<label class="control-label col-lg-3" for="content<?=$list['id']?>">回复内容</label>
+								                                    	<label class="control-label col-lg-3" for="content">回复内容</label>
 								                                    	<div class="col-lg-9">
-								                                      		<textarea class="form-control" id="content<?=$list['id']?>" name="content"></textarea>
+								                                      		<textarea class="form-control" id="content" name="content"></textarea>
 								                                    	</div>
 								                                  	</div>
 									                            </div>

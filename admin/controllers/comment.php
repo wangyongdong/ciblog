@@ -31,6 +31,8 @@ class Comment extends MY_Controller {
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
+		$data['footer'] = 'upload';
+		
 		//标记已读
 		$this->comment_model->doRead();
 		

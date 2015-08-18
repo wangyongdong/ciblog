@@ -248,13 +248,17 @@ function checkPopL() {
 	}
 	return true;
 }
+
 function checkPopC(id) {
 	//var content = $("#content"+id).text();
-	var content = $("#content"+id).val();
+	var content = $("#myModal"+id+" #content").val();
 	if(content.length == 0) {
 		$("#content"+id).addClass('form-pop');
 		return false;
 	}
+	comment = replace_em(content);
+	$("#myModal"+id+" #content").val('');
+	$("#myModal"+id+" #content").val(comment);
 	return true;
 }
 function checkPopS() {
@@ -346,4 +350,19 @@ function signIn() {
 		},
 		"json"
 	);
+}
+// 
+function doBakcup() {
+	$.ajax({
+		url:__A+'site/doBackup',
+		data:'module=data',
+		type:'post',
+		success:function(data) {
+			if(data) {
+				window.location.reload();
+			} else {
+				alert("删除失败");
+			}
+		}
+	})
 }
