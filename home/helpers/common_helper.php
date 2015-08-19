@@ -137,13 +137,13 @@ function is_email($email) {
  * 生成用户头像
  */
 function LinkAvatar($uid) {
-	$sql = 'SELECT picname FROM blog_member WHERE id='.$uid;
+	$sql = 'SELECT img FROM blog_member WHERE id='.$uid;
 	$db = DB('default');
 	$res = $db->query($sql);
-	$list = $res->result_array();
-	$picname = $list['0']['picname'];
-	if(!empty($picname)) {
-		$url = UPLOAD_PUBLIC.'user/'.$picname;
+	$list = $res->row_array();
+	$img = $list['img'];
+	if(!empty($img)) {
+		$url = UPLOAD_PUBLIC.'user/'.$img;
 	} else {
 		$url = ADMIN_PUBLIC.'images/common/avatar.jpg';
 	}

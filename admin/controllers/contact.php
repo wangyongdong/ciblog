@@ -26,7 +26,9 @@ class Contact extends MY_Controller {
 		
 		//标记已读
 		$this->contact_model->doRead();
-
+		//导航
+		$data['nav'] = 'comcon';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('contact/contact_list',$data);
 		$this->load->view('public/footer',$data);
@@ -41,6 +43,9 @@ class Contact extends MY_Controller {
 		$data['reply'] = $this->contact_model->getContactReply($iContact);
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'comcon';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('contact/contact_edit',$data);
 		$this->load->view('public/footer',$data);
@@ -77,7 +82,7 @@ class Contact extends MY_Controller {
 		$data['reply_id'] = sg($_POST['reply_id']);		//回复id
 		$data['userid'] = UserId();						//userid
 		$data['author'] = UserName();					//用户名
-		$data['content'] = sg($_POST['content']);		//内容
+		$data['content'] = sg($_POST['reply_content']);		//内容
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
 		$data['datetime'] = date("Y-m-d H:i:s",time());
@@ -85,8 +90,6 @@ class Contact extends MY_Controller {
 		//数据验证
 		$arr = array($data['author'],$data['content']);
 		checkEmpty($arr);
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
 	
 		$this->contact_model->doReply($data);
 		succes(site_url('contact'));

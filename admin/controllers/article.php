@@ -38,6 +38,8 @@ class Article extends MY_Controller {
 		
 		//执行查询
 		$data['list'] = $this->article_model->getArticleList($arr['start'],$arr['pagenum'],$data['aFilter']);
+		//导航
+		$data['nav'] = 'article';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_list',$data);
@@ -52,6 +54,8 @@ class Article extends MY_Controller {
 		//token
 		$data['token'] = getToken($this->tokentype);
 		$data['footer'] = 'upload';
+		//导航
+		$data['nav'] = 'article';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_new',$data);
@@ -68,6 +72,8 @@ class Article extends MY_Controller {
 		//token
 		$data['token'] = getToken($this->tokentype);
 		$data['footer'] = 'upload';
+		//导航
+		$data['nav'] = 'article';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_edit',$data);

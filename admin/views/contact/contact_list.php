@@ -1,6 +1,6 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-    <div class="page-head">
+    <div class="page-head" style="margin-top:-22px;">
       	<h2 class="pull-left"><i class="icon-home"></i> 用户留言</h2>
     	<div class="bread-crumb pull-right">
           	<a href="/admin"><i class="icon-home"></i> 首页</a> 
@@ -51,40 +51,9 @@
 			                            		<button class="btn btn-xs btn-default"><i class="icon-remove"></i> </button>
 			                          		</a>
 			                          	</div>
-			                          	<a href="#myModal<?=$list['id']?>" data-toggle="modal">
+			                          	<a href="#myModalC" data-toggle="modal" id="<?=$list['id']?>" class="btn-cc">
                   							<button class="btn btn-xs btn-success pull-right">回复</button>
                   						</a>
-                  						<!-- Modal -->
-										<div id="myModal<?=$list['id']?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-														<h4 class="modal-title"> &nbsp;</h4>
-													</div>
-													<form class="form-horizontal" method="post" action="<?=site_url('contact/doReply')?>" onsubmit="return checkPopC(<?=$list['id']?>)">
-														<div class="modal-body">
-									          				<div class="padd">
-									              				<div class="form quick-post">
-								                              		<input type="hidden" name="reply_id" value="<?=$list['id']?>" >
-																	<input type="hidden" name="token" value="<?=$token?>" >
-								                                  	<div class="form-group">
-								                                    	<label class="control-label col-lg-3" for="content">回复内容</label>
-								                                    	<div class="col-lg-9">
-								                                      		<textarea class="form-control" id="content" name="content"></textarea>
-								                                    	</div>
-								                                  	</div>
-									                            </div>
-									          				</div>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
-															<button type="submit" class="btn btn-primary">回复</button>
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
 			                          	<div class="clearfix"></div>
 			                        </div>
 			                    </li>
@@ -102,6 +71,36 @@
         			</div>
       			</div>
    			</div>
+   			<!-- Modal -->
+			<div id="myModalC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title"> &nbsp;</h4>
+						</div>
+						<form class="form-horizontal" method="post" action="<?=site_url('contact/doReply')?>" onsubmit="return checkPopCon()">
+							<div class="modal-body">
+		          				<div class="padd">
+		              				<div class="form quick-post">
+	                              		<input type="hidden" name="reply_id" id="reply_id" value="" >
+	                                  	<div class="form-group">
+	                                    	<label class="control-label col-lg-3" for="reply_content">回复内容</label>
+	                                    	<div class="col-lg-9">
+	                                      		<textarea class="form-control" id="reply_content" name="reply_content"></textarea>
+	                                    	</div>
+	                                  	</div>
+		                            </div>
+		          				</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+								<button type="submit" class="btn btn-primary">回复</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

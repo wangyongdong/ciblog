@@ -76,6 +76,10 @@ class Contact_model extends CI_Model {
     function doReply($data) {
     	if(empty($data['id'])) {
     		$this->db->insert('contact', $data);
+    		
+    		//邮件发送
+    		$arr = $this->public_model->contactEmail($data['reply_id'],$data['author'],$data['content']);
+    		$this->public_model->sendMail($arr['email'],$arr['subject'],$arr['content']);
     	} else {
     		$this->db->update('contact',$data,array('id'=>$data['id']));
     	}

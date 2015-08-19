@@ -35,6 +35,7 @@ class Member_model extends CI_Model  {
      */
     function doUser($data) {
     	if(!empty($data['id'])) {
+    		changeImg('user', $data['id'], $data['img']);
     		$this->db->update('member',$data,array('id'=>$data['id']));
     		//添加操作log
     		$this->site_model->addActionLog('member','update');

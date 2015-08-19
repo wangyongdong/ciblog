@@ -36,6 +36,9 @@ class Show extends MY_Controller {
 		
 		$data['arr'] = $arrSys;
 		
+		//导航
+		$data['nav'] = 'index';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('show',$data);
 		$this->load->view('public/footer',$data);

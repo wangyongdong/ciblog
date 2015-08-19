@@ -1,6 +1,6 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-    <div class="page-head">
+    <div class="page-head" style="margin-top:-22px;">
       	<h2 class="pull-left"><i class="icon-home"></i> 用户留言</h2>
     	<div class="bread-crumb pull-right">
           	<a href="/admin"><i class="icon-home"></i> 首页</a> 
@@ -101,9 +101,9 @@
                               		<input type="hidden" name="reply_id" value="<?=$reply['reply_id']?>" >
 									<input type="hidden" name="token" value="<?=$token?>" >
                                   	<div class="form-group">
-                                    	<label class="control-label col-lg-3" for="content">回复内容</label>
+                                    	<label class="control-label col-lg-3" for="reply_content">回复内容</label>
                                     	<div class="col-lg-9">
-                                      		<textarea class="form-control" id="content" name="content"><?=$reply['content']?></textarea>
+                                      		<textarea class="form-control" id="reply_content" name="reply_content"><?=$reply['content']?></textarea>
                                     	</div>
                                   	</div>
                                   	<div class="form-group">

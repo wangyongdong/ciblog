@@ -20,6 +20,9 @@ class Sort extends MY_Controller {
 		//执行查询
 		$data['list'] = $this->sort_model->getSortList($arr['start'],$arr['pagenum']);
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'article';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('sort/sort_list',$data);
 		$this->load->view('public/footer',$data);
@@ -33,10 +36,12 @@ class Sort extends MY_Controller {
 		$iSort = $this->uri->segment(3);
 		$data['list'] = $this->sort_model->getSortInfo($iSort);
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'article';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('sort/sort_edit',$data);
 		$this->load->view('public/footer',$data);
-		
 	}
 	
 	/**

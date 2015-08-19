@@ -264,6 +264,12 @@ function getTitle($iArticle) {
 	return $list['title'];
 }
 /**
+ * 生成文章链接
+ */
+function linkArticle($iArticle) {
+	return HOST.'/article/view/'.$iArticle;
+}
+/**
  * 获取文章所属分类
  */
 function getArticleField($iArticle,$sField) {
@@ -307,12 +313,12 @@ function LinkAvatar($iUser='') {
 	if(empty($iUser)) {
 		$iUser = UserId();
 	}
-	$sql = 'SELECT picname FROM blog_member WHERE id='.$iUser;
+	$sql = 'SELECT img FROM blog_member WHERE id='.$iUser;
 	$db = DB('default');
 	$res = $db->query($sql);
 	$list = $res->row_array();
-	if(!empty($list['picname'])) {
-		$url = UPLOAD_PUBLIC.'user/'.$list['picname'];
+	if(!empty($list['img'])) {
+		$url = UPLOAD_PUBLIC.'user/'.$list['img'];
 	} else {
 		$url = UPLOAD_PUBLIC.'user/avatar.jpg';
 	}
@@ -520,3 +526,37 @@ function pl($var) {
 	$prefix = '[' . date('c') . '] ';
 	@file_put_contents($file, $prefix . $value . "\n", FILE_APPEND);
 }
+/**
+ * 删除旧图片
+ * 修改资料时，若图片被修改，则删除旧图
+ */
+function changeImg($sType,$id,$sFile) {
+	//此处删除使用真实路径
+	if($sType == 'article') {
+		$sql = 'SELECT img FROM blog_article WHERE id='.$id;
+		$path = UPLOAD_PATH.'article/';
+	}
+	if($sType == 'user') {
+		$sql = 'SELECT img FROM blog_member WHERE id='.$id;
+		$path = UPLOAD_PATH.'user/';
+	}
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	if(!empty($list) && $list['img'] != $sFile) {
+		$res = unlink($path.$list['img']);
+	}
+}
+/**
+ * 获取评论和留言的email
+ */
+function getEmail($sType,$id) {
+	$sql = 'SELECT * FROM blog_'.$sType.' WHERE id='.$id;
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	if(!empty($list)) {
+		return $list;
+	}
+}
+

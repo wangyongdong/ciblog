@@ -21,6 +21,8 @@ class Record extends MY_Controller {
 		$arr = $this->public_model->getPage("record",'record?',$pageId,$sFilter);
 		//执行查询
 		$data['list'] = $this->record_model->getRecordList($arr['start'],$arr['pagenum']);
+		//导航
+		$data['nav'] = 'record';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('record/index',$data);

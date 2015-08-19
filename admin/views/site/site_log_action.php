@@ -1,6 +1,6 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-	<div class="page-head">
+	<div class="page-head" style="margin-top:-22px;">
 		<h2 class="pull-left"><i class="icon-home"></i> 日志信息</h2>
         <div class="bread-crumb pull-right">
 	    	<a href="/admin"><i class="icon-home"></i> 首页</a> 

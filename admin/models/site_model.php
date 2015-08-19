@@ -261,7 +261,62 @@ class Site_model extends CI_Model  {
     /**
      * 数据库备份
      */
-    public function dbBackup($sPath='') {
+    public function dbBackup() {
+    	// Load the DB utility class
+    	$this->load->dbutil();
+    	
+    	$filename = 'ciblog_'. date('Ymd_His', time()).'.sql';
+    	
+    	$prefs = array(
+    		'tables'        => array(),   	// Array of tables to backup.
+    		'ignore'        => array(),		// List of tables to omit from the backup
+    		'format'        => 'sql',       // gzip, zip, txt
+    		'filename'      => $filename,   // File name - NEEDED ONLY WITH ZIP FILES
+    		'add_drop'      => TRUE,        // Whether to add DROP TABLE statements to backup file
+    		'add_insert'    => TRUE,        // Whether to add INSERT data to backup file
+    		'newline'       => "\n"         // Newline character used in backup file
+    	);
+    	
+    	// Backup your entire database and assign it to a variable
+    	$backup = $this->dbutil->backup($prefs);
+    	
+    	// Load the download helper and send the file to your desktop
+    	$this->load->helper('download');
+    	force_download('ciblog_backup.sql', $backup);
+    }
+    
+    /**
+     * 上传图片资源备份
+     */
+    public function upBackup() {
+    	$this->load->library('zip');
+    	$path = dirname(dirname(dirname(__FILE__))).'/upload/';
+    	//$path = '/path/to/your/directory/';
+    	 
+    	$this->zip->read_dir($path,FALSE);
+    	 
+    	// Download the file to your desktop. Name it "my_backup.zip"
+    	$this->zip->download('upload_backup.zip');
+    }
+    
+    /**
+     * 全站资源备份
+     */
+    public function reBackup() {
+    	$this->load->library('zip');
+    	$path = dirname(dirname(dirname(__FILE__))).'/';
+    	//$path = '/path/to/your/directory/';
+    	
+    	$this->zip->read_dir($path,FALSE);
+    	
+    	// Download the file to your desktop. Name it "my_backup.zip"
+    	$this->zip->download('ciblog_backup.zip');
+    }
+    
+    /**
+     * 数据库备份
+     */
+    public function dbBackups($sPath='') {
     	header("Content-type:text/html;charset=utf-8");
     	//配置信息
     	$cfg_dbhost = 'localhost';

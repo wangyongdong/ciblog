@@ -115,7 +115,7 @@ function saveImg(val) {
 	var id = $("#id").val();
 	$.post(
 		__A+'member/doProfile',
-		{id:id,picname:val,type:'img'},
+		{id:id,img:val,type:'img'},
 		function(data) {
 			if(!data) {
 				alert("保存失败");
@@ -158,6 +158,7 @@ function delActionLog() {
 		})
 	}
 }
+
 //弹出提示框
 function popTips(val) {
 	var win_str = '<div id="myModal" class="modal fade in" style="display: block;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog win-min"><div class="modal-content"><div class="modal-header win-header"><button type="button" class="close" onclick="close_pop();">×</button><h4 class="modal-title">&nbsp;</h4></div><div class="modal-body"><p class="center">'+val+'</p></div><div class="modal-footer win-footer"></div></div></div></div><div class="modal-backdrop fade in"></div>';
@@ -248,17 +249,43 @@ function checkPopL() {
 	}
 	return true;
 }
-
-function checkPopC(id) {
-	//var content = $("#content"+id).text();
-	var content = $("#myModal"+id+" #content").val();
+//添加内容
+$(function() {
+	$(".btn-cc").click(function() {
+		$("#reply_id").val(this.id);
+		if(this.name) {
+			$("#comment_id").val(this.name);
+		}
+		
+	});
+	$('#myModalC').on('show.bs.modal', function () {
+		//
+	})
+});
+//清除内容
+$(function() {
+	$('#myModalC').on('hidden.bs.modal', function () {
+		$("#reply_id").val("");
+		$("#comment_id").val("");
+	})
+});
+function checkPopCom(id) {
+	var content = $("#reply_content").val();
 	if(content.length == 0) {
-		$("#content"+id).addClass('form-pop');
+		$("#reply_content").addClass('form-pop');
 		return false;
 	}
 	comment = replace_em(content);
-	$("#myModal"+id+" #content").val('');
-	$("#myModal"+id+" #content").val(comment);
+	$("#reply_content").val('');
+	$("#reply_content").val(comment);
+	return true;
+}
+function checkPopCon() {
+	var content = $("#reply_content").val();
+	if(content.length == 0) {
+		$("#reply_content").addClass('form-pop');
+		return false;
+	}
 	return true;
 }
 function checkPopS() {
@@ -350,19 +377,4 @@ function signIn() {
 		},
 		"json"
 	);
-}
-// 
-function doBakcup() {
-	$.ajax({
-		url:__A+'site/doBackup',
-		data:'module=data',
-		type:'post',
-		success:function(data) {
-			if(data) {
-				window.location.reload();
-			} else {
-				alert("删除失败");
-			}
-		}
-	})
 }

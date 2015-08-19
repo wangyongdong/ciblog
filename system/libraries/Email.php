@@ -364,7 +364,7 @@ class CI_Email {
 	 */
 	public function subject($subject)
 	{
-		$subject = $this->_prep_q_encoding($subject);
+		//$subject = $this->_prep_q_encoding($subject);
 		$this->_set_header('Subject', $subject);
 		return $this;
 	}

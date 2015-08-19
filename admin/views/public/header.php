@@ -194,13 +194,13 @@
 	        <div class="sidebar-dropdown"><a href="#">导航</a></div>
 	        <ul id="nav">
 	          	<li>
-	          		<a href="/admin" class="open"><i class="icon-home"></i> 首页</a>
+	          		<a href="/admin" <?php if($nav=='index'){echo ' class="open"';}?> ><i class="icon-home"></i> 首页</a>
 				</li>
 				<?php 
 				if(roleMenu('record','select')) {
 				?>
 	          	<li>
-	          		<a href="<?=site_url('record')?>"><i class="icon-bullhorn"></i> 碎言碎语 </a>
+	          		<a href="<?=site_url('record')?>" <?php if($nav=='record'){echo ' class="open"';}?> ><i class="icon-bullhorn"></i> 碎言碎语 </a>
 	          	</li>
 	          	<?php 
 	          	}
@@ -209,7 +209,7 @@
 	          	if(roleMenu('article','select') || roleMenu('article','update') || roleMenu('sort','select')) {
 	          	?>
 	          	<li class="has_sub">
-	          		<a href="#"><i class="icon-file-alt"></i> 学无止境 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+	          		<a href="#" <?php if($nav=='article'){echo ' class="open"';}?> ><i class="icon-file-alt"></i> 学无止境 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
 		            	<?php 
 						if(roleMenu('article','update')) {
@@ -237,7 +237,7 @@
 	          	if(roleMenu('comment','select') || roleMenu('contact','select')) {
 	          	?>
 	          	<li class="has_sub">
-	          		<a href="#"><i class="icon-comment"></i> 评论留言 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+	          		<a href="#" <?php if($nav=='comcon'){echo ' class="open"';}?> ><i class="icon-comment"></i> 评论留言 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
 		            	<?php 
 						if(roleMenu('comment','select')) {
@@ -260,7 +260,7 @@
 				if(roleMenu('links','select')) {
 				?>
 				<li>
-	          		<a href="<?=site_url('links')?>"><i class="icon-link"></i> 友情链接 </a>
+	          		<a href="<?=site_url('links')?>" <?php if($nav=='links'){echo ' class="open"';}?> ><i class="icon-link"></i> 友情链接 </a>
 	          	</li>
 	          	<?php 
 	          	}
@@ -269,7 +269,7 @@
 				if(roleMenu('member','select')) {
 				?>
 				<li class="has_sub">
-	          		<a href="#"><i class="icon-user"></i> 用户管理 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+	          		<a href="#" <?php if($nav=='member'){echo ' class="open"';}?> ><i class="icon-user"></i> 用户管理 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
 		            	<?php 
 						if(roleMenu('member','update')) {
@@ -297,7 +297,7 @@
 				if(roleMenu('site','select')) {
 				?>
 				<li class="has_sub">
-	          		<a href="#"><i class="icon-cogs"></i> 控制中心 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+	          		<a href="#" <?php if($nav=='site'){echo ' class="open"';}?> ><i class="icon-cogs"></i> 控制中心 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
 		            <ul>
 		              	<li><a href="<?=site_url('site/web')?>">网站设置</a></li>
 		              	<li><a href="<?=site_url('site/menu')?>">导航管理</a></li>

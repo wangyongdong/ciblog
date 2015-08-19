@@ -18,6 +18,8 @@ class Site extends MY_Controller {
 		
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_web',$data);
@@ -74,6 +76,8 @@ class Site extends MY_Controller {
 		$data['list'] = $this->site_model->getSiteMenu('',$arr['start'],$arr['pagenum']);
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_menu',$data);
@@ -88,6 +92,8 @@ class Site extends MY_Controller {
 		$data['list'] = $this->site_model->getSiteMenu($id);
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_menu_edit',$data);
@@ -137,6 +143,8 @@ class Site extends MY_Controller {
 		
 		$data['data'] = $this->site_model->getVisitStatistic();
 		$data['arr'] = $this->site_model->getmoduleStatistic();
+		//导航
+		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_statistic',$data);
@@ -151,6 +159,8 @@ class Site extends MY_Controller {
 		$data['aFilter']['end'] = sg($this->input->get('de'));
 		//执行查询
 		$data['list'] = $this->site_model->getAction($data['aFilter']);
+		//导航
+		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_log_action',$data);
@@ -175,6 +185,8 @@ class Site extends MY_Controller {
 		$arr = $this->public_model->getPage("notice",'site/notice?',$pageId);
 		//执行查询
 		$data['notice'] = $this->site_model->getNotice($arr['start'],$arr['pagenum']);
+		//导航
+		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_notice',$data);
@@ -218,7 +230,9 @@ class Site extends MY_Controller {
 	 */
 	public function backup() {
 		$data['data'] = 1;
-	
+		//导航
+		$data['nav'] = 'site';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_backup',$data);
 		$this->load->view('public/footer',$data);
@@ -228,22 +242,26 @@ class Site extends MY_Controller {
 	 * 执行备份
 	 */
 	public function doBackup() {
-		$module = sg($_POST['module']);
-		$path = sg($_POST['path']);
-		//if($module == 'data') {
+		$module = $this->uri->segment(3);
+		if($module == 'db') {
 			$this->site_model->dbBackup();
-		//}
-		
-		
+		}
+		if($module == 're') {
+			$this->site_model->reBackup();
+		}
+		if($module == 'up') {
+			$this->site_model->upBackup();
+		}
 	}
-	
 	
 	/**
 	 * 缓存
 	 */
 	public function cache() {
 		$data['data'] = 1;
-	
+		//导航
+		$data['nav'] = 'site';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_cache',$data);
 		$this->load->view('public/footer',$data);

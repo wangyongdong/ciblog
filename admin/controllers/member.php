@@ -19,6 +19,8 @@ class Member extends MY_Controller {
 		$arr = $this->public_model->getPage("member",'member?',$pageId);
 		//执行查询
 		$data['list'] = $this->member_model->getMemberList($arr['start'],$arr['pagenum']);
+		//导航
+		$data['nav'] = 'member';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('member/member_list',$data);
@@ -33,6 +35,8 @@ class Member extends MY_Controller {
 		$data['list'] = getUser($iUser);
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'member';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('member/member_edit',$data);
@@ -45,7 +49,9 @@ class Member extends MY_Controller {
 	public function create() {
 		//token
 		$data['token'] = getToken($this->tokentype);
-	
+		//导航
+		$data['nav'] = 'member';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('member/member_create',$data);
 		$this->load->view('public/footer',$data);
@@ -108,6 +114,8 @@ class Member extends MY_Controller {
 		$data['list'] = getUser(UserId());
 		$data['token'] = getToken($this->tokentype);
 		$data['footer'] = 'upload';
+		//导航
+		$data['nav'] = 'member';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('member/member_profile',$data);
@@ -151,10 +159,8 @@ class Member extends MY_Controller {
 				$data['password'] = buildPass($_POST['password'], $UserInfo['uniquely']);
 				break;
 			case 'img':
-				pl($_POST['picname']);
 				$data['id'] = sg($_POST['id']);
-				$data['picname'] = sg($_POST['picname']);
-				
+				$data['img'] = sg($_POST['img']);
 				break;
 		}
 		
@@ -174,6 +180,8 @@ class Member extends MY_Controller {
 	
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'member';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('member/member_role',$data);
@@ -188,6 +196,8 @@ class Member extends MY_Controller {
 		$data['list'] = $this->member_model->getRoleInfo($iRole);
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'member';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('member/member_role_edit',$data);

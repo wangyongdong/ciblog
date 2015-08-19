@@ -1,6 +1,6 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-    <div class="page-head">
+    <div class="page-head" style="margin-top:-22px;">
       	<h2 class="pull-left"><i class="icon-home"></i> 文章评论</h2>
     	<div class="bread-crumb pull-right">
           	<a href="/admin"><i class="icon-home"></i> 首页</a> 
@@ -66,67 +66,9 @@
               						<td><?=$list['comment_id']?>：<?=getTitle($list['comment_id'])?></td>
               						<td><?=$list['datetime']?></td>
               						<td>
-                  						<a href="#myModal<?=$list['id']?>" data-toggle="modal">
+                  						<a href="#myModalC" data-toggle="modal" id="<?=$list['id']?>" name="<?=$list['comment_id']?>" class="btn-cc">
                   							<button class="btn btn-xs btn-primary" title="回复"><i class="icon-reply"></i></button>
                   						</a>
-										<!-- Modal -->
-										<div id="myModal<?=$list['id']?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-														<h4 class="modal-title"> &nbsp;</h4>
-													</div>
-													<form class="form-horizontal" method="post" action="<?=site_url('comment/doReply')?>" onsubmit="return checkPopC(<?=$list['id']?>)">
-														<div class="modal-body">
-									          				<div class="padd">
-									              				<div class="form quick-post">
-									              				<script src="<?=ADMIN_PUBLIC?>js/jquery.js"></script> <!-- jQuery -->
-									              				<script type="text/javascript" src="<?=PLUGIN_QQFACE?>browser.js"></script>
-									              				<script type="text/javascript" src="<?=PLUGIN_QQFACE?>jquery.qqFace.js"></script>
-									              					<script type="text/javascript">
-																		//表情js
-																		$(function(){
-																			$('.emotion').qqFace({
-																				id : 'facebox', //表情盒子的ID
-																				assign:'content', //给那个控件赋值
-																				path:'../../public/plugin/qqface/face/'	//表情存放的路径
-																			});
-																			$(".sub_btn").click(function(){
-																				var str = $("#saytext").val();
-																				$("#show").html(replace_em(str));
-																			});
-																		});
-																		//查看结果
-																		function replace_em(str){
-																			str = str.replace(/\</g,'&lt;');
-																			str = str.replace(/\>/g,'&gt;');
-																			str = str.replace(/\n/g,'<br/>');
-																			str = str.replace(/\[em_([0-9]*)\]/g,'<img src="<?=PLUGIN_QQFACE?>face/$1.gif" border="0" />');
-																			return str;
-																		}
-																	</script>
-								                              		<input type="hidden" name="comment_id" value="<?=$list['comment_id']?>">
-								                              		<input type="hidden" name="reply_id" value="<?=$list['id']?>" >
-																	<input type="hidden" name="token" value="<?=$token?>" >
-								                                  	<div class="form-group">
-								                                    	<label class="control-label col-lg-3" for="content">回复内容</label>
-								                                    	<div class="col-lg-9">
-								                                      		<textarea class="form-control" id="content" name="content"></textarea>
-								                                    		<span class="emotion"></span>
-								                                    	</div>
-								                                  	</div>
-									                            </div>
-									          				</div>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
-															<button type="submit" class="btn btn-primary">回复</button>
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
                   						<a href="<?=site_url('comment/update/'.$list['id'])?>">
                   							<button class="btn btn-xs btn-warning" title="编辑"><i class="icon-pencil"></i> </button>
                   						</a>
@@ -152,6 +94,63 @@
 						</div>
     				</div>
   				</div>
+			</div>
+			<!-- Modal -->
+			<div id="myModalC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title"> &nbsp;</h4>
+						</div>
+						<form class="form-horizontal" method="post" action="<?=site_url('comment/doReply')?>" onsubmit="return checkPopCom()">
+							<div class="modal-body">
+		          				<div class="padd">
+		              				<div class="form quick-post">
+		              				<script src="<?=ADMIN_PUBLIC?>js/jquery.js"></script> <!-- jQuery -->
+		              				<script type="text/javascript" src="<?=PLUGIN_QQFACE?>browser.js"></script>
+		              				<script type="text/javascript" src="<?=PLUGIN_QQFACE?>jquery.qqFace.js"></script>
+		              					<script type="text/javascript">
+											//表情js
+											$(function(){
+												$('.emotion').qqFace({
+													id : 'facebox', 	//表情盒子的ID
+													assign:'reply_content', 	//给那个控件赋值
+													path:'../../public/plugin/qqface/face/'	//表情存放的路径
+												});
+												$(".sub_btn").click(function(){
+													var str = $("#saytext").val();
+													$("#show").html(replace_em(str));
+												});
+											});
+											//查看结果
+											function replace_em(str){
+												str = str.replace(/\</g,'&lt;');
+												str = str.replace(/\>/g,'&gt;');
+												str = str.replace(/\n/g,'<br/>');
+												str = str.replace(/\[em_([0-9]*)\]/g,'<img src="<?=PLUGIN_QQFACE?>face/$1.gif" border="0" />');
+												return str;
+											}
+										</script>
+	                              		<input type="hidden" name="comment_id" id="comment_id" value="">
+	                              		<input type="hidden" name="reply_id" id="reply_id" value="" >
+	                                  	<div class="form-group">
+	                                    	<label class="control-label col-lg-3" for="reply_content">回复内容</label>
+	                                    	<div class="col-lg-9">
+	                                      		<textarea class="form-control" id="reply_content" name="reply_content"></textarea>
+	                                    		<span class="emotion"></span>
+	                                    	</div>
+	                                  	</div>
+		                            </div>
+		          				</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+								<button type="submit" class="btn btn-primary">回复</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

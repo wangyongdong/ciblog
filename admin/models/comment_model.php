@@ -82,6 +82,13 @@ class Comment_model extends CI_Model {
     		$this->db->insert('comment', $data);
     		//添加操作log
     		$this->site_model->addActionLog('comment','add');
+    		
+    		//修改评论数量
+    		$this->updArticle($data['comment_id']);
+    		
+    		//邮件发送
+    		$arr = $this->public_model->commentEmail($data['reply_id'],$data['author'],$data['content']);
+    		$this->public_model->sendMail($arr['email'],$arr['subject'],$arr['content']);
     	} else {
     		$this->db->update('comment',$data,array('id'=>$data['id']));
     		//添加操作log
@@ -104,11 +111,11 @@ class Comment_model extends CI_Model {
     /**
 	 * 修改文章评论数量
 	 */
-	function updArticle($iArticle,$sNum) {
+	function updArticle($iArticle) {
 		$sql = 'UPDATE
     				blog_article
     			SET
-    				 comnum=comnum+'.$sNum.'
+    				 comnum=comnum+1
     			WHERE
     				id='.$iArticle;
 		$res = $this->db->query($sql);

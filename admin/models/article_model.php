@@ -62,6 +62,7 @@ class Article_model extends CI_Model {
     		//添加操作log
     		$this->site_model->addActionLog('article','add');
     	} else {
+    		changeImg('article', $data['id'], $data['img']);
     		//获取文章原分类
     		$iSort = getArticleField($data['id'],'sortid');
     		$this->db->update('article',$data,array('id'=>$data['id']));

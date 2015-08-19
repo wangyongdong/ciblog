@@ -22,6 +22,8 @@ class Links extends MY_Controller {
 
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'links';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('links/links_list',$data);
@@ -37,6 +39,9 @@ class Links extends MY_Controller {
 		$data['list'] = $this->links_model->getLinksInfo($iLinks);
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'links';
+		
 		$this->load->view('public/header',$data);
 		$this->load->view('links/links_edit',$data);
 		$this->load->view('public/footer',$data);

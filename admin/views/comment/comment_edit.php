@@ -1,6 +1,6 @@
 ﻿<!-- Main bar -->
 <div class="mainbar">  
-    <div class="page-head">
+    <div class="page-head" style="margin-top:-22px;">
       	<h2 class="pull-left"><i class="icon-home"></i> 文章评论</h2>
     	<div class="bread-crumb pull-right">
           	<a href="/admin"><i class="icon-home"></i> 首页</a> 
@@ -94,15 +94,15 @@
         			<div class="widget-content">
           				<div class="padd">
               				<div class="form quick-post">
-                              	<form class="form-horizontal" method="post" action="<?=site_url('comment/doReply')?>" onsubmit="return checkFormC()">
+                              	<form class="form-horizontal" method="post" action="<?=site_url('comment/doReply')?>">
                               		<input type="hidden" name="id" value="<?=$reply['id']?>" >
                               		<input type="hidden" name="reply_id" value="<?=$reply['reply_id']?>" >
                               		<input type="hidden" name="comment_id" value="<?=$reply['comment_id']?>" >
 									<input type="hidden" name="token" value="<?=$token?>" >
                                   	<div class="form-group">
-                                    	<label class="control-label col-lg-3" for="content">回复内容</label>
+                                    	<label class="control-label col-lg-3" for="reply_content">回复内容</label>
                                     	<div class="col-lg-9">
-                                      		<textarea class="form-control" id="content" name="content"><?=stripcslashes($reply['content'])?></textarea>
+                                      		<textarea class="form-control" id="reply_content" name="reply_content"><?=stripcslashes($reply['content'])?></textarea>
                                     	</div>
                                   	</div>
                                   	<div class="form-group">

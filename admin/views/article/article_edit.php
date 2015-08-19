@@ -54,7 +54,7 @@
 											<div id="queue"></div>
 											<input id="file_upload" name="file_upload" type="file" multiple="true">
 											<div id="image" style="float:left;margin:2px 0 0 2px">
-												<img alt="" src="<?=UPLOAD_PUBLIC?>article/<?=$list['img']?>" height=80 width=80>
+												<img src="<?=UPLOAD_PUBLIC?>article/<?=$list['img']?>" height=80 width=80>
 											</div>
 											<input type="hidden" id="post-img" name="img" value="<?=$list['img']?>">
 											<script type="text/javascript">
@@ -90,7 +90,7 @@
 															$('#post-img').val(data);
 															img_id_upload[i]=data;
 															i++;
-															alert(data);
+															//alert(data);
 														}
 													});
 												});

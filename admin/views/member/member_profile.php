@@ -69,7 +69,7 @@
 												saveImg(data);
 												img_id_upload[i]=data;
 												i++;
-												alert(data);
+												//alert(data);
 											}
 										});
 									});

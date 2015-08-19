@@ -35,6 +35,8 @@ class Comment extends MY_Controller {
 		
 		//标记已读
 		$this->comment_model->doRead();
+		//导航
+		$data['nav'] = 'comcon';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('comment/comment_list',$data);
@@ -51,6 +53,8 @@ class Comment extends MY_Controller {
 		$data['reply'] = $this->comment_model->getCommentReply($iComment);
 		//token
 		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'comcon';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('comment/comment_edit',$data);
@@ -91,7 +95,7 @@ class Comment extends MY_Controller {
 			$data['author'] = UserName();					//用户名
 		}
 		
-		$data['content'] = sg($_POST['content']);			//内容
+		$data['content'] = sg($_POST['reply_content']);			//内容
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
 		$data['datetime'] = date("Y-m-d H:i:s",time());
@@ -99,8 +103,7 @@ class Comment extends MY_Controller {
 		//数据验证
 		$arr = array($data['content']);
 		checkEmpty($arr);
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		
 	
 		$this->comment_model->doReply($data);
 		succes(site_url('comment'));
