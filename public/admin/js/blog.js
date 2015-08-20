@@ -124,8 +124,13 @@ function saveImg(val) {
 	);
 }
 //搜索提交
-function searchF(url) {
-	var keyword = $("#s_keyword").val();
+function searchFT(url) {
+	var keyword = $("#sf_keyword").val();
+	window.location = url+'?s='+keyword;
+}
+//搜索提交
+function searchFL(url) {
+	var keyword = $("#sl_keyword").val();
 	window.location = url+'?s='+keyword;
 }
 //sort条件搜索

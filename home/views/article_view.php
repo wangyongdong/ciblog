@@ -117,7 +117,7 @@ function loadMore() {
 					）
 				</div>
 				<div class="keyfl">
-					<p><span>文章分类</span>：<?=getSortField($article['type'],'name');?></p>
+					<p><span>文章分类</span>：<?=getSortField($article['sortid'],'name');?></p>
 				</div>
 				<div class="keybq">
 					<p><span>关键词</span>：<?=$article['keyword'];?></p>
@@ -197,7 +197,7 @@ function loadMore() {
 						</ul>
 						<div id="load_more">
 							<input type="hidden" value="5" name="start" id="start">
-							<input type="hidden" value="<?=getSet('comment_pnum');?>" name="limit" id="limit">
+							<input type="hidden" value="<?=getSet('comment_nums');?>" name="limit" id="limit">
 							<input type="hidden" value="<?=$article['id']?>" name="id" id="id">
 						    <div class="part_btn" <?php if(empty($i) || $i<5) {echo 'style="display:none;"'; }?>>
 						    	<a id="a-load" href="javascript:void(0);" onclick="loadMore();">查看更多</a>
@@ -210,13 +210,11 @@ function loadMore() {
 						</div>
 						<?php 
 						if(getSet('is_comment') == 'y') {
-							if($article['allow_remark'] == 'y') {
 						?>
 						<div class="action flex">
 							<span id="btnrepost" class="btn i-coms">评论</span>
 						</div>
 						<?php 
-							}
 						}
 						?>
 					</div>

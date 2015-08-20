@@ -30,7 +30,6 @@ class Encrypt {
 		$scr1 = crypt(self::key,substr($str,0,$strkey));
 		$scr2 = crypt($str,substr(self::key,0,$strkey));
 		return crypt($scr1,substr($scr2,0,$strkey));
-		
 	}
 	
 	static function sha1encode($str) {

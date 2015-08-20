@@ -8,7 +8,6 @@ class Access {
 	
 	//获取用户权限和角色
 	static function getUserRole() {
-		//获取用户权限信息
 		$info = getRole();
 		
 		$arr = array();

@@ -44,8 +44,8 @@
 								</div>
 				                <div class="widget-icons pull-right">
 				                	<div class="form-group">
-				                		<input class="form-control search" type="text" placeholder="文章标题" name="keyword" id="s_keyword" value="<?=$aFilter['keyword']?>">
-										<a class="search-btn" href="javascript:void(0)" onclick="searchF('<?=site_url('article')?>');"><i class="icon-search"></i></a>
+				                		<input class="form-control search" type="text" placeholder="文章标题" name="keyword" id="sl_keyword" value="<?=$aFilter['keyword']?>">
+										<a class="search-btn" href="javascript:void(0)" onclick="searchFL('<?=site_url('article')?>');"><i class="icon-search"></i></a>
 									</div>
 				                </div>
 								<div class="clearfix"></div>

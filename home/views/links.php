@@ -46,7 +46,7 @@ $(function() {
 	            <fieldset class="info_fieldset">
 		            <div id="note"></div>
 		            <div id="contacts-form">
-			            <form id="form_contact" method="post" action="<?=site_url('common/doLinks')?>">
+			            <form id="form_contact" method="post" action="<?=site_url('links/doLinks')?>">
 			            	<input type="hidden" name="token" value="<?=$token?>" />
 			            	<input type="text" name="name" required placeholder="Website name" class="required"/><span class="input_name"></span>
 			             	<input type="text" name="url" required placeholder="http://" /> <span class="input_url"></span>

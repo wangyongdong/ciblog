@@ -1,7 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Article extends MY_Controller {
-	const INDEX_REC = 'index_rec';
+	const ARTICLE_VIEWS = 'views';
+	const ARTICLE_COM = 'comnum';
+	const ARTICLE_NEW = 'datetime';
 	var $tokentype = 'article';
 	
 	public function __construct() {
@@ -14,19 +16,20 @@ class Article extends MY_Controller {
 	public function index() {
 		//执行分页
 		$pageId = $this->input->get('page');
+		//获取系统变量，文章数量
 		$sPageNum = getSet('article_nums');
-		$arr = $this->public_model->getPage("article",'article/index?',$pageId,$sPageNum);
+		$arr = $this->public_model->getPage("article",'article?',$pageId,$sPageNum);
 		//文章列表
-		$data['article'] = $this->article_model->getArticleList($arr['start'],$arr['pagenum']);
+		$data['article'] = $this->article_model->getArticleList(self::ARTICLE_NEW,$arr['start'],$arr['pagenum']);
 		
 		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleAct(self::INDEX_REC,10);
+		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
 		
 		//文章分类
-		$data['sort'] = $this->public_model->getSort();
+		$data['sort'] = $this->sort_model->getSort();
 		
-		//最近评论
-		$data['comment'] = $this->contact_model->getRecentComment();
+		//最新评论
+		$data['comment'] = $this->comment_model->getNewComment();
 
 		//文章归档
 		$data['archive'] = $this->article_model->getArchive();
@@ -55,10 +58,10 @@ class Article extends MY_Controller {
 		$data['article_related'] = $this->article_model->getRelated($iArticle);
 		
 		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleAct(self::INDEX_REC,10);
+		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
 		
 		//文章分类
-		$data['sort'] = $this->public_model->getSort();
+		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
 		$data['archive'] = $this->article_model->getArchive();
@@ -66,6 +69,7 @@ class Article extends MY_Controller {
 		//文章评论
 		$data['comment'] = $this->getComment($iArticle);
 		//文章评论数量
+		
 		//token
 		$data['token'] = getToken($this->tokentype);
 		
@@ -98,10 +102,10 @@ class Article extends MY_Controller {
 		$data['article'] = $this->article_model->getArticleBySort($iType,$arr['start'],$arr['pagenum']);
 		
 		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleAct(self::INDEX_REC,10);
+		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
 		
 		//文章分类
-		$data['sort'] = $this->public_model->getSort();
+		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
 		$data['archive'] = $this->article_model->getArchive();
@@ -133,10 +137,10 @@ class Article extends MY_Controller {
 		$data['article'] = $this->article_model->getArticleByArchive($sTime,$arr['start'],$arr['pagenum']);
 		
 		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleAct(self::INDEX_REC,10);
+		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
 		
 		//文章分类
-		$data['sort'] = $this->public_model->getSort();
+		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
 		$data['archive'] = $this->article_model->getArchive();
@@ -164,7 +168,7 @@ class Article extends MY_Controller {
 			$iPageNum = $_POST['limit'];
 		}
 		//查询回复
-		$aComment = $this->article_model->getComment($iArticle,$iStart,$iPageNum);
+		$aComment = $this->comment_model->getComment($iArticle,$iStart,$iPageNum);
 		if(!empty($_POST['type'])) {
 			$str = '';
 			$i = 0;
@@ -210,9 +214,9 @@ class Article extends MY_Controller {
 		//token验证
 		checkToken($_POST['token'],$this->tokentype);
 		
-		$iInsert = $this->article_model->doComment($data);
+		$iInsert = $this->comment_model->doComment($data);
 		if(!empty($iInsert)) {
-			$this->article_model->updArticle($data['comment_id'],'1');//执行数量增加
+			$this->comment_model->updArticle($data['comment_id'],'1');//执行数量增加
 			//添加提醒
 			$aNotice = array();
 			$aNotice['type'] = 'article';

@@ -290,8 +290,7 @@ class Site_model extends CI_Model  {
      */
     public function upBackup() {
     	$this->load->library('zip');
-    	$path = dirname(dirname(dirname(__FILE__))).'/upload/';
-    	//$path = '/path/to/your/directory/';
+    	$path = trim($_SERVER['DOCUMENT_ROOT'],'/').'/upload/';
     	 
     	$this->zip->read_dir($path,FALSE);
     	 
@@ -304,10 +303,9 @@ class Site_model extends CI_Model  {
      */
     public function reBackup() {
     	$this->load->library('zip');
-    	$path = dirname(dirname(dirname(__FILE__))).'/';
-    	//$path = '/path/to/your/directory/';
+    	$path = trim($_SERVER['DOCUMENT_ROOT'],'/').'/';
     	
-    	$this->zip->read_dir($path,FALSE);
+    	$this->zip->read_dir($path);
     	
     	// Download the file to your desktop. Name it "my_backup.zip"
     	$this->zip->download('ciblog_backup.zip');

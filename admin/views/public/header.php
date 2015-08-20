@@ -3,14 +3,16 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Mac风格响应式后台管理模版演示 - 源码之家</title>
+		<title>博客管理系统 - 王永东博客</title>
+		<meta name="author" content="王永东">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="author" content="">
+		<meta http-equiv="Cache-Control" content="no-transform" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<meta name="robots" content="noarchive" />
 		<!-- Stylesheets -->
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/bootstrap.css">
 		<!-- Font awesome icon -->
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/font-awesome.css"> 
-		<!-- jQuery UI -->
 		<!-- prettyPhoto -->
 		<link rel="stylesheet" href="<?=ADMIN_PUBLIC?>style/prettyPhoto.css">  
 		<!-- Date picker -->
@@ -54,8 +56,8 @@
 	        	</ul>
 		        <form class="navbar-form navbar-left" role="search">
 					<div class="form-group">
-						<input class="form-control" type="text" placeholder="文章快速搜索" name="keyword" id="s_keyword" value="<?=sg($aFilter['keyword'])?>">
-						<a class="search-btn ts" href="javascript:void(0)" onclick="searchF('<?=site_url('article')?>');"><i class="icon-search"></i></a>
+						<input class="form-control" type="text" placeholder="文章快速搜索" name="keyword" id="sf_keyword" value="<?=sg($aFilter['keyword'])?>">
+						<a class="search-btn ts" href="javascript:void(0)" onclick="searchFT('<?=site_url('article')?>');"><i class="icon-search"></i></a>
 					</div>
 				</form>
 	        	<ul class="nav navbar-nav pull-right">

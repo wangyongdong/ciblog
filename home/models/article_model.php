@@ -8,39 +8,21 @@ class Article_model extends CI_Model{
 		parent::__construct();
 		$this->load->database();
 	}
-	
-	/**
-	 * 获取文章信息
-	 */
-	public function getArticleAct($sType,$iLimit=10) {
-		$sLimit = ' LIMIT '.$iLimit;
-		if($sType == 'index_rec') {
-			$sOrder = ' ORDER BY views DESC ';
-		}
-		if($sType == 'index_new') {
-			$sOrder = ' ORDER BY datetime DESC';
-		}
-		$sql = 'SELECT 
-					* 
-				FROM 
-					blog_article 
-				'.$sOrder.$sLimit;
-		$res = $this->db->query($sql);
-		$aList = $res->result_array();
-		return $aList;
-	}
-	
 	/**
 	 * 获取文章列表
+	 * @param string $sOrder	排序方式：时间，阅读量，评论数
+	 * @param number $iStart
+	 * @param number $iPageNum
+	 * @return array
 	 */
-	function getArticleList($iStart=0,$iPageNum=10) {
+	function getArticleList($sOrder='datetime',$iStart=0,$iPageNum=10) {
 		$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
 		$sql = 'SELECT
     				*
     			FROM
     				blog_article
-    			ORDER BY
-    				datetime DESC
+    			ORDER BY 
+    			'.$sOrder.' DESC
     			'.$sLimit;
 		$res = $this->db->query($sql);
 		$aList = $res->result_array();
@@ -79,7 +61,6 @@ class Article_model extends CI_Model{
 		$res = $this->db->query($sql);
 		$last = $res->row_array();
 		
-		$list = '';
 		$list['next'] = sg($next);
 		$list['last'] = sg($last);
 		return $list;
@@ -95,7 +76,7 @@ class Article_model extends CI_Model{
 		$iLength = count($list);
 		if($iLength < $iLimit) {
 			//随机一个分类填充数量
-			$sort_list = $this->public_model->getSort();
+			$sort_list = $this->sort_model->getSort();
 			$sortNum = count($sort_list);
 			$iOtherType = rand(1,$sortNum);
 			$iOtherLimit = $iLimit - $iLength;
@@ -125,7 +106,7 @@ class Article_model extends CI_Model{
 				FROM
 					blog_article
 				WHERE
-					type='.$iType.'
+					sortid='.$iType.'
 				ORDER BY
 					datetime DESC '.$sLimit;
 		$res = $this->db->query($sql);
@@ -180,45 +161,5 @@ class Article_model extends CI_Model{
 		$res = $this->db->query($sql);
 	}
 	
-	/**
-	 * 修改文章评论数量
-	 */
-	function updArticle($iArticle,$sNum) {
-		$sql = 'UPDATE
-    				blog_article
-    			SET
-    				 comnum=comnum+'.$sNum.'
-    			WHERE
-    				id='.$iArticle;
-		$res = $this->db->query($sql);
-	}
 	
-	/**
-	 * 获取评论信息
-	 */
-	function getComment($iArticle,$iStart=0,$iPageNum=5) {
-		$sLimit = ' LIMIT '.$iStart.','.$iPageNum;
-		$sql = 'SELECT
-    				*
-    			FROM
-    				blog_comment
-    			WHERE
-    				comment_type="article"
-    				AND comment_id=" '.$iArticle.' "
-    			ORDER BY
-    				id DESC 
-    			'.$sLimit;
-		$res = $this->db->query($sql);
-		$aComment = $res->result_array();
-		return $aComment;
-	}
-	
-	/**
-	 * 执行评论添加
-	 */
-	function doComment($data) {
-		$this->db->insert('comment',$data);
-		$iInsert = $this->db->insert_id();
-		return $iInsert;
-	}
 }

@@ -152,8 +152,8 @@
 			<ul>
 				<li><a href="/admin">登录blog</a></li>
 				<li><a href="#">分享网址</a></li>
-				<li><a href="/contact">留言评论</a></li>
-				<li><a href="/common/links">申请友链</a></li>
+				<li><a href="/contact">给我留言</a></li>
+				<li><a href="/links">申请友链</a></li>
 			</ul>
 		</div>
 	</div>

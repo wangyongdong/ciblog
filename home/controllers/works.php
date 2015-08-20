@@ -1,7 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Works extends MY_Controller {
-	const INDEX_REC = 'index_rec';
+	const ARTICLE_VIEWS = 'views';
+	const ARTICLE_COM = 'comnum';
+	const ARTICLE_NEW = 'datetime';
 	
 	public function __construct() {
 		parent::__construct();
@@ -15,10 +17,10 @@ class Works extends MY_Controller {
 		$data['works'] = $this->works_model->getWorksList($arr['start'],$arr['pagenum']);
 		
 		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleAct(self::INDEX_REC,10);
+		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
 		
 		//文章分类
-		$data['sort'] = $this->public_model->getSort();
+		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
 		$data['archive'] = $this->article_model->getArchive();
@@ -37,10 +39,10 @@ class Works extends MY_Controller {
 		$data['works'] = $this->works_model->getWorksInfo($iWorks);
 		
 		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleAct(self::INDEX_REC,10);
+		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
 		
 		//文章分类
-		$data['sort'] = $this->public_model->getSort();
+		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
 		$data['archive'] = $this->article_model->getArchive();

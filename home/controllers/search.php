@@ -4,6 +4,10 @@
  * @author WangYongdong
  */
 class Search extends MY_Controller {
+	const ARTICLE_VIEWS = 'views';
+	const ARTICLE_COM = 'comnum';
+	const ARTICLE_NEW = 'datetime';
+	
 	public function __construct() {
 		parent::__construct();
 	}
@@ -30,10 +34,10 @@ class Search extends MY_Controller {
 		$data['article'] = $this->search_model->getSearchArticle($aFilter,$arr['start'],$arr['pagenum']);
 		
 		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleAct('index_rec',10);
+		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
 		
 		//文章分类
-		$data['sort'] = $this->public_model->getSort();
+		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
 		$data['archive'] = $this->article_model->getArchive();

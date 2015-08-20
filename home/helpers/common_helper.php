@@ -81,10 +81,10 @@ function getSortField($id,$field='') {
  */
 function getSortByArticle($id) {
 	$db = DB('default');
-	$sql = 'SELECT type FROM blog_article WHERE id='.$id;
+	$sql = 'SELECT sortid FROM blog_article WHERE id='.$id;
 	$res = $db->query($sql);
 	$aList = $res->row_array();
-	return $aList['type'];
+	return $aList['sortid'];
 }
 /**
  * 获取作品状态

@@ -65,37 +65,6 @@ class Public_model extends CI_Model{
 	}
 	
 	/**
-	 * 获取首页友情链接
-	 */
-	public function getLinks() {
-		$sql = 'SELECT 
-					sitename,siteurl,description 
-				FROM 
-					blog_links 
-				WHERE 
-					status="show" 
-				ORDER BY 
-					id ASC 
-				LIMIT 5';
-		$res = $this->db->query($sql);
-		$list = $res->result_array();
-		return $list;
-	}
-	/**
-	 * 获取文章分类
-	 */
-	public function getSort() {
-		$sql = 'SELECT
-					*
-				FROM
-					blog_sort
-				ORDER BY
-					id ASC';
-		$res = $this->db->query($sql);
-		$aList = $res->result_array();
-		return $aList;
-	}
-	/**
 	 * 调用分页类
 	 */
 	public function getPage($sTable,$sUrl,$pageId,$iPageNum=10,$sFilter='') {

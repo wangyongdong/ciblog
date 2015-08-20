@@ -20,6 +20,8 @@ class MY_Controller extends CI_Controller {
 		$this->load->model('search_model');
 		$this->load->model('login_model');
 		$this->load->model('contact_model');
+		$this->load->model('comment_model');
+		$this->load->model('sort_model');
 	}
 	
 	private function addLog() {

@@ -32,7 +32,7 @@
 							Views: <a><?=$list['views']?></a>
 						</span>
 						<span class="meta-info category">
-							Category: <a><?=getSortField($list['type'],'name');?></a>
+							Category: <a><?=getSortField($list['sortid'],'name');?></a>
 						</span>
 					</p>
 					<p class="postcomments">
@@ -43,8 +43,7 @@
 				</div>
 			</div>
 			<?php endforeach;?>
-		</article><!-- #post-188 -->
-		<!-- #分页 -->
+		</article>
 		<div class="pagination">
 			<?php 
 				echo $this->pagination->create_links();
@@ -100,7 +99,7 @@
 				<?php foreach($comment as $list):?>
 				<li>
 					<a href="<?=$list['url']?>"><?=$list['author']?></a>：
-					<?=cutStr(imgReplace($list['comment']),18)?>
+					<?=cutStr(imgReplace($list['content']),18)?>
 					<a href="<?=site_url('article/view/'.$list['comment_id'])?>">查看>></a>
 				</li>
 				<?php endforeach;?>

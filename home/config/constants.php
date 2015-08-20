@@ -5,7 +5,7 @@
  */
 $host = "http://".$_SERVER['SERVER_NAME'];
 define("HOST",$host);
-define("PATH_PUBLIC","/public/home/"); 			//前台素材文件路径
+define("PATH_PUBLIC","/public/home/"); 		//前台素材文件路径
 define("PATH_UPLOAD","/public/uploads/"); 	//上传文件位置
 /*
 |--------------------------------------------------------------------------
