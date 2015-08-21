@@ -8,40 +8,7 @@ class Comment extends MY_Controller {
 	}
 	
 	/**
-	 * 获取文章评论
-	 */
-	public function getComment($iArticle='',$iStart=0,$iPageNum=5) {
-		if(empty($iArticle)) {
-			$iArticle = $_POST['id'];
-		}
-		if(!empty($_POST['start'])) {
-			$iStart = $_POST['start'];
-		}
-		if(!empty($_POST['limit'])) {
-			$iPageNum = $_POST['limit'];
-		}
-		//查询回复
-		$aComment = $this->comment_model->getComment($iArticle,$iStart,$iPageNum);
-		if(!empty($_POST['type'])) {
-			$str = '';
-			$i = 0;
-			foreach ($aComment as $key=>$value) {
-				$str .= '<li>
-							<a class="author" href="'.$value['url'].'">'.$value['author'].'：</a>
-							<span class="cont">'.$value['comment'].'</span><br>
-							<span class="time">'.$value['datetime'].'</span>
-						 </li>';
-				$i++;
-			}
-			$aRtn['comment'] = $str;
-			$aRtn['num'] = $i;
-			echoAjax($aRtn);
-		}
-		return $aComment;
-	}
-	
-	/**
-	 * 文章评论
+	 * 添加文章评论
 	 */
 	public function doComment() {
 		$data = array();

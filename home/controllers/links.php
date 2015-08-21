@@ -17,9 +17,13 @@ class Links extends MY_Controller {
 		//首页右侧个人信息
 		$data['blogger'] = $this->public_model->getBloggerInfo();
 		
-		$sTitle = '王永东的个人博客';
-		$sHeader = 'links';
-		$this->public_model->loadView($sTitle,$sHeader,'links',$data);
+		//设置seo
+		$seo_info = $this->config->item('list_seo');
+		$aMeta['title'] = '申请友链'.$seo_info['title'];
+		$aMeta['keywords'] = $seo_info['keywords'];
+		$aMeta['description'] = $seo_info['description'];
+		$sHeader = 'about';
+		$this->public_model->loadView($aMeta,$sHeader,'links',$data);
 	}
 	/**
 	 * 友情链接申请

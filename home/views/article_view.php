@@ -219,7 +219,7 @@ function loadMore() {
 						?>
 					</div>
 					<div class="contacts-block white-form" id="re_reply_<?=$article['id']?>">
-			            <form id="form_contact" method="post" action="<?=site_url('article/doComment')?>">
+			            <form id="form_contact" method="post" action="<?=site_url('comment/doComment')?>">
 			            	<input type="hidden" name="id" value="<?=$article['id']?>" />
 			            	<input type="text" name="name" class="name" required placeholder="Your Name" /><span class="input_name"></span>
 			                <input type="email" name="email" class="email" required  placeholder="Your Email" /><span class="input_email"></span>

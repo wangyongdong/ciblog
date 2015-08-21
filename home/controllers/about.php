@@ -17,6 +17,5 @@ class About extends MY_Controller {
 		$aMeta['description'] = $seo_info['description'];
 		$sHeader = 'about';
 		$this->public_model->loadView($aMeta,$sHeader,'about',$data);
-		
 	}
 }

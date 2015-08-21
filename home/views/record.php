@@ -9,7 +9,7 @@
 				<div class="sy">
 					<div class="re_info">
 						<?php if(!empty($list['img'])) { ?>
-						<img class="img_pic" src="images/001.png">
+						<img class="img_pic" src="images/001.png" width="80px" height="80px">
 						<?php } ?>
 						<p> <?=stripcslashes($list['content'])?></p>
 					</div>

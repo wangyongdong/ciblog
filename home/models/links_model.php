@@ -1,9 +1,9 @@
 <?php
 /**
- * 获取公共信息模型
+ * 友情链接模型类
  * @author WangYongDong
  */
-class Links_model extends CI_Model{
+class Links_model extends CI_Model {
 	function __construct() {
 		parent::__construct();
 		$this->load->database();

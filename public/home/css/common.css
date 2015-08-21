@@ -600,24 +600,6 @@ h1.t_nav span {
     background: #888a13 none repeat scroll 0 0;
     border: 2px solid #fff;
 }
-.sy {
-    /*overflow: hidden;*/
-}
-.sy_reply {
-	/*float:right;*/
-	border-bottom: 1px solid #fff;
-    line-height: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-}
-.sy_reply .text-num {
-	float:right;
-	margin-right:35px;
-}
-.sy_reply a ,.sy_reply .text-num span {
-	color:#888a13;
-	/*color:#CDAD00;*/
-}
 .contacts-block .input_name,.input_email,.input_url {
 	color:#FF0000;
 	font-size:11px;
@@ -636,14 +618,6 @@ h1.t_nav span {
 	display:block;
 	margin-top: 25px;
 }
-.reply_button {
-	margin:3px;
-}
-.sy .reply_r li {
-	list-style-type: none;
-    border-bottom: 1px solid #f7f7f7;
-    padding: 5px 3px 5px;
-}
 .reply_r .cont {
     line-height: 3.3;
     padding-left: 5px;
@@ -652,13 +626,6 @@ h1.t_nav span {
 	height:20px;
 	line-height:25px;
 	color: #8c8c8c;
-}
-.sy .mess {
-    color: #ff0000;
-    float: right;
-    font-size: 12px;
-    margin-right: 400px;
-    margin-top: 8px;
 }
 .dateview {
     background: #888a13 none repeat scroll 0 0;
@@ -679,6 +646,10 @@ h1.t_nav span {
 .margin-pag {
 	margin-left:60px;
 	border-top: 1px solid #fff;
+}
+.re_info p img {
+	width:80px;
+	height:80px;
 }
 /* record end */
 /* article comment start */
