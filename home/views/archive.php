@@ -1,40 +1,32 @@
+<script>
+
+</script>
 <div id="main" role="main" class="clearfix">
 	<div id="left">
-		<article>
-			<?php foreach($article as $list):?>	
-			<div class="post">
-				<header>
-					<h3 class="posttitle">
-						<a href="<?=site_url('article/view/'.$list['id'])?>" rel="bookmark"><?=$list['title']?></a>
-					</h3>
-				</header>
-				<div class="postdate">
-					<p><span class="postdateno"><?=dateFor($list['datetime'],"d")?></span><br><?=engDate($list['datetime'],'m')?></p>
-				</div>
-				<div class="postcontent"><?=cutTab($list['content'],150)?></div>
-				<div class="postdetails">
-					<p class="meta-pos">
-						<span class="meta-info author">
-							Author: <a><?=getUserInfo($list['uid'],'username')?></a>
-						</span>
-						<span class="meta-info comments">
-							Views: <a><?=$list['views']?></a>
-						</span>
-						<span class="meta-info category">
-							Category: <a><?=getSortField($list['sortid'],'name');?></a>
-						</span>
-					</p>
-					<p class="postcomments">
-						<time class="entry-date"><?=dateFor($list['datetime'])?></time>
-					</p>
-				</div>
-			</div>
+		<div class="archives">
+			<?php foreach($archive_list as $key=>$arlist):?>
+			<h3 class="year"><?=$key?> 年</h3>
+			<ul class="mon_list">
+				<?php foreach($arlist as $k=>$v):?>
+				<li>
+					<span class="mon" onclick="cutStatus(<?=$v['month']?>);"><?=$v['month']?> 月 ( <?=$v['num']?> 篇文章 )</span>
+					<ul class="post_list" id="<?=$v['month']?>" style="display: none;">
+						<?php foreach($v['article'] as $aK=>$aV):?>
+						<li>
+							<i class="icon-li"></i>
+							<?=dateFor($aV['datetime'],'d')?>日:
+							<a href="<?=site_url('article/view/'.$aV['id'])?>"><?=$aV['title']?></a>
+							<span class="ac">
+							<i class="icon-scroll-c"></i>
+							<?=$aV['comnum']?>
+							</span>
+						</li>
+						<?php endforeach;?>
+					</ul>
+				</li>
+				<?php endforeach;?>
+			</ul>
 			<?php endforeach;?>
-		</article>
-		<div class="pagination">
-			<?php 
-				echo $this->pagination->create_links();
-			?>
 		</div>
 	</div>
 	<div id="right">
@@ -43,14 +35,6 @@
 			<ul>
 				<?php foreach($sort as $list):?>
 				<li><a href="<?=site_url('article/sort/'.$list['id'])?>"><?=$list['name']?></a></li>
-				<?php endforeach;?>
-			</ul>
-		</div>
-		<h3 class="widgettitle">文章归档<span class="left-more"><a href="<?=site_url('archive')?>">更多>></a></h3>
-		<div class="widget">
-			<ul>
-				<?php foreach($archive as $list):?>
-				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
 				<?php endforeach;?>
 			</ul>
 		</div>

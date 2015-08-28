@@ -40,7 +40,7 @@ class Search extends MY_Controller {
 		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
-		$data['archive'] = $this->article_model->getArchive();
+		$data['archive'] = $this->archive_model->getArchive(5);
 		
 		$data['aFilter'] = $aFilter;
 		

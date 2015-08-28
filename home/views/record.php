@@ -6,15 +6,13 @@
 		<div class="bloglist">
 			<?php foreach($record as $list):?>
 			<ul class="arrow_box">
-				<div class="sy">
-					<div class="re_info">
-						<?php if(!empty($list['img'])) { ?>
-						<img class="img_pic" src="images/001.png" width="80px" height="80px">
-						<?php } ?>
-						<p> <?=stripcslashes($list['content'])?></p>
-					</div>
+				<div class="re_info">
+					<?php if(!empty($list['img'])) { ?>
+					<img class="img_pic" src="images/001.png" width="80px" height="80px">
+					<?php } ?>
+					<p> <?=stripcslashes($list['content'])?></p>
 				</div>
-				<span class="dateview"><?=date('Y-m-d',strtotime($list['datetime']))?></span>
+				<span class="dateview"><?=dateFor($list['datetime'])?></span>
 			</ul>
 			<?php endforeach;?>
 		</div>

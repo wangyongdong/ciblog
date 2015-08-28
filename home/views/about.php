@@ -11,16 +11,12 @@
 				</div>
 			</div>
 		</div>
-			<div class="twelve columns">
-				<?=$blogger['about_me']?>
-			</div>
+		<div class="twelve columns"><?=$blogger['about_me']?></div>
 	</div>
 	<div id="right">
 		<div class="widget">
 			<div class="avatar">
-				<a href="about.html">
-					<span>关于王永东</span>
-				</a>
+				<a href="<?=site_url('about')?>"><span>关于<?=$blogger['username']?></span></a>
 			</div>
 			<ul>
 				<li>姓名：<?=$blogger['username']?></li>
@@ -44,9 +40,9 @@
 			</div>
 			<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
 			<script>
-			var jiathis_config = {
-				title:' 王永东博客 | 记录在学习和工作中遇到的技术与问题，见证一名网站开发人员的成长与体会。博客地址:<?=HOST?>。'
-			}
+				var jiathis_config = {
+					title:' 王永东博客 | 记录在学习和工作中遇到的技术与问题，见证一名网站开发人员的成长与体会。博客地址:<?=HOST?>。'
+				}
 			</script>
 			<!-- JiaThis Button END -->
 		</div>
@@ -63,8 +59,8 @@
 			<ul>
 				<li><a href="/admin">登录blog</a></li>
 				<li><a href="#">分享网址</a></li>
-				<li><a href="/contact">留言评论</a></li>
-				<li><a href="/common/links">申请友链</a></li>
+				<li><a href="/contact">给我留言</a></li>
+				<li><a href="/links">申请友链</a></li>
 			</ul>
 		</div>
 	</div>

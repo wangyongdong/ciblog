@@ -154,11 +154,7 @@ function delActionLog() {
 			url:__A+'site/delActionLog',
 			type:'post',
 			success:function(data) {
-				if(data) {
-					window.location.reload();
-				} else {
-					alert("删除失败");
-				}
+				window.location.reload();
 			}
 		})
 	}

@@ -2,8 +2,8 @@
 
 class Search_model extends CI_Model {
     function __construct() {
-        parent::__construct();		//构造函数里面要调用父类的构造方法
-        $this->load->database();	//加载数据库,数据库名称在Config文件里面配置。，还有其他信息，例如密码等
+        parent::__construct();
+        $this->load->database();
     }
 	
     /**

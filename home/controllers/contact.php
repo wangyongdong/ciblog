@@ -31,19 +31,17 @@ class Contact extends MY_Controller {
 		$data['author'] = sg($this->input->post('name', TRUE));
 		$data['email'] = sg($this->input->post('email', TRUE));
 		$data['url'] = prep_url(sg($this->input->post('url', TRUE)));
-		$data['subject'] = sg($this->input->post('subject', TRUE));
-		$data['comment'] = sg($this->input->post('comment', TRUE));
-		$data['comment_type'] = 'contact';
+		$data['content'] = sg($this->input->post('content', TRUE));
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
 		$data['datetime'] = date("Y-m-d H:i:s",time());
-		if (empty($data['author']) || empty($data['email']) || empty($data['comment'])) {
+		if (empty($data['author']) || empty($data['email']) || empty($data['content'])) {
 			localCommon('数据信息不完整。');
 		} else if (mb_strlen($data['author']) < 2 || mb_strlen($data['author']) > 16) {
 			localCommon('用户名在2-16个字符。');
 		} else if (!is_email($data['email'])) {
 			localCommon('邮箱格式不正确。');
-		} else if (mb_strlen($data['comment']) < 2 || mb_strlen($data['comment']) > 500) {
+		} else if (mb_strlen($data['content']) < 2 || mb_strlen($data['content']) > 500) {
 			localCommon('评论内容在2-500个字符。');
 		}
 		//token验证
@@ -55,7 +53,6 @@ class Contact extends MY_Controller {
 			$aNotice = array();
 			$aNotice['type'] = 'contact';
 			$aNotice['author'] = $data['author'];
-			$aNotice['id'] = $iInsert;
 			$this->public_model->addNotice($aNotice);
 			//跳转
 			localCommon('留言成功，请等待回复，回复内容会已邮件的形式通知您');

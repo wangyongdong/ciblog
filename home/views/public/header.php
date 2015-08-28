@@ -41,8 +41,8 @@
 							<li <?php if($header == 'home') {echo 'class="current"';}?>><a href="<?=site_url("home")?>">Home</a></li>
 							<li <?php if($header == 'record') {echo 'class="current"';}?>><a href="<?=site_url('record')?>">闲言碎语</a></li>
 							<li <?php if($header == 'article') {echo 'class="current"';}?>><a href="<?=site_url('article')?>">学无止境</a></li>
+							<li <?php if($header == 'cms') {echo 'class="current"';}?>><a href="<?=site_url('cms')?>">业内新闻</a></li>
 							<li <?php if($header == 'album') {echo 'class="current"';}?>><a href="<?=site_url('album')?>">生活点滴</a></li>
-							<li <?php if($header == 'works') {echo 'class="current"';}?>><a href="<?=site_url('works')?>">我的作品</a></li>
 							<li <?php if($header == 'contact') {echo 'class="current"';}?>><a href="<?=site_url('contact')?>">contact</a></li>
 							<li <?php if($header == 'about') {echo 'class="current"';}?>><a href="<?=site_url('about')?>">关于我</a></li>
 						</ul>

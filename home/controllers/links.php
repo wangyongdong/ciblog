@@ -47,7 +47,6 @@ class Links extends MY_Controller {
 			//添加提醒
 			$aNotice = array();
 			$aNotice['type'] = 'links';
-			$aNotice['id'] = $iInsert;
 			$this->public_model->addNotice($aNotice);
 			//跳转
 			localCommon('申请已提交，审核通过后会已邮件的形式通知您');

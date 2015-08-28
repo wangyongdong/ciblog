@@ -208,7 +208,7 @@
 	          	}
 	          	?>
 	          	<?php 
-	          	if(roleMenu('article','select') || roleMenu('article','update') || roleMenu('sort','select')) {
+	          	if(roleMenu('article','select') || roleMenu('article','update')) {
 	          	?>
 	          	<li class="has_sub">
 	          		<a href="#" <?php if($nav=='article'){echo ' class="open"';}?> ><i class="icon-file-alt"></i> 学无止境 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
@@ -224,13 +224,17 @@
 		              	<li><a href="<?=site_url('article')?>">文章列表</a></li>
 		              	<?php 
 		              	}
-		              	if(roleMenu('sort','select')) {
-		              	?>
-		              	<li><a href="<?=site_url('sort')?>">文章分类</a></li>
-		              	<?php 
-		              	}
 		              	?>
 		            </ul>
+	          	</li>
+	          	<?php 
+	          	}
+	          	?>
+	          	<?php 
+				if(roleMenu('sort','select')) {
+				?>
+	          	<li>
+	          		<a href="<?=site_url('sort')?>" <?php if($nav=='sort'){echo ' class="open"';}?> ><i class="icon-sort"></i> 文章分类 </a>
 	          	</li>
 	          	<?php 
 	          	}

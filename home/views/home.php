@@ -44,46 +44,31 @@
 			<?php foreach($article_recom as $list):?>
 			<div class="post">
 				<header>
-				<h2 class="posttitle">
-					<a href="<?=site_url('article/view/'.$list['id'])?>" rel="bookmark">
-						<?=$list['title']?>
-					</a>
-				</h2>
+					<h2 class="posttitle">
+						<a href="<?=site_url('article/view/'.$list['id'])?>" rel="bookmark"><?=$list['title']?></a>
+					</h2>
 				</header>
 				<div class="postdate">
-					<p>
-						<span class="postdateno">
-							<?=date("d",strtotime($list['datetime']))?>
-						</span><br>
-						<?=engMonth($list['datetime'])?>
-					</p>
+					<p><span class="postdateno"><?=dateFor($list['datetime'],"d")?></span><br><?=engDate($list['datetime'],'m')?></p>
 				</div>
-				<div class="postcontent">
-				<?=cutStr($list['content'],120)?>
-				</div>
+				<div class="postcontent"><?=cutTab($list['content'],120)?></div>
 				<div class="postdetails">
 					<p class="postedby">
 						<span class="sep">Posted on</span>
-						<a class="bookmark" rel="bookmark">
-							<time class="entry-date" datetime="" pubdate=""><?=dateFor($list['datetime'])?></time>
-						</a>
-						<span class="sep">&nbsp;&nbsp; by</span>
-						<span class="author vcard">
-							<a class="url fn n" href="#author/chip-bennett"><?=getUserInfo($list['uid'],'username')?></a>
-						</span>
+						<a class="bookmark" rel="bookmark"><time class="entry-date"><?=dateFor($list['datetime'])?></time></a>
+						<span class="sep">by</span>
+						<span class="author vcard"><a class="url fn n"><?=getUserInfo($list['uid'],'username')?></a></span>
 					</p>
 					<p class="postcomments"><span>Views &nbsp;<?=$list['views']?></span></p>
 				</div>
 			</div>
 			<?php endforeach;?>
-		</article><!-- #post-1 -->
+		</article>
 	</div>
 	<div id="right">
 		<div class="widget">
 			<div class="avatar">
-				<a href="about.html">
-					<span>关于<?=$blogger['username']?></span>
-				</a>
+				<a href="<?=site_url('about')?>"><span>关于<?=$blogger['username']?></span></a>
 			</div>
 			<ul>
 				<li>姓名：<?=$blogger['username']?></li>
@@ -93,11 +78,11 @@
 				<li>邮箱：<?=$blogger['email']?></li>
 			</ul>
 		</div>
-		<h3 class="widgettitle">文章归档</h3>
+		<h3 class="widgettitle">文章归档<span class="left-more"><a href="<?=site_url('archive')?>">更多>></a></h3>
 		<div class="widget">
 			<ul>
 				<?php foreach($archive as $list):?>
-				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'])?></a>&nbsp;(<?=$list['num']?>)</li>
+				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -105,7 +90,15 @@
 		<div class="widget">
 			<ul>
 				<?php foreach($article_new as $list):?>
-				<li><a href="<?=site_url('article/view/'.$list['id'])?>"><?=$list['title']?></a></li>
+				<li><a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
+				<?php endforeach;?>
+			</ul>
+		</div>
+		<h3 class="widgettitle">业内新闻</h3>
+		<div class="widget">
+			<ul>
+				<?php foreach($cms_recom as $list):?>
+				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -113,9 +106,7 @@
 		<div class="widget">
 			<ul class="website">
 				<?php foreach($links as $list):?>
-				<li>
-					<a target="_blank" href="<?=$list['siteurl']?>"><?=$list['sitename']?></a>
-				</li>
+				<li><a target="_blank" href="<?=$list['siteurl']?>"><?=$list['sitename']?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -133,9 +124,9 @@
 			</div>
 			<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
 			<script>
-			var jiathis_config = {
-				title:' 王永东博客 | 记录在学习和工作中遇到的技术与问题，见证一名网站开发人员的成长与体会。博客地址:<?=HOST?>。'
-			}
+				var jiathis_config = {
+					title:' 王永东博客 | 记录在学习和工作中遇到的技术与问题，见证一名网站开发人员的成长与体会。博客地址:<?=HOST?>。'
+				}
 			</script>
 			<!-- JiaThis Button END -->
 		</div>

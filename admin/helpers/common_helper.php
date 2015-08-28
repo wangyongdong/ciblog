@@ -3,7 +3,7 @@
  * 文章编辑器定制
  */
 function ArticleUedit($sContent='') {
-	$ss = '
+	$sUedit = '
 			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
 			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
 			<script type="text/javascript">
@@ -11,7 +11,7 @@ function ArticleUedit($sContent='') {
 				//SyntaxHighlighter.highlight();
 			</script>
 			';
-	$sUedit = '
+	$sUedit .= '
     		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
     		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
 			
@@ -288,6 +288,16 @@ function beSort($iSort) {
 	$res = $db->query($sql);
 	$aList = $res->row_array();
 	return $aList['name'];
+}
+/**
+ * 获取分类level
+ */
+function sortLevel($iSort) {
+	$db = DB('default');
+	$sql = 'SELECT level FROM blog_sort WHERE id='.$iSort;
+	$res = $db->query($sql);
+	$aList = $res->row_array();
+	return sg($aList['level'],0);
 }
 /**
  * 获取置顶方式

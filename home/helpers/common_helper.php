@@ -1,5 +1,4 @@
 ﻿<?php
-
 /**
  * 获取token
  * @param string $tokentype
@@ -69,36 +68,24 @@ function getUserInfo($iUser,$type='list') {
 /**
  * 获取分类信息
  */
-function getSortField($id,$field='') {
+function getSortField($iSort,$sField='') {
 	$db = DB('default');
-	$sql = 'SELECT '.$field.' FROM blog_sort WHERE id='.$id;
+	$sql = 'SELECT '.$sField.' FROM blog_sort WHERE id='.$iSort;
 	$res = $db->query($sql);
 	$aList = $res->row_array();
-	return $aList[$field];
+	return $aList[$sField];
 }
 /**
  * 获取文章所属分类
  */
-function getSortByArticle($id) {
+function getSortByArticle($iArticle) {
 	$db = DB('default');
-	$sql = 'SELECT sortid FROM blog_article WHERE id='.$id;
+	$sql = 'SELECT sortid FROM blog_article WHERE id='.$iArticle;
 	$res = $db->query($sql);
 	$aList = $res->row_array();
 	return $aList['sortid'];
 }
-/**
- * 获取作品状态
- */
-function getWorkStatus($str) {
-	switch ($str) {
-		case 'learn':
-			return '未上线';
-			break;
-		case 'online':
-			return '已上线';
-			break;
-	}
-}
+
 /**
  * 跳转方法
  * @param unknown $sMessage
@@ -132,7 +119,6 @@ function getRecordTitle($iRecord) {
 function is_email($email) {
 	return strlen($email) > 6 && preg_match("/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/", $email);
 }
-
 /**
  * 生成用户头像
  */
@@ -150,19 +136,10 @@ function LinkAvatar($uid) {
 	return $url;
 }
 /**
- * 生成作品上传文件链接
- */
-function LinkWorks($str) {
-	if(empty($str)) {
-		return '';
-	}
-	return UPLOAD_PUBLIC.'works/'.$str;
-}
-/**
  * 过滤用户输入的数据
  */
-function sg($str,$fit='') {
-	if(!is_array($str)) {
+function sg(&$str,$fit='') {
+	if(!is_array($str) && !empty($str)) {
 		$str = trim($str);
 		$str = addslashes($str);
 	}
@@ -171,23 +148,72 @@ function sg($str,$fit='') {
 /**
  * 截取函数
  */
-function cutStr($str,$length,$dot = '......') {
-	$len = mb_strlen($str,'utf8');
-	$str = mb_substr($str,0,$length,'UTF-8');
-	if($len>$length) {
-		return $str.$dot;
+function cutStr($string,$length,$dot='…') {
+	$len = mb_strlen($string,'utf8');
+	$string = mb_substr($string,0,$length,'UTF-8');
+	if($len > $length) {
+		return $string.$dot;
 	} else {
-		return $str;
+		return $string;
 	}
 }
 /**
- * 去除img标签
+ * 简单截取+过滤
+ * 去掉img标签并截取
  */
-function imgReplace($str) {
-	return strip_tags($str,'img');
+function cutShes($string,$length) {
+	$string = preg_replace("/<img.*?>/si","",$string);
+	return cutStr($string,$length);
 }
 /**
- * 获取页面介绍
+ * 字符串切割+过滤+转换
+ *
+ * 功能：截取字符串（支持中文）
+ * 如果截取的字符串中不包含html标签，则正常截取
+ * 如果字符串中包括img标签，则先进行过去标签，截取后，将标签位置放回,截取的字符串则会保留完整的html标签
+ *
+ * @param string $string
+ * @param unknown $length
+ * @param string $replace
+ * @return string
+ */
+function cutTab($string, $length='15', $dot = '…') {
+	$_lenth = mb_strlen($string, "utf-8");
+	$text_str = preg_replace("/<img.*?>/si","",$string);
+	$text_lenth = mb_strlen($text_str, "utf-8") - 1;
+
+	if($text_lenth <= $length) {
+		return stripcslashes($string);
+	}
+
+	if(strpos($string, '<img') === false){
+		$res = mb_substr($string, 0, $length, 'UTF-8');
+		return stripcslashes($res).$dot;
+	}
+
+	//计算标签位置
+	$html_start = ceil(strpos($string, '<img') / 3);
+	$html_end = ceil(strpos($string, '/>') / 3);
+
+	if($length < $html_start) {
+		$res = mb_substr($string, 0, $length, 'UTF-8');
+		return stripcslashes($res).$dot;
+	}
+
+	if($length > $html_start) {
+
+		$res_html = mb_substr($text_str, 0, $length-1, 'UTF-8');
+
+		preg_match('/<img[^>]*\>/',$string,$result_html);
+		$before = mb_substr($res_html, 0, $html_start, 'UTF-8');
+		$after = mb_substr($res_html, $html_start, mb_strlen($res_html, "utf-8"), 'UTF-8');
+		$res = $before.$result_html[0].$after;
+		return stripcslashes($res).$dot;
+	}
+
+}
+/**
+ * 获取页面title
  */
 function getPageDesc($sName) {
 	$sql = 'SELECT menu_desc FROM blog_menu WHERE menu_alias="'.$sName.'"';
@@ -215,66 +241,54 @@ function getPageCount($table,$sFilter='') {
 	return $list['num'];
 }
 /**
- * 信息统计
- */
-function getStatis($table) {
-	$sql = 'SELECT count(*) as num FROM blog_'.$table;
-	$db = DB('default');
-	$res = $db->query($sql);
-	$list = $res->row_array();
-	return $list['num'];
-}
-/**
  * 时间友好显示
  */
-function dateFor($time) {
-	return date("Y-m-d",strtotime($time));
-}
-/**
- * 英文月份转换
- */
-function engMonth($time) {
-	$month = date("m",strtotime($time));
-	$Month_E = array(
-			1 => "January",
-			2 => "February",
-			3 => "March",
-			4 => "April",
-			5 => "May",
-			6 => "June",
-			7 => "July",
-			8 => "August",
-			9 => "September",
-			10 => "October",
-			11 => "November",
-			12 => "December"
-	);
-	return $Month_E[intval($month)];
+function dateFor($time,$val='') {
+	if(!empty($val)) {
+		return date($val,strtotime($time));
+	} else {
+		return date("Y-m-d",strtotime($time));
+	}
 }
 /**
  * 英文日期转换
  */
-function engDate($time) {
-	$arr = explode('/', $time);
+function engDate($time,$val='') {
 	$Month_E = array(
-			1 => "January",
-			2 => "February",
-			3 => "March",
-			4 => "April",
-			5 => "May",
-			6 => "June",
-			7 => "July",
-			8 => "August",
-			9 => "September",
-			10 => "October",
-			11 => "November",
-			12 => "December"
+		1 => "January",
+		2 => "February",
+		3 => "March",
+		4 => "April",
+		5 => "May",
+		6 => "June",
+		7 => "July",
+		8 => "August",
+		9 => "September",
+		10 => "October",
+		11 => "November",
+		12 => "December"
 	);
-	$eng_month = $Month_E[intval($arr[1])];
-	$engTime = $eng_month.' '.$arr[0];
-	return $engTime;
+	if($val == 'm') {
+		$month = date("m",strtotime($time));
+		return $Month_E[intval($month)];
+	} else if($val == 'yd') {
+		$arr = explode('/', $time);
+		$eng_month = $Month_E[intval($arr[1])];
+		$engTime = $eng_month.' '.$arr[0];
+		return $engTime;
+	}
+	
 }
-
+/**
+ * 打印数据信息
+ */
+function pl($var) {
+	$value = print_r($var, TRUE);
+	$fileName = 'ciblog_admin.'.date('Ymd').'.run.log';
+	$file = LOG.$fileName;
+	$prefix = '[' . date('c') . '] ';
+	@file_put_contents($file, $prefix . $value . "\n", FILE_APPEND);
+}
 
 
 

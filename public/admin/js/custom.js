@@ -74,7 +74,6 @@ $('.wminimize').click(function(e){
     }
     $wcontent.toggle(500);
 });
-
 /* Scroll to Top */
 $(".totop").hide();
 $(function(){

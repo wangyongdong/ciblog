@@ -29,17 +29,23 @@
 			                          	<th>ID</th>
 			                          	<th>名称</th>
 			                          	<th>别名</th>
+			                          	<th>父ID</th>
+			                          	<th>级别</th>
 			                          	<th>描述</th>
 			                          	<th>文章数量</th>
 			                          	<th></th>
 		                        	</tr>
 		                      	</thead>
 	          					<tbody>
-	          						<?php foreach($list as $list):?>
+	          						<?php foreach($aSort as $list):?>
 	            					<tr>
-	              						<td><?=$list['id']?></td>
+	              						<td>
+	              							<?=$list['id']?>
+	              						</td>
 	              						<td><?=$list['name']?></td>
 	              						<td><?=$list['alias']?></td>
+	              						<td><?=$list['parent_id']?></td>
+	              						<td><?=$list['level']?></td>
 	              						<td><?=$list['description']?></td>
 	              						<td><?=$list['nums']?></td>
 	              						<td>
@@ -93,6 +99,44 @@
 	                                        	<label class="control-label col-lg-3" for="alias">别名</label>
 	                                        	<div class="col-lg-9"> 
 	                                          		<input type="text" class="form-control" id="alias" name="alias">
+	                                        	</div>
+	                                      	</div>
+	                                      	<div class="form-group">
+	                                        	<label class="control-label col-lg-3" for="alias">分类位置</label>
+	                                        	<div class="uni pull-left s-select">
+	                                          		<select class="form-control" name="parent_id">
+								                    	<option value='0'>默认：根分类</option>
+								                    	<optgroup label='一级分类'></optgroup>
+								                    	<?php 
+								                    		foreach($sort_list as $slist):
+								                    		if(empty($slist['parent_id'])) {
+								                    	?>
+								                    	<option class="se-op" value="<?=$slist['id']?>"><?=$slist['name']?></option>
+								                    	<?php 
+								                    	}	
+								                    	endforeach;
+								                    	?>
+								                    	<optgroup label='二级分类'></optgroup>
+								                    	<?php 
+								                    		foreach($sort_list as $slist):
+								                    		if(!empty($slist['parent_id']) && $slist['level']==2) {
+								                    	?>
+								                    	<option class="se-op" value="<?=$slist['id']?>"><?=$slist['name']?></option>
+								                    	<?php 
+								                    	}	
+								                    	endforeach;
+								                    	?>
+								                    	<optgroup label='三级分类'></optgroup>
+								                    	<?php 
+								                    		foreach($sort_list as $slist):
+								                    		if(!empty($slist['parent_id']) && $slist['level']==3) {
+								                    	?>
+								                    	<option class="se-op" value="<?=$slist['id']?>"><?=$slist['name']?></option>
+								                    	<?php 
+								                    	}	
+								                    	endforeach;
+								                    	?>
+													</select>
 	                                        	</div>
 	                                      	</div>
 	                                      	<div class="form-group">

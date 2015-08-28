@@ -16,6 +16,9 @@ class Home extends MY_Controller {
 		//首页右侧最新文章
 		$data['article_new'] = $this->article_model->getArticleList(self::ARTICLE_NEW);
 		
+		//首页cms文章推荐
+		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
+		
 		//首页右侧友情链接
 		$data['links'] = $this->links_model->getLinks();
 		
@@ -23,7 +26,7 @@ class Home extends MY_Controller {
 		$data['blogger'] = $this->public_model->getBloggerInfo();
 		
 		//文章归档
-		$data['archive'] = $this->article_model->getArchive();
+		$data['archive'] = $this->archive_model->getArchive(5);
 		
 		//设置seo
 		$seo_info = $this->config->item('index_seo');

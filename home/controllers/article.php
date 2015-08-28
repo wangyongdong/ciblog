@@ -18,12 +18,16 @@ class Article extends MY_Controller {
 		$pageId = $this->input->get('page');
 		//获取系统变量，文章数量
 		$sPageNum = getSet('article_nums');
-		$arr = $this->public_model->getPage("article",'article?',$pageId,$sPageNum);
+		$sFilter = 'AND sortid != "2" ';
+		$arr = $this->public_model->getPage("article",'article?',$pageId,$sPageNum,$sFilter);
 		//文章列表
 		$data['article'] = $this->article_model->getArticleList(self::ARTICLE_NEW,$arr['start'],$arr['pagenum']);
 		
 		//文章点击排行榜
 		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
+		
+		//首页cms文章推荐
+		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
 		
 		//文章分类
 		$data['sort'] = $this->sort_model->getSort();
@@ -32,7 +36,7 @@ class Article extends MY_Controller {
 		$data['comment'] = $this->comment_model->getNewComment();
 
 		//文章归档
-		$data['archive'] = $this->article_model->getArchive();
+		$data['archive'] = $this->archive_model->getArchive(5);
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
@@ -41,7 +45,6 @@ class Article extends MY_Controller {
 		$aMeta['description'] = $seo_info['description'];
 		$sHeader = 'article';
 		$this->public_model->loadView($aMeta,$sHeader,'article',$data);
-		
 	}
 	/**
 	 * 文章详情页
@@ -60,11 +63,14 @@ class Article extends MY_Controller {
 		//文章点击排行榜
 		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
 		
+		//首页cms文章推荐
+		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
+		
 		//文章分类
 		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
-		$data['archive'] = $this->article_model->getArchive();
+		$data['archive'] = $this->archive_model->getArchive(5);
 		
 		//文章评论
 		$data['comment'] = $this->getComment($iArticle);
@@ -99,7 +105,7 @@ class Article extends MY_Controller {
 		$arr = $this->public_model->getPage("article",'article/sort/'.$iType.'?',$pageId,$sPageNum,$sFilter);
 		
 		//根据分类获取文章列表
-		$data['article'] = $this->article_model->getArticleBySort($iType,$arr['start'],$arr['pagenum']);
+		$data['article'] = $this->sort_model->getArticleBySort($iType,$arr['start'],$arr['pagenum']);
 		
 		//文章点击排行榜
 		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
@@ -107,8 +113,14 @@ class Article extends MY_Controller {
 		//文章分类
 		$data['sort'] = $this->sort_model->getSort();
 		
+		//首页cms文章推荐
+		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
+		
+		//最新评论
+		$data['comment'] = $this->comment_model->getNewComment();
+		
 		//文章归档
-		$data['archive'] = $this->article_model->getArchive();
+		$data['archive'] = $this->archive_model->getArchive(5);
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
@@ -134,7 +146,7 @@ class Article extends MY_Controller {
 		$arr = $this->public_model->getPage("article",'article/archive/'.$sTime.'?',$pageId,$sPageNum,$sFilter);
 		
 		//根据时间获取文章列表
-		$data['article'] = $this->article_model->getArticleByArchive($sTime,$arr['start'],$arr['pagenum']);
+		$data['article'] = $this->archive_model->getArticleByArchive($sTime,$arr['start'],$arr['pagenum']);
 		
 		//文章点击排行榜
 		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
@@ -143,7 +155,13 @@ class Article extends MY_Controller {
 		$data['sort'] = $this->sort_model->getSort();
 		
 		//文章归档
-		$data['archive'] = $this->article_model->getArchive();
+		$data['archive'] = $this->archive_model->getArchive();
+		
+		//首页cms文章推荐
+		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
+		
+		//最新评论
+		$data['comment'] = $this->comment_model->getNewComment();
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
@@ -174,8 +192,8 @@ class Article extends MY_Controller {
 			$i = 0;
 			foreach ($aComment as $key=>$value) {
 				$str .= '<li>
-							<a class="author" href="'.$value['url'].'">'.$value['author'].'：</a>
-							<span class="cont">'.$value['comment'].'</span><br>
+							<div class="com_top"><a class="author" href="'.$value['url'].'">'.$value['author'].'：</a></div>
+							<span class="cont">'.stripcslashes($value['content']).'</span><br>
 							<span class="time">'.$value['datetime'].'</span>
 						 </li>';
 				$i++;

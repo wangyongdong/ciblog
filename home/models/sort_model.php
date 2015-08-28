@@ -17,11 +17,34 @@ class Sort_model extends CI_Model{
 					*
 				FROM
 					blog_sort
+				WHERE
+					nums>0
+					AND id != "2"
 				ORDER BY
 					id ASC';
 		$res = $this->db->query($sql);
 		$aList = $res->result_array();
 		return $aList;
 	}
+	/**
+	 * 根据类别获取文章
+	 */
+	function getArticleBySort($iType,$iStart='',$iPageNum='') {
+		$sLimit = '';
+		if(!empty($iPageNum)) {
+			$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
+		}
 	
+		$sql = 'SELECT
+					*
+				FROM
+					blog_article
+				WHERE
+					sortid='.$iType.'
+				ORDER BY
+					datetime DESC '.$sLimit;
+		$res = $this->db->query($sql);
+		$list = $res->result_array();
+		return $list;
+	}
 }

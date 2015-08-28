@@ -18,10 +18,14 @@ class Sort extends MY_Controller {
 		$pageId = $this->input->get('page');
 		$arr = $this->public_model->getPage("sort",'sort?',$pageId);
 		//执行查询
-		$data['list'] = $this->sort_model->getSortList($arr['start'],$arr['pagenum']);
+		$data['aSort'] = $this->sort_model->getSortList($arr['start'],$arr['pagenum']);
 		$data['token'] = getToken($this->tokentype);
+		
+		//sort列表
+		$data['sort_list'] = $this->sort_model->getSortList();
+		
 		//导航
-		$data['nav'] = 'article';
+		$data['nav'] = 'sort';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('sort/sort_list',$data);
@@ -36,8 +40,12 @@ class Sort extends MY_Controller {
 		$iSort = $this->uri->segment(3);
 		$data['list'] = $this->sort_model->getSortInfo($iSort);
 		$data['token'] = getToken($this->tokentype);
+		
+		//sort列表
+		$data['sort_list'] = $this->sort_model->getSortList();
+		
 		//导航
-		$data['nav'] = 'article';
+		$data['nav'] = 'sort';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('sort/sort_edit',$data);
@@ -54,7 +62,9 @@ class Sort extends MY_Controller {
 		} else {
 			$data['id'] = sg($_POST['id'],0);	//修改
 		}
-		
+		$data['parent_id'] = sg($_POST['parent_id'],0);
+		//根据parent_id获取level
+		$data['level'] = sortLevel($_POST['parent_id'])+1;
 		$data['name'] = sg($_POST['name']);
 		$data['alias'] = sg($_POST['alias']);
 		$data['description'] = sg($_POST['description']);

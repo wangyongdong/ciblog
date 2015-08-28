@@ -17,7 +17,7 @@ function replace_em(str){
 	str = str.replace(/\</g,'&lt;');
 	str = str.replace(/\>/g,'&gt;');
 	str = str.replace(/\n/g,'<br/>');
-	str = str.replace(/\[em_([0-9]*)\]/g,'<img src="<?=PLUGIN_QQFACE?>face/$1.gif" border="0" />');
+	str = str.replace(/\[em_([0-9]*)\]/g,'<img src="<?=PLUGIN_QQFACE;?>face/$1.gif" border="0" />');
 	return str;
 }
 $(function () {
@@ -84,9 +84,7 @@ function loadMore() {
 			if(data.num>=5) {
 				$(".part_btn").html('<a id="a-load" href="javascript:void(0);" onclick="loadMore();">查看更多</a>');
 			}
-		},
-		'json'
-	);
+		},'json');
 }
 </script>
 <div class="t_title">
@@ -97,36 +95,36 @@ function loadMore() {
 		<article>
 			<div class="post">
 				<header>
-					<h3 class="posttitle"><?=$article['title']?></h3>
+					<h3 class="posttitle"><?=$cms['title']?></h3>
 				</header>
 				<div class="postauths">
 					<p class="meta-pos al-views">
 						<span class="meta-info author al-views">
-							Author: <a class="al-views"><?=getUserInfo($article['uid'],'username')?></a>
+							Author: <a class="al-views"><?=getUserInfo($cms['uid'],'username')?></a>
 						</span>
 						<span class="meta-info comments al-views">
-							Comments: <a class="al-views"><?=$article['comnum']?></a>
+							Comments: <a class="al-views"><?=$cms['comnum']?></a>
 						</span>
 						<span class="meta-info category al-views">
-							Views: <a class="al-views"><?=$article['views']?></a>
+							Views: <a class="al-views"><?=$cms['views']?></a>
 						</span>
 					</p>
 				</div>
 				<div class="postcontent">
-					<?=$article['content']?>
+					<?=$cms['content']?>
 				</div>
 				<div class="postdetails posttime">
-					<p class="postcomments"><time class="entry-date" datetime="" pubdate=""><?=dateFor($article['datetime'])?></time></p>
+					<p class="postcomments"><time class="entry-date" datetime="" pubdate=""><?=dateFor($cms['datetime'])?></time></p>
 				</div>
 				<div class="vc-copyright">
 					本站文章除注明转载外，均为原创文章。
 					转载请注明：文章转载自： <a href="http://www.wangyongdong.com">王永东个人博客</a>
 				</div>
 				<div class="keyfl">
-					<p><span>文章分类</span>：<?=getSortField($article['sortid'],'name');?></p>
+					<p><span>文章分类</span>：<?=getSortField($cms['sortid'],'name');?></p>
 				</div>
 				<div class="keybq">
-					<p><span>关键词</span>：<?=$article['keyword'];?></p>
+					<p><span>关键词</span>：<?=$cms['keyword'];?></p>
 				</div>
 				<!-- JiaThis Button BEGIN -->
 				<div class="fenxiang">
@@ -153,14 +151,14 @@ function loadMore() {
 			<div class="clear"></div>
 			<div class="nextinfo">
 					<?php 
-					if(!empty($article_near['last'])) {
+					if(!empty($cms_near['last'])) {
 					?>
-					<p> 上一篇：<a href="<?=site_url('article/view/'.$article_near['last']['id'])?>"><?=$article_near['last']['title']?></a></p>
+					<p> 上一篇：<a href="<?=site_url('article/view/'.$cms_near['last']['id'])?>"><?=$cms_near['last']['title']?></a></p>
 					<?php 
 					}
-					if(!empty($article_near['next'])) {
+					if(!empty($cms_near['next'])) {
 					?>
-					<p> 下一篇：<a href="<?=site_url('article/view/'.$article_near['next']['id'])?>"><?=$article_near['next']['title']?></a></p>
+					<p> 下一篇：<a href="<?=site_url('article/view/'.$cms_near['next']['id'])?>"><?=$cms_near['next']['title']?></a></p>
 					<?php 
 					}
 					?>
@@ -168,7 +166,7 @@ function loadMore() {
 				<div class="otherlink">
 					<h2>相关文章</h2>
 					<ul>
-						<?php foreach($article_related as $list):?>
+						<?php foreach($cms_related as $list):?>
 						<li>
 							<a title="<?=$list['title']?>" href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],18)?></a>
 						</li>
@@ -176,13 +174,12 @@ function loadMore() {
 					</ul>
 				</div>
 				<div id="comment_list" class="re_reply">
-					<div id="<?=$article['id']?>" class="reply_r">
+					<div id="<?=$cms['id']?>" class="reply_r">
 						<h3>用户评论</h3>
 						<ul class="ds-comments">
 							<?php 
-							if(!empty($comment)) {
-								$i = 1;
-								foreach($comment as $comment):
+							$i = 1;
+							foreach($comment as $comment):
 							?>
 							<li>
 								<div class="com_top">
@@ -192,15 +189,14 @@ function loadMore() {
 								<div class="time"><?=$comment['datetime']?></div>
 							</li>
 							<?php 
-								$i++;
-								endforeach;
-							}
+							$i++;
+							endforeach;
 							?>
 						</ul>
 						<div id="load_more">
 							<input type="hidden" value="5" name="start" id="start">
 							<input type="hidden" value="<?=getSet('comment_nums');?>" name="limit" id="limit">
-							<input type="hidden" value="<?=$article['id']?>" name="id" id="id">
+							<input type="hidden" value="<?=$cms['id']?>" name="id" id="id">
 						    <div class="part_btn" <?php if(empty($i) || $i<5) {echo 'style="display:none;"'; }?>>
 						    	<a id="a-load" href="javascript:void(0);" onclick="loadMore();">查看更多</a>
 						    </div>
@@ -208,19 +204,21 @@ function loadMore() {
 					</div>
 					<div class="comment_pro">
 						<div class="min-comments">
-							<p class="i-like">已有 <?=$article['comnum']?> 人发表感言！</p>
+							<p class="i-like">已有 <?=$cms['comnum']?> 人发表感言！</p>
 						</div>
 						<?php 
 						if(getSet('is_comment') == 'y') {
 						?>
-						<div class="action flex"><span id="btnrepost" class="btn i-coms">评论</span></div>
+						<div class="action flex">
+							<span id="btnrepost" class="btn i-coms">评论</span>
+						</div>
 						<?php 
 						}
 						?>
 					</div>
-					<div class="contacts-block white-form" id="re_reply_<?=$article['id']?>">
+					<div class="contacts-block white-form" id="re_reply_<?=$cms['id']?>">
 			            <form id="form_contact" method="post" action="<?=site_url('comment/doComment')?>">
-			            	<input type="hidden" name="id" value="<?=$article['id']?>" />
+			            	<input type="hidden" name="id" value="<?=$cms['id']?>" />
 			            	<input type="text" name="name" class="name" required placeholder="Your Name" /><span class="input_name"></span>
 			                <input type="email" name="email" class="email" required  placeholder="Your Email" /><span class="input_email"></span>
 			             	<input type="text" name="url" class="url" placeholder="http://" />
@@ -234,22 +232,14 @@ function loadMore() {
 						<div class="clear"></div>
 				    </div>
 			    </div>
-		</article><!-- #post-188 -->
+		</article>
 	</div>
 	<div id="right">
-		<h3 class="widgettitle">文章归档<span class="left-more"><a href="<?=site_url('archive')?>">更多>></a></span></h3>
+		<h3 class="widgettitle">文章归档<span class="left-more"><a href="<?=site_url('archive')?>">更多>></a></h3>
 		<div class="widget">
 			<ul>
 				<?php foreach($archive as $list):?>
 				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
-				<?php endforeach;?>
-			</ul>
-		</div>
-		<h3 class="widgettitle">栏目导航</h3>
-		<div class="rnav">
-			<ul>
-				<?php foreach($sort as $list):?>
-				<li><a href="<?=site_url('article/sort/'.$list['id'])?>"><?=$list['name']?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -266,7 +256,7 @@ function loadMore() {
 			<ul>
 				<?php 
 				$i=0;
-				foreach($article_view as $list):
+				foreach($cms_view as $list):
 					$i++;
 					if($i<=3) {
 				?>

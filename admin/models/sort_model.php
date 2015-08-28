@@ -8,7 +8,7 @@ class Sort_model extends CI_Model  {
     /**
      * 获取类别列表
      */
-    function getSortList($iStart=0,$iPageNum=20) {
+    function getSortList($iStart=0,$iPageNum=100) {
     	$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
     	$sql = 'SELECT
     				*
@@ -38,7 +38,6 @@ class Sort_model extends CI_Model  {
 		$aList = $res->row_array();
 		return $aList;
 	}
-	
     /**
      * 执行类别添加修改
      */

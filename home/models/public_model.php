@@ -91,23 +91,14 @@ class Public_model extends CI_Model{
 	public function addNotice($aNotice) {
 		$arr = array();
 		$arr['type'] = $aNotice['type'];
-		if($arr['type'] == 'record') {
-			//获取说说标题
-			$title = getRecordTitle($aNotice['comment_id']);
-			$sRtnUrl = HOST.'/admin/record/rnew';
-			$arr['content'] = '用户  <font color="blue">'.$aNotice['author'].'</font> 评论了您的说说 "'.$title.'"，<a href="' . $sRtnUrl . '" target="_blank">去看看>></a>';
-		}
-		if($arr['type'] == 'article') {
-			$sRtnUrl = HOST.'/admin/comment/update/'.$aNotice['id'];
-			$arr['content'] = '用户  <font color="blue">'.$aNotice['author'].'</font> 评论了您的文章，<a href="' . $sRtnUrl . '" target="_blank">去看看>></a>';
+		if($arr['type'] == 'comment') {
+			$arr['content'] = '用户  <font color="blue">'.$aNotice['author'].'</font> 评论了您的文章.';
 		}
 		if($arr['type'] == 'contact') {
-			$sRtnUrl = HOST.'/admin/comment/update/'.$aNotice['id'];
-			$arr['content'] = '用户  <font color="blue">'.$aNotice['author'].'</font> 给你留言了，<a href="' . $sRtnUrl . '" target="_blank">去看看>></a>';
+			$arr['content'] = '用户  <font color="blue">'.$aNotice['author'].'</font> 给你留言了.';
 		}
 		if($arr['type'] == 'links') {
-			$sRtnUrl = HOST.'/admin/links/update/'.$aNotice['id'];
-			$arr['content'] = '有新的友情链接申请，请审核，<a href="' . $sRtnUrl . '" target="_blank">去看看>></a>';
+			$arr['content'] = '有新的友情链接申请，请审核.';
 		}
 		$arr['status'] = 'unread';
 		$arr['datetime'] = date("Y-m-d H:i:s",time());

@@ -40,6 +40,44 @@
                                     	</div>
                                   	</div>
                                   	<div class="form-group">
+										<label class="control-label col-lg-3" for="alias">分类位置</label>
+                                        <div class="uni pull-left s-select">
+                                        	<select class="form-control" name="parent_id">
+							                	<option value='0'>默认：根分类</option>
+							                    <optgroup label='一级分类'></optgroup>
+							                    	<?php 
+							                    		foreach($sort_list as $slist):
+							                    		if(empty($slist['parent_id'])) {
+							                    	?>
+							                    	<option class="se-op" value="<?=$slist['id']?>" <?php if($slist['id']==$list['parent_id']){echo 'selected';}?> ><?=$slist['name']?></option>
+							                    	<?php 
+							                    	}	
+							                    	endforeach;
+							                    	?>
+							                    	<optgroup label='二级分类'></optgroup>
+							                    	<?php 
+							                    		foreach($sort_list as $slist):
+							                    		if(!empty($slist['parent_id']) && $slist['level']==2) {
+							                    	?>
+							                    	<option class="se-op" value="<?=$slist['id']?>" <?php if($slist['id']==$list['parent_id']){echo 'selected';}?> ><?=$slist['name']?></option>
+							                    	<?php 
+							                    	}
+							                    	endforeach;
+							                    	?>
+							                    	<optgroup label='三级分类'></optgroup>
+							                    	<?php 
+							                    		foreach($sort_list as $slist):
+							                    		if(!empty($slist['parent_id']) && $slist['level']==3) {
+							                    	?>
+							                    	<option class="se-op" value="<?=$slist['id']?>" <?php if($slist['id']==$list['parent_id']){echo 'selected';}?> ><?=$slist['name']?></option>
+							                    	<?php 
+							                    	}	
+							                    	endforeach;
+							                    	?>
+											</select>
+                                        </div>
+                                    </div>
+                                  	<div class="form-group">
                                     	<label class="control-label col-lg-3" for="description">摘要</label>
                                     	<div class="col-lg-9">
                                       		<textarea class="form-control" id="description" name="description"><?=$list['description']?></textarea>

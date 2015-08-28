@@ -13,7 +13,7 @@ class Contact_model extends CI_Model{
 	 * 执行留言添加
 	 */
 	function doContact($data) {
-		$this->db->insert('comment',$data);
+		$this->db->insert('contact',$data);
 		$iInsert = $this->db->insert_id();
 		return $iInsert;
 	}

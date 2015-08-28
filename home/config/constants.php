@@ -2,11 +2,17 @@
 
 /*
  * 定义前台素材文件为常量
- */
+*/
 $host = "http://".$_SERVER['SERVER_NAME'];
-define("HOST",$host);
+define("HOST", $host);
 define("PATH_PUBLIC","/public/home/"); 		//前台素材文件路径
-define("PATH_UPLOAD","/public/uploads/"); 	//上传文件位置
+define("LOG",$_SERVER['DOCUMENT_ROOT']."/public/logs/"); 	//log目录
+define("PLUGIN_UEDITOR",$host."/public/plugin/ueditor/"); 	//编辑器插件
+define("PLUGIN_UPLOAD",$host."/public/plugin/uploadify/"); 	//图片上传插件
+define("PLUGIN_QQFACE","/public/plugin/qqface/"); 	//表情插件
+define("UPLOAD_PUBLIC","/public/upload/"); 							//上传文件位置
+define("UPLOAD_PATH",$_SERVER['DOCUMENT_ROOT']."/public/upload/"); 	//文件上传目录
+
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes
