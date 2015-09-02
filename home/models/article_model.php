@@ -15,17 +15,19 @@ class Article_model extends CI_Model{
 	 * @param number $iPageNum
 	 * @return array
 	 */
-	function getArticleList($sOrder='datetime',$iStart=0,$iPageNum=10) {
+	function getArticleList($sOrder='datetime',$iStart=0,$iPageNum=10,$aFilter='') {
 		$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
 		$sql = 'SELECT
     				*
     			FROM
     				blog_article
-				WHERE
-					sortid != "2"
-    			ORDER BY 
-    			'.$sOrder.' DESC
-    			'.$sLimit;
+    			WHERE
+    				sortid != "2" ';
+		if(!empty($aFilter['q'])) {
+			$sql .= ' AND title LIKE"%'.$aFilter['q'].'%"';
+		}
+		$sql .= ' ORDER BY
+    				'.$sOrder.' DESC '.$sLimit;
 		$res = $this->db->query($sql);
 		$aList = $res->result_array();
 		return $aList;

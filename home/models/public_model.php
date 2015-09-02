@@ -24,6 +24,9 @@ class Public_model extends CI_Model{
 		$data['keywords'] = $aMeta['keywords'];
 		$data['description'] = $aMeta['description'];
 		$data['header'] = $sHeader;
+		if(!empty($aData['aFilter']['q'])) {
+			$data['aFilter']['q'] = $aData['aFilter']['q'];
+		}
 		$this->load->view('public/header',$data);
 		$this->load->view($sView,$aData);
 		$this->load->view('public/footer');

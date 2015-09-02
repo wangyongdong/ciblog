@@ -25,9 +25,9 @@
 						<ul class="task">
 							<?php foreach($notice as $notice):?>
 							<li <?php if($notice['status']=='unread'){echo 'class="un-weld"';}?>>
-								<span class="uni"><input type='checkbox' name='select[]' id="<?=$notice['id']?>"/></span> 
-								<?=cutShes($notice['content'],10)?>
-								<span class="label label-danger">Important</span>
+								<span class="uni"><input type='checkbox' name='select[]' id="<?=$notice['id']?>"/></span>
+								<span class="label label-warning"><?=$notice['type']?></span>
+								<?=$notice['content']?>
 								<a href="#" class="pull-right"><i class="icon-remove"></i></a>
 							</li>
 							<?php endforeach;?>

@@ -95,6 +95,9 @@ class Site_model extends CI_Model  {
     				*
     			FROM
     				blog_notice
+    			WHERE 
+    				type != "contact" 
+					AND type != "comment"
     			ORDER BY
     				datetime DESC
     			'.$sLimit;
@@ -122,7 +125,6 @@ class Site_model extends CI_Model  {
     	$this->site_model->addActionLog('notice','update');
     	return $affect;
     }
-    
     /**
      * 获取操作日志
      */

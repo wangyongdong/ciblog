@@ -1,12 +1,8 @@
 /*
- * blog common js
- * 后台页面js调用
- *
+ * Blog page some of the use of JS and some processing
  * @author 	wangyongdong
  * @time	2015年8月12日18:22:21
- *
  */
-
 //jquery 实现复选框的全选和取消全选
 $("#checkall").click(function() {
 	if(this.checked) {
@@ -315,67 +311,4 @@ function checkPopR() {
 		return false;
 	}
 	return true;
-}
-//消除警示
-$(function() {
-	$(".form-horizontal input,.form-horizontal textarea").focus(function() {
-		$(this).removeClass('form-pop');
-	});
-	$("#inputEmail").focus(function() {
-		$(".login-warning").text("");
-	});
-	$("#inputPassword").focus(function() {
-		$(".login-warning").text("");
-	});
-})
-//登录
-function signIn() {
-	var email = $("#inputEmail").val();
-	var pass = $("#inputPassword").val();
-	
-	if(email.length == 0) {
-		$("#inputEmail").addClass('form-pop');
-		return false;
-	}
-	/*if (/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email) == false) {
-		$("#inputEmail").addClass('form-pop');
-		$(".login-warning").text("邮箱格式不正确，请重新填写");
-		return false;
-	}*/
-	if(pass.length == 0) {
-		$("#inputPassword").addClass('form-pop');
-		return false;
-	}
-	if(pass.length < 6 || pass.length >16) {
-		$("#inputPassword").addClass('form-pop');
-		$("#pass").text("密码合法长度为6-16个字符");
-		return false;
-	}
-	$.post(
-		__A+'login/loginIn',
-		{name:email,pass:pass},
-		function(data) {
-			if(data.success) {
-				window.location.href = __A;
-			}
-			if(data.error) {
-				if(data.status == -1) {
-					$("#inputEmail").addClass('form-pop');
-					$("#email").text(data.error);
-					return false;
-				}
-				if(data.status == -2) {
-					$("#inputPassword").addClass('form-pop');
-					$("#pass").text(data.error);
-					return false;
-				}
-				if(data.status == -3) {
-					$("#inputEmail").addClass('form-pop');
-					$("#pass").text(data.error);
-					return false;
-				}
-			}
-		},
-		"json"
-	);
 }

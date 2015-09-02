@@ -17,6 +17,7 @@
 		<script src="<?=PATH_PUBLIC;?>js/modernizr-1.js"></script>
 		<script src="<?=PATH_PUBLIC;?>js/jquery_easing.js" type="text/javascript"></script>
 		<script src="<?=PATH_PUBLIC;?>js/jquery_toTop.js" type="text/javascript"></script>
+		<script src="<?=PATH_PUBLIC;?>js/blog.js" type="text/javascript"></script>
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$().UItoTop({ easingType: 'easeOutQuart' });
@@ -27,7 +28,7 @@
 	<body class="home blog">
 		<div id="container">
 			<header id="top">
-				<p class="sitesign">阿斯顿顶顶顶顶顶阿斯顿</p>
+				<p class="sitesign"><?=getSet('sitesign');?></p>
 				<p>
 					<a href="/" rel="home">
 						<img src="<?=PATH_PUBLIC;?>img/logo.png" class="logo" alt="logo" height="69" width="299">
@@ -48,8 +49,8 @@
 						</ul>
 					</div>
 				</div><!-- #access -->
-				<form id="navsearchform" role="search" method="get" action="<?=site_url("search/index")?>">
-					<input value="<?php if(empty($aFilter['q'])){echo 'Search Here';} else {echo $aFilter['q'];}?>" onFocus="if (this.value == 'Search Here') {this.value = '';}" onBlur="if (this.value == '') {this.value = 'Search Here';}" name="q" id="navs" type="text">
+				<form id="navsearchform" role="search" method="get" action="<?=site_url("article")?>">
+					<input placeholder="文章快速搜索" value="<?=sg($aFilter['q'])?>" name="q" id="navs" type="text">
 					<input id="navsearchsubmit" value="" type="submit">
 				</form>
 			</nav>

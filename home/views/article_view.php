@@ -23,21 +23,25 @@ function replace_em(str){
 $(function () {
 	$(".i-coms").toggle(
 		function() {
+			$("#comment").text("");
 			$(".contacts-block").show();
 		},
       	function() {
+			$("#comment").text("");
 			$(".contacts-block").hide();
     	}
 	);
 });
+function getReply(id,val) {
+	$("#reply_id").val("").val(id);
+	$(".contacts-block").toggle();
+	$("#comment").text("@"+val+"：");
+}
 $(function() {
 	$("#subform").click(function() {
 		var name = $('input[name=name]').val();
 		var email = $('input[name=email]').val();
 		var content = $('textarea').val();
-		comment = replace_em(content);
-		$('textarea').val('');
-		$('textarea').val(comment);
 		
 		if($.trim(name).length < 2 || $.trim(name).length > 16) {
 			$("#form_contact .input_name").text('* 用户名由2-16个字符组成');
@@ -48,10 +52,15 @@ $(function() {
 		} else if (!email.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
 			$("#form_contact .input_email").text('* 邮箱格式不正确！请重新输入！');
 			return false;
-		} else if($.trim(comment).length < 2 || $.trim(comment).length > 500) {
+		} else if($.trim(content).length < 2 || $.trim(content).length > 500) {
 			$("#form_contact .input_content").text('* 内容请控制在2-500字以内');
 			return false;
 		} else {
+			//做表情替换
+			comment = replace_em(content);
+			$('textarea').val('');
+			$('textarea').val(comment);
+			
 			$("#form_contact").submit();
 		}
 	});
@@ -161,9 +170,7 @@ function loadMore() {
 					if(!empty($article_near['next'])) {
 					?>
 					<p> 下一篇：<a href="<?=site_url('article/view/'.$article_near['next']['id'])?>"><?=$article_near['next']['title']?></a></p>
-					<?php 
-					}
-					?>
+					<?php } ?>
 				</div>
 				<div class="otherlink">
 					<h2>相关文章</h2>
@@ -186,10 +193,46 @@ function loadMore() {
 							?>
 							<li>
 								<div class="com_top">
-									<a class="author" href="<?=$comment['url']?>"><?=$comment['author']?>：</a>
+									<a class="author" <?php if(!empty($comment['url'])){echo 'href="'.$comment['url'].'"';}?> target="_black"><?=$comment['author']?>：</a>
 								</div>
 								<div class="cont"><?=stripcslashes($comment['content'])?></div>
 								<div class="time"><?=$comment['datetime']?></div>
+								<span class="com"><a class="btn" onclick="getReply(<?=$comment['id']?>,'<?=$comment['author']?>');">评论</a></span>
+								<ul class="children" id="ul<?=$comment['id']?>">
+									<?php 
+									if(!empty($comment['children'])) {
+										foreach ($comment['children'] as $k=>$v) {
+									?>
+									<li class="comrep-list">
+										<div class="com_top">
+											<a class="author" <?php if(!empty($v['url'])){echo 'href="'.$v['url'].'"';}?> target="_black"><?=$v['author']?>：</a>
+										</div>
+										<div class="cont"><?=stripcslashes($v['content'])?></div>
+										<div class="time"><?=$v['datetime']?></div>
+										<span class="com"><a class="btn" onclick="getReply(<?=$v['id']?>,'<?=$v['author']?>');">评论</a></span>
+										<ul class="children" id="ul<?=$v['id']?>">
+											<?php 
+											if(!empty($v['children'])) {
+												foreach ($v['children'] as $key=>$value) {
+											?>
+											<li class="comrep-list">
+												<div class="com_top">
+													<a class="author" <?php if(!empty($value['url'])){echo 'href="'.$value['url'].'"';}?> target="_black"><?=$value['author']?>：</a>
+												</div>
+												<div class="cont"><?=stripcslashes($value['content'])?></div>
+												<div class="time"><?=$value['datetime']?></div>
+											</li>
+											<?php 
+												}
+											}
+											?>
+										</ul>
+									</li>
+									<?php 
+										}
+									}
+									?>
+								</ul>
 							</li>
 							<?php 
 								$i++;
@@ -217,27 +260,29 @@ function loadMore() {
 						<?php 
 						}
 						?>
+						<div class="contacts-block white-form" id="re_reply_<?=$article['id']?>">
+				            <form id="form_contact" method="post" action="<?=site_url('comment/doComment')?>">
+				            	<input type="hidden" name="token" value="<?=$token?>" />
+				            	<input type="hidden" name="id" value="<?=$article['id']?>" />
+				            	<input type="hidden" name="reply_id" id="reply_id" value="" />
+				            	<input type="text" name="name" class="name" required placeholder="Your Name" /><span class="input_name"></span>
+				                <input type="email" name="email" class="email" required  placeholder="Your Email" /><span class="input_email"></span>
+				             	<input type="text" name="url" class="url" placeholder="http://" />
+				                <textarea name="comment" id="comment" class="comment" required placeholder="Type your comments here..."></textarea>
+				                <div class="face_ico"><span class="emotion"></span></div>
+				                <span class="input_content"></span>
+				                <div class="comment_button">
+				                	<input type="button" id="subform" class="submit" value="评论"/>
+				                </div>
+				            </form>
+							<div class="clear"></div>
+					    </div>
 					</div>
-					<div class="contacts-block white-form" id="re_reply_<?=$article['id']?>">
-			            <form id="form_contact" method="post" action="<?=site_url('comment/doComment')?>">
-			            	<input type="hidden" name="id" value="<?=$article['id']?>" />
-			            	<input type="text" name="name" class="name" required placeholder="Your Name" /><span class="input_name"></span>
-			                <input type="email" name="email" class="email" required  placeholder="Your Email" /><span class="input_email"></span>
-			             	<input type="text" name="url" class="url" placeholder="http://" />
-			                <textarea name="comment" id="comment" class="comment" required placeholder="Type your comments here..."></textarea>
-			                <div class="face_ico"><span class="emotion"></span></div>
-			                <span class="input_content"></span>
-			                <div class="comment_button">
-			                	<input type="button" id="subform" class="submit" value="评论"/>
-			                </div>
-			            </form>
-						<div class="clear"></div>
-				    </div>
 			    </div>
-		</article><!-- #post-188 -->
+		</article>
 	</div>
 	<div id="right">
-		<h3 class="widgettitle">文章归档<span class="left-more"><a href="<?=site_url('archive')?>">更多>></a></span></h3>
+		<h3 class="widgettitle">文章归档</h3>
 		<div class="widget">
 			<ul>
 				<?php foreach($archive as $list):?>
@@ -291,7 +336,7 @@ function loadMore() {
 		<div class="widget">
 			<ul>
 				<li><a href="/admin">登录blog</a></li>
-				<li><a href="#">分享网址</a></li>
+				<li><a href="<?=site_url('archive')?>">文章归档</a></li>
 				<li><a href="/contact">给我留言</a></li>
 				<li><a href="/links">申请友链</a></li>
 			</ul>

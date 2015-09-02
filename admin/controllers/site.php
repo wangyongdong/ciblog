@@ -137,7 +137,7 @@ class Site extends MY_Controller {
 		//获取统计信息
 		$data['record'] = getStatis('record');
 		$data['comment'] = getStatis('comment');
-		$data['contact'] = getStatis('contact');
+		$data['contact'] = getStatis('contact',' WHERE userid=0 ');
 		$data['links'] = getStatis('links');
 		$data['view'] = getStatis('log');
 		

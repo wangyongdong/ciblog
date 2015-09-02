@@ -159,7 +159,7 @@
 	                			foreach($notices as $notices):
 	                			?>
 	                  			<li>
-				                    <h6><a href="#"><?=cutShes($notices['content'],10)?></a> 
+				                    <h6><a href="#"><?=cutTab($notices['content'],10)?></a> 
 				                    <span class="label label-warning pull-right"><?=timeTran($notices['datetime'])?></span></h6><div class="clearfix"></div><hr />
 	                  			</li>
 	                  			<?php endforeach;?>                 

@@ -32,7 +32,7 @@ class login extends CI_Controller {
 		switch ($res) {
 			case '-1':
 				$data['status'] = -1;
-				$data['error'] = '账号不正确';
+				$data['error'] = '用户不存在';
 				break;
 			case '-2':
 				$data['status'] = -2;

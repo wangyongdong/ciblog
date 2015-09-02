@@ -647,13 +647,48 @@ input:invalid, textarea:invalid {
 	line-height:25px;
 	color: #8c8c8c;
 }
+.reply_r .com {
+	float:right;
+	height:20px;
+	line-height:25px;
+	color: #8c8c8c;
+	margin-right: 10px;
+    margin-top: -18px;
+}
+
+#comment_list .reply_r .comrep-list {
+	border: 1px dotted #ccc;
+	padding:10px 0px 10px 10px;
+	width: 90%;
+	border-radius:5px;
+	margin-top:10px;
+}
+#comment_list .reply_r .children {
+    margin: 10px;
+}
+#comment_list .reply_r .btn {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    line-height: 25px;
+    padding: 0 10px;
+	color:#8c8c8c;
+	display: inline-flex;
+	cursor:pointer;
+}
+#comment_list .reply_r .btn:hover {
+    background: #568abc none repeat scroll 0 0;
+    border: 1px solid #568abc;
+    color: #fff;
+    transition: all 0.2s ease-in 0s;
+}
 /* article comment start */
 #comment_list {
 	float:left;
 	width: 100%;
 }
 #comment_list li {
-	border-bottom: 1px dotted #ddd;
+	border-bottom: 1px solid #ddd;
 	list-style: outside none none;
     margin: 0;
     overflow: hidden;
@@ -668,6 +703,7 @@ input:invalid, textarea:invalid {
 	margin-top:15px;
 	display:none;
 	float: left;
+	width:95%;
 }
 #comment_list h3 {
 	background: rgba(0, 0, 0, 0) url("../img/comments.png") no-repeat scroll 10px center;
@@ -688,6 +724,7 @@ input:invalid, textarea:invalid {
 #comment_list .author {
 	line-height: 3.5;
     padding-left: 40px;
+	color:#888a13;
 }
 .comment_pro .action.flex {
 	float:right;
@@ -729,6 +766,7 @@ input:invalid, textarea:invalid {
     margin: 0 3px 0 0;
     vertical-align: -3px;
     width: 16px;
+	cursor:pointer;
 }
 .comment_pro {
 	float:left;
@@ -764,6 +802,7 @@ input:invalid, textarea:invalid {
     margin-bottom: 8px;
     text-align: center;
 	text-decoration: none;
+	margin-top:5px;
 }
 /* article comment end */
 
@@ -856,7 +895,7 @@ input:invalid, textarea:invalid {
 
 .year {
     border-bottom: 1px solid #ebebeb;
-    border-left: 5px solid #0088cc;
+    border-left: 5px solid #888a13;
     font-size: 16px;
     margin: 10px -21px;
     padding: 0 20px;
@@ -878,8 +917,20 @@ input:invalid, textarea:invalid {
     line-height: 30px;
     text-indent: 2em;
 }
+.entry-header h2 {
+    background: #f8f8f8 none repeat scroll 0 0;
+    border-left: 5px solid #888a13;
+    font-size: 1.5rem;
+    line-height: 40px;
+    margin: 35px -5px 20px -25px;
+    padding: 0 20px;
+    position: relative;
+    text-align: center;
+}
+.archives-meta { font-size: 15px; }
+.i-com { background-image: url("../img/pl.png"); background-position: -215px 0; content: ""; display: inline-block; height: 15px; width: 16px; margin-left:10px; }
+.i-ico { background-image: url(../img/smallarrow.png); content: ""; display: inline-block; height: 12px; width: 11px; }
 /* archive */
-.left-more { font-size:11px;color:#fff;float:right;margin-right:15px; }
-.left-more a:link,a:visited{color:#fff;}
 
- */
+
+

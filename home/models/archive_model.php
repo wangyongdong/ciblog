@@ -51,25 +51,6 @@ class Archive_model extends CI_Model{
 		return $asr;
 	}
 	/**
-	 * 获取全部归档列表
-	 */
-	function getArchiveLists() {
-		$list = $this->getYearArchive();
-		foreach ($list as $key=>$value) {
-			$aList = $this->getMonthArchive($value['year']);
-			foreach ($aList as $k=>$v) {
-				$arr['month'] = $v['month'];
-				$arr['num'] = $v['num'];
-				$arr['year'] = $value['year'];
-				$aLists[$value['year']][] = $arr;
-				$arr = '';
-			}
-			$asr = $aLists;
-				
-		}
-		return $asr;
-	}
-	/**
 	 * 获取归档年份
 	 */
 	function getYearArchive() {
@@ -122,5 +103,15 @@ class Archive_model extends CI_Model{
 		$aList = $res->result_array();
 		return $aList;
 	}
-	
+	/**
+	 * 获取统计信息
+	 */
+	function getSiteStatis() {
+		$data['sort'] = getStatis('sort');
+		$data['article'] = getStatis('article');
+		$data['contact'] = getStatis('contact',' WHERE userid=0 ');
+		$data['comment'] = getStatis('comment');
+		
+		return $data;
+	}
 }

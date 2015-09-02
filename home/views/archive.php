@@ -1,24 +1,35 @@
 <script>
-
+function cutStatus(obj) {
+	$("#"+obj).toggle();
+}
 </script>
 <div id="main" role="main" class="clearfix">
 	<div id="left">
 		<div class="archives">
+			<header class="entry-header">
+				<h2 class="single-title">文章归档</h2>
+				<div class="archives-meta">
+					站点统计:<?=$static['sort']?>个分类 &nbsp;&nbsp;<?=$static['article']?>篇文章&nbsp;&nbsp;<?=$static['contact']?>条留言 &nbsp;&nbsp;<?=$static['comment']?>条评论&nbsp;&nbsp;博客运行:
+					<span id="run_time" style="color: #888a13;">1年256天15时36分52秒</span>
+				</div>
+			</header>
 			<?php foreach($archive_list as $key=>$arlist):?>
 			<h3 class="year"><?=$key?> 年</h3>
 			<ul class="mon_list">
 				<?php foreach($arlist as $k=>$v):?>
 				<li>
-					<span class="mon" onclick="cutStatus(<?=$v['month']?>);"><?=$v['month']?> 月 ( <?=$v['num']?> 篇文章 )</span>
+					<span class="mon" onclick="cutStatus('<?=$v['month']?>');"><?=$v['month']?> 月 ( <?=$v['num']?> 篇文章 )</span>
 					<ul class="post_list" id="<?=$v['month']?>" style="display: none;">
 						<?php foreach($v['article'] as $aK=>$aV):?>
 						<li>
-							<i class="icon-li"></i>
+							<span class='i-ico'></span>
 							<?=dateFor($aV['datetime'],'d')?>日:
-							<a href="<?=site_url('article/view/'.$aV['id'])?>"><?=$aV['title']?></a>
+							<a target="_blank" href="<?=site_url('article/view/'.$aV['id'])?>" style="color: #888a13;">
+								<?=$aV['title']?>
+							</a>
 							<span class="ac">
-							<i class="icon-scroll-c"></i>
-							<?=$aV['comnum']?>
+								<span class='i-com'> </span>
+								<?=$aV['comnum']?>
 							</span>
 						</li>
 						<?php endforeach;?>
@@ -87,7 +98,7 @@
 		<div class="widget">
 			<ul>
 				<li><a href="/admin">登录blog</a></li>
-				<li><a href="#">分享网址</a></li>
+				<li><a href="<?=site_url('archive')?>">文章归档</a></li>
 				<li><a href="/contact">给我留言</a></li>
 				<li><a href="/links">申请友链</a></li>
 			</ul>

@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<div id="right">
-		<h3 class="widgettitle">文章归档<span class="left-more"><a href="<?=site_url('archive')?>">更多>></a></h3>
+		<h3 class="widgettitle">文章归档</h3>
 		<div class="widget">
 			<ul>
 				<?php foreach($archive as $list):?>
@@ -86,7 +86,7 @@
 		<div class="widget">
 			<ul>
 				<li><a href="/admin">登录blog</a></li>
-				<li><a href="#">分享网址</a></li>
+				<li><a href="<?=site_url('archive')?>">文章归档</li>
 				<li><a href="/contact">给我留言</a></li>
 				<li><a href="/links">申请友链</a></li>
 			</ul>

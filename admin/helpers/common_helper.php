@@ -450,16 +450,6 @@ function dynamicCou($sTable) {
 	return $list['num'];
 }
 /**
- * 未读提醒统计
- */
-function noticeCou() {
-	$sql = 'SELECT count(*) as num FROM blog_notice WHERE status = "unread"';
-	$db = DB('default');
-	$res = $db->query($sql);
-	$list = $res->row_array();
-	return $list['num'];
-}
-/**
  * 获取未浏览前几条动态
  */
 function getDynamic($sTable) {
@@ -479,6 +469,16 @@ function getDynamic($sTable) {
 	return $list;
 }
 /**
+ * 未读提醒统计
+ */
+function noticeCou() {
+	$sql = 'SELECT count(*) as num FROM blog_notice WHERE status = "unread" AND type != "contact" AND type != "comment"';
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	return $list['num'];
+}
+/**
  * 获取未读消息前几条
  */
 function getNotice() {
@@ -487,7 +487,9 @@ function getNotice() {
 			FROM
 				blog_notice
 			WHERE
-				status = "unread"
+				status = "unread" 
+				AND type != "contact" 
+				AND type != "comment"
 			ORDER BY
 				datetime DESC
 			LIMIT 3';

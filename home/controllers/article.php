@@ -14,14 +14,23 @@ class Article extends MY_Controller {
 	 * 文章列表页
 	 */
 	public function index() {
+		$data['aFilter']['q'] = sg($this->input->get('q'));
 		//执行分页
 		$pageId = $this->input->get('page');
 		//获取系统变量，文章数量
 		$sPageNum = getSet('article_nums');
 		$sFilter = 'AND sortid != "2" ';
-		$arr = $this->public_model->getPage("article",'article?',$pageId,$sPageNum,$sFilter);
+		if(!empty($data['aFilter']['q'])) {
+			$sFilter .= ' AND title LIKE"%'.$data['aFilter']['q'].'%" ';
+		}
+		if(empty($data['aFilter']['q'])) {
+			$sUrl = 'article?';
+		} else {
+			$sUrl = 'article?q='.$data['aFilter']['q'];
+		}
+		$arr = $this->public_model->getPage("article",$sUrl,$pageId,$sPageNum,$sFilter);
 		//文章列表
-		$data['article'] = $this->article_model->getArticleList(self::ARTICLE_NEW,$arr['start'],$arr['pagenum']);
+		$data['article'] = $this->article_model->getArticleList(self::ARTICLE_NEW,$arr['start'],$arr['pagenum'],$data['aFilter']);
 		
 		//文章点击排行榜
 		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
@@ -175,35 +184,88 @@ class Article extends MY_Controller {
 	/**
 	 * 获取文章评论
 	 */
-	public function getComment($iArticle='',$iStart=0,$iPageNum=5) {
+	public function getComment($iArticle='',$iComment='',$iStart=0,$iPageNum=5) {
 		if(empty($iArticle)) {
-			$iArticle = $_POST['id'];
+			$iArticle = sg($_POST['id']);
+			//$iComment = '';
 		}
 		if(!empty($_POST['start'])) {
-			$iStart = $_POST['start'];
+			$iStart = sg($_POST['start']);
 		}
 		if(!empty($_POST['limit'])) {
-			$iPageNum = $_POST['limit'];
+			$iPageNum = sg($_POST['limit']);
 		}
-		//查询回复
-		$aComment = $this->comment_model->getComment($iArticle,$iStart,$iPageNum);
+		$aComments = $this->getReply($iArticle,$iComment,$iStart,$iPageNum);
+		//ajax获取处理
 		if(!empty($_POST['type'])) {
-			$str = '';
-			$i = 0;
-			foreach ($aComment as $key=>$value) {
-				$str .= '<li>
-							<div class="com_top"><a class="author" href="'.$value['url'].'">'.$value['author'].'：</a></div>
-							<span class="cont">'.stripcslashes($value['content']).'</span><br>
-							<span class="time">'.$value['datetime'].'</span>
-						 </li>';
-				$i++;
-			}
-			$aRtn['comment'] = $str;
-			$aRtn['num'] = $i;
-			echoAjax($aRtn);
+			$arr = $this->ajaxComment($aComments);
+			echoAjax($arr);
 		}
-		return $aComment;
+		return $aComments;
 	}
 	
+	/**
+	 * 获取文章回复
+	 */
+	public function getReply($iArticle='',$iComment='',$iStart=0,$iPageNum=5) {
+		//查询评论
+		$aComment = $this->comment_model->getComment($iArticle,$iComment,$iStart,$iPageNum);
+		if(!empty($aComment)) {
+			foreach ($aComment as $key=>$value) {
+				$arr = $value;
+				$arr['children'] = $this->getReply('',$value['id'],0,100);
+				$aList[] = $arr;
+			}
+			return $aList;
+		} else {
+			return $aComment;
+		}
+	}
+	
+	/**
+	 * ajax处理评论
+	 */
+	public function ajaxComment($aComments) {
+		$str = '';
+		$i = 0;
+		foreach ($aComments as $key=>$value) {
+			$str .= '<li>
+							<div class="com_top"><a class="author" href="'.$value['url'].'" target="_black">'.$value['author'].'：</a></div>
+							<span class="cont">'.stripcslashes($value['content']).'</span><br>
+							<span class="time">'.$value['datetime'].'</span>
+							<span class="com"><a class="btn" onclick="getReply('.$value['id'].',"'.$value['author'].'");">评论</a></span>
+							<ul class="children">';
+			if(!empty($value['children'])) {
+				foreach ($value['children'] as $k=>$v) {
+					$str .= '<li class="comrep-list">
+										<div class="com_top">
+											<a class="author" href="'.$v['url'].'" target="_black">'.$v['author'].'：</a>
+										</div>
+										<div class="cont">'.stripcslashes($v['content']).'</div>
+										<div class="time">'.$v['datetime'].'</div>
+										<span class="com"><a class="btn" onclick="getReply('.$v['id'].',"'.$v['author'].'");">评论</a></span>
+										<ul class="children">';
+					if(!empty($v['children'])) {
+						foreach ($v['children'] as $kr=>$vr) {
+							$str .= '<li class="comrep-list">
+												<div class="com_top">
+													<a class="author" href="'.$vr['url'].'" target="_black">'.$vr['author'].'：</a>
+												</div>
+												<div class="cont">'.stripcslashes($vr['content']).'</div>
+												<div class="time">'.$vr['datetime'].'</div>
+											</li>';
+						}
+					}
+					$str .= ' </ul> </li>';
+				}
+			}
+			$str .= ' </ul> </li>';
+			$i++;
+		}
+		$aRtn['comment'] = $str;
+		$aRtn['num'] = $i;
+		return $aRtn;
+		
+	}
 	
 }

@@ -10,7 +10,6 @@ function getToken($tokentype) {
 	$tokenvalue = $CI->token->granteToken($tokentype);
 	return $tokenvalue;
 }
-
 /**
  * token验证
  * @param string $token
@@ -33,6 +32,42 @@ function checkToken($token,$tokentype) {
 	return $info;
 }
 /**
+ * 跳转方法
+ * @param unknown $sMessage
+ * @param string $sUrl
+ */
+function localCommon($sMessage,$sUrl='') {
+	$url = site_url('common/index?mess='.urlencode($sMessage).'&url='.urlencode($sUrl));
+	redirect($url);
+}
+/**
+ * ajax 输出方法
+ */
+function echoAjax($aRtn) {
+	echo json_encode($aRtn);
+	exit;
+}
+/**
+ * 打印数据信息
+ */
+function pl($var) {
+	$value = print_r($var, TRUE);
+	$fileName = 'ciblog_admin.'.date('Ymd').'.run.log';
+	$file = LOG.$fileName;
+	$prefix = '[' . date('c') . '] ';
+	@file_put_contents($file, $prefix . $value . "\n", FILE_APPEND);
+}
+/**
+ * 过滤用户输入的数据
+ */
+function sg(&$str,$fit='') {
+	if(!is_array($str) && !empty($str)) {
+		$str = trim($str);
+		$str = addslashes($str);
+	}
+	return empty($str) ? $fit : $str;
+}
+/**
  * 获取配置信息
  */
 function getSet($sField) {
@@ -46,6 +81,44 @@ function getSet($sField) {
 	$res = $db->query($sql);
 	$list = $res->row_array();
 	return $list['option_value'];
+}
+/**
+ * 获取页面title
+ */
+function getPageDesc($sName) {
+	$sql = 'SELECT menu_desc FROM blog_menu WHERE menu_alias="'.$sName.'"';
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	return $list['menu_desc'];
+}
+/**
+ * 获取数据总条数
+ */
+function getPageCount($table,$sFilter='') {
+	$sQuery = 'SELECT
+                    count(*) as num
+               FROM
+					blog_'.$table.'
+               WHERE
+                    1 = "1" ';
+	if (!empty($sFilter)) {
+		$sQuery .= $sFilter;
+	}
+	$db = DB('default');
+	$res = $db->query($sQuery);
+	$list = $res->row_array();
+	return $list['num'];
+}
+/**
+ * 数据信息统计
+ */
+function getStatis($table,$sWhere='') {
+	$sql = 'SELECT count(*) as num FROM blog_'.$table.' '.$sWhere;
+	$db = DB('default');
+	$res = $db->query($sql);
+	$list = $res->row_array();
+	return $list['num'];
 }
 /**
  * 获取用户信息
@@ -85,33 +158,6 @@ function getSortByArticle($iArticle) {
 	$aList = $res->row_array();
 	return $aList['sortid'];
 }
-
-/**
- * 跳转方法
- * @param unknown $sMessage
- * @param string $sUrl
- */
-function localCommon($sMessage,$sUrl='') {
-	$url = site_url('common/index?mess='.urlencode($sMessage).'&url='.urlencode($sUrl));
-	redirect($url);
-}
-/**
- * ajax 输出方法
- */
-function echoAjax($aRtn) {
-	echo json_encode($aRtn);
-	exit;
-}
-/**
- * 获取说说标题
- */
-function getRecordTitle($iRecord) {
-	$db = DB('default');
-	$sql = 'SELECT content FROM blog_record WHERE id='.$iRecord;
-	$res = $db->query($sql);
-	$aList = $res->row_array();
-	return cutStr(strip_tags($aList['content']),12);
-}
 /**
  * 判断email格式是否正确
  * @param $email
@@ -134,16 +180,6 @@ function LinkAvatar($uid) {
 		$url = ADMIN_PUBLIC.'images/common/avatar.jpg';
 	}
 	return $url;
-}
-/**
- * 过滤用户输入的数据
- */
-function sg(&$str,$fit='') {
-	if(!is_array($str) && !empty($str)) {
-		$str = trim($str);
-		$str = addslashes($str);
-	}
-	return empty($str) ? $fit : $str;
 }
 /**
  * 截取函数
@@ -213,34 +249,6 @@ function cutTab($string, $length='15', $dot = '…') {
 
 }
 /**
- * 获取页面title
- */
-function getPageDesc($sName) {
-	$sql = 'SELECT menu_desc FROM blog_menu WHERE menu_alias="'.$sName.'"';
-	$db = DB('default');
-	$res = $db->query($sql);
-	$list = $res->row_array();
-	return $list['menu_desc'];
-}
-/**
- * 获取数据总条数
- */
-function getPageCount($table,$sFilter='') {
-	$sQuery = 'SELECT
-                    count(*) as num
-               FROM
-					blog_'.$table.'
-               WHERE
-                    1 = "1" ';
-	if (!empty($sFilter)) {
-		$sQuery .= $sFilter;
-	}
-	$db = DB('default');
-	$res = $db->query($sQuery);
-	$list = $res->row_array();
-	return $list['num'];
-}
-/**
  * 时间友好显示
  */
 function dateFor($time,$val='') {
@@ -277,18 +285,9 @@ function engDate($time,$val='') {
 		$engTime = $eng_month.' '.$arr[0];
 		return $engTime;
 	}
-	
 }
-/**
- * 打印数据信息
- */
-function pl($var) {
-	$value = print_r($var, TRUE);
-	$fileName = 'ciblog_admin.'.date('Ymd').'.run.log';
-	$file = LOG.$fileName;
-	$prefix = '[' . date('c') . '] ';
-	@file_put_contents($file, $prefix . $value . "\n", FILE_APPEND);
-}
+
+
 
 
 

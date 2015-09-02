@@ -28,6 +28,9 @@ class Archive extends MY_Controller {
 		//最新评论
 		$data['comment'] = $this->comment_model->getNewComment();
 		
+		//统计
+		$data['static'] = $this->archive_model->getSiteStatis();
+		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
 		$aMeta['title'] = '文章归档'.$seo_info['title'];

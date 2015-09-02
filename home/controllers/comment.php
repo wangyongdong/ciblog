@@ -13,6 +13,7 @@ class Comment extends MY_Controller {
 	public function doComment() {
 		$data = array();
 		$data['comment_id'] = sg($this->input->post('id', TRUE));
+		$data['reply_id'] = sg($this->input->post('reply_id', TRUE),0);
 		$data['author'] = sg($this->input->post('name', TRUE));
 		$data['email'] = sg($this->input->post('email', TRUE));
 		$data['url'] = prep_url(sg($this->input->post('url', TRUE)));

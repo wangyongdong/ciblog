@@ -44,23 +44,25 @@ class Comment_model extends CI_Model{
 	/**
 	 * 获取评论信息
 	 */
-	function getComment($iArticle,$iStart=0,$iPageNum=5) {
+	function getComment($iArticle,$iComment,$iStart=0,$iPageNum=5) {
 		$sLimit = ' LIMIT '.$iStart.','.$iPageNum;
 		$sql = 'SELECT
     				*
     			FROM
     				blog_comment
     			WHERE
-    				userid=0
-    				AND comment_id=" '.$iArticle.' "
-    			ORDER BY
-    				id DESC
-    			'.$sLimit;
+    				1=1';
+		if(!empty($iArticle) && empty($iComment)) {
+			$sWhere = ' AND reply_id=0 AND comment_id='.$iArticle;
+		}
+		if(!empty($iComment)) {
+			$sWhere = ' AND reply_id='.$iComment;
+		}
+		$sql .= $sWhere.' ORDER BY id DESC '.$sLimit;
 		$res = $this->db->query($sql);
 		$aComment = $res->result_array();
 		return $aComment;
 	}
-	
 	/**
 	 * 执行评论添加
 	 */

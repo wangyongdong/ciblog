@@ -16,7 +16,6 @@ class MY_Controller extends CI_Controller {
 		$this->load->model('article_model');
 		$this->load->model('public_model');
 		$this->load->model('record_model');
-		$this->load->model('search_model');
 		$this->load->model('contact_model');
 		$this->load->model('comment_model');
 		$this->load->model('sort_model');
