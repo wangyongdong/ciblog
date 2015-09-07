@@ -36,15 +36,15 @@ class Cms_model extends CI_Model{
 	 */
 	function getLastNext($iArticle) {
 		//下一篇
-		$sql = 'SELECT id,title FROM blog_article WHERE type="cms" AND id<'.$iArticle.' ORDER BY id DESC limit 0,1';
+		$sql = 'SELECT id,title FROM blog_article WHERE sortid = "2" AND id<'.$iArticle.' ORDER BY id DESC limit 0,1';
 		$res = $this->db->query($sql);
 		$next = $res->row_array();
-		
+	
 		//上一篇
-		$sql = 'SELECT id,title FROM blog_article WHERE type="cms" AND  id>'.$iArticle.' ORDER BY id DESC limit 0,1';
+		$sql = 'SELECT id,title FROM blog_article WHERE sortid = "2" AND id>'.$iArticle.' ORDER BY id DESC limit 0,1';
 		$res = $this->db->query($sql);
 		$last = $res->row_array();
-		
+	
 		$list['next'] = sg($next);
 		$list['last'] = sg($last);
 		return $list;
@@ -55,11 +55,11 @@ class Cms_model extends CI_Model{
 	 */
 	function getRelated($iArticle,$iLimit=6) {
 		//获取文章所属分类
-		$iType = getSortByArticle($iArticle);
-		$list = $this->sort_model->getArticleBySort($iType,$iStart=0,$iLimit);
+		$iSort = getSortByArticle($iArticle);
+		$list = $this->sort_model->getArticleBySort($iSort,$iStart=0,$iLimit);
 		$iLength = count($list);
 		if($iLength < $iLimit) {
-			//随机一个分类填充数量
+			//如果数量不够，随机一个分类填充数量
 			$sort_list = $this->sort_model->getSort();
 			$sortNum = count($sort_list);
 			$iOtherType = rand(1,$sortNum);

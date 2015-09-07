@@ -76,8 +76,8 @@
 			<ul class="c_comment">
 				<?php foreach($comment as $list):?>
 				<li>
-					<a href="<?=$list['url']?>"><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
-					<a href="<?=site_url('article/view/'.$list['comment_id'])?>">查看>></a>
+					<a <?php if(!empty($list['url'])){echo 'href="'.$list['url'].'"';} ?>><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
+					<a href="<?=site_url('cms/view/'.$list['comment_id'])?>">查看>></a>
 				</li>
 				<?php endforeach;?>
 			</ul>

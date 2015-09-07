@@ -12,8 +12,8 @@ class Comment extends MY_Controller {
 	 */
 	public function doComment() {
 		$data = array();
-		$data['comment_id'] = sg($this->input->post('id', TRUE));
-		$data['reply_id'] = sg($this->input->post('reply_id', TRUE),0);
+		$data['comment_id'] = sg($this->input->post('c_id', TRUE));
+		$data['reply_id'] = sg($this->input->post('r_id', TRUE),0);
 		$data['author'] = sg($this->input->post('name', TRUE));
 		$data['email'] = sg($this->input->post('email', TRUE));
 		$data['url'] = prep_url(sg($this->input->post('url', TRUE)));
@@ -21,7 +21,7 @@ class Comment extends MY_Controller {
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
 		$data['datetime'] = date("Y-m-d H:i:s",time());
-		
+		$data['content'] = ubbReplace($data['content']);
 		if (empty($data['comment_id']) || empty($data['author']) || empty($data['email']) || empty($data['content'])) {
 			localCommon('数据信息不完整。');
 		} else if (mb_strlen($data['author']) < 2 || mb_strlen($data['author']) > 16) {

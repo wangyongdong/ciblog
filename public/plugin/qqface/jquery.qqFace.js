@@ -13,6 +13,12 @@
 		var path = option.path;
 		var tip = option.tip;
 		
+		/* update start 2015年9月7日15:26:02 by.wangyongdong */
+		if(option.box) {
+			option.assign = option.assign+option.box;
+		}
+		/* update end 2015年9月7日15:26:02 by.wangyongdong */
+		
 		if(assign.length<=0){
 			alert('缺少表情赋值对象。');
 			return false;

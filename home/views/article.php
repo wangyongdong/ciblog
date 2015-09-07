@@ -65,14 +65,14 @@
 				?>
 				<li>
 					<span class="num1"><?php echo $i;?></span>
-					<a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
+					<a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
 				</li>
 				<?php 
 					} else {
 				?>
 				<li>
 					<span><?php echo $i;?></span>
-					<a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
+					<a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
 				</li>
 				<?php 
 					}
@@ -93,7 +93,7 @@
 			<ul class="c_comment">
 				<?php foreach($comment as $list):?>
 				<li>
-					<a href="<?=$list['url']?>"><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
+					<a <?php if(!empty($list['url'])){echo 'href="'.$list['url'].'"';} ?>><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
 					<a href="<?=site_url('cms/view/'.$list['comment_id'])?>">查看>></a>
 				</li>
 				<?php endforeach;?>

@@ -12,15 +12,22 @@ class Comment_model extends CI_Model{
 	/**
 	 * 获取最近评论信息
 	 */
-	public function getNewComment() {
+	public function getNewComment($iSort='') {
+		if(!empty($iSort)) {
+			$sWhere = ' AND a.sortid = "2" ';
+		} else {
+			$sWhere = ' AND a.sortid != "2" ';
+		}
 		$sql = 'SELECT
-					id,comment_id,author,url,content
+					c.id,c.comment_id,c.author,c.url,c.content
 				FROM
-					blog_comment
+					blog_comment c,blog_article a
 				WHERE
-					userid = 0
+					c.comment_id = a.id
+					AND c.userid = 0
+					'.$sWhere.'
 				ORDER BY
-					datetime DESC
+					c.datetime DESC
 				LIMIT
 					10';
 		$res = $this->db->query($sql);

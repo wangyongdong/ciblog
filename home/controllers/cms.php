@@ -30,7 +30,7 @@ class Cms extends MY_Controller {
 		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
 		
 		//最新评论
-		$data['comment'] = $this->comment_model->getNewComment();
+		$data['comment'] = $this->comment_model->getNewComment('cms');
 
 		//文章归档
 		$data['archive'] = $this->archive_model->getArchive(5);
@@ -49,13 +49,13 @@ class Cms extends MY_Controller {
 	public function view() {
 		//获取文章详情
 		$iArticle = $this->uri->segment(3);
-		$data['cms'] = $this->article_model->getArticleInfo($iArticle);
+		$data['article'] = $this->article_model->getArticleInfo($iArticle);
 		
 		//上一篇文章,下一篇文章
-		$data['cms_near'] = $this->cms_model->getLastNext($iArticle);
+		$data['article_near'] = $this->cms_model->getLastNext($iArticle);
 		
 		//获取相关文章
-		$data['cms_related'] = $this->cms_model->getRelated($iArticle);
+		$data['article_related'] = $this->cms_model->getRelated($iArticle);
 		
 		//文章点击排行榜
 		$data['cms_view'] = $this->cms_model->getcmsList(self::ARTICLE_VIEWS);
@@ -77,9 +77,9 @@ class Cms extends MY_Controller {
 		
 		//设置seo
 		$seo_info = $this->config->item('info_seo');
-		$aMeta['title'] = $data['cms']['title'].$seo_info['title'];
-		$aMeta['keywords'] = $data['cms']['keyword'].$seo_info['keywords'];
-		$aMeta['description'] = $data['cms']['title'].$data['cms']['keyword'];
+		$aMeta['title'] = $data['article']['title'].$seo_info['title'];
+		$aMeta['keywords'] = $data['article']['keyword'].$seo_info['keywords'];
+		$aMeta['description'] = $data['article']['title'].$data['article']['keyword'];
 		$sHeader = 'cms';
 		$this->public_model->loadView($aMeta,$sHeader,'cms_view',$data);
 		
@@ -88,34 +88,162 @@ class Cms extends MY_Controller {
 	/**
 	 * 获取文章评论
 	 */
-	public function getComment($iArticle='',$iStart=0,$iPageNum=5) {
+	public function getComment($iArticle='',$iComment='',$iStart=0,$iPageNum=5) {
 		if(empty($iArticle)) {
-			$iArticle = $_POST['id'];
+			$iArticle = sg($_POST['id']);
+			//$iComment = '';
 		}
 		if(!empty($_POST['start'])) {
-			$iStart = $_POST['start'];
+			$iStart = sg($_POST['start']);
 		}
 		if(!empty($_POST['limit'])) {
-			$iPageNum = $_POST['limit'];
+			$iPageNum = sg($_POST['limit']);
 		}
-		//查询回复
-		$aComment = $this->comment_model->getComment($iArticle,$iStart,$iPageNum);
+		$aComments = $this->getReply($iArticle,$iComment,$iStart,$iPageNum);
+		//ajax获取处理
 		if(!empty($_POST['type'])) {
-			$str = '';
-			$i = 0;
-			foreach ($aComment as $key=>$value) {
-				$str .= '<li>
-							<div class="com_top"><a class="author" href="'.$value['url'].'">'.$value['author'].'：</a></div>
-							<span class="cont">'.stripcslashes($value['content']).'</span><br>
-							<span class="time">'.$value['datetime'].'</span>
-						 </li>';
-				$i++;
-			}
-			$aRtn['comment'] = $str;
-			$aRtn['num'] = $i;
-			echoAjax($aRtn);
+			$arr = $this->ajaxComment($aComments);
+			echoAjax($arr);
 		}
-		return $aComment;
+		return $aComments;
+	}
+	
+	/**
+	 * 获取文章回复
+	 */
+	public function getReply($iArticle='',$iComment='',$iStart=0,$iPageNum=5) {
+		//查询评论
+		$aComment = $this->comment_model->getComment($iArticle,$iComment,$iStart,$iPageNum);
+		if(!empty($aComment)) {
+			foreach ($aComment as $key=>$value) {
+				$arr = $value;
+				$arr['children'] = $this->getReply('',$value['id'],0,100);
+				$aList[] = $arr;
+			}
+			return $aList;
+		} else {
+			return $aComment;
+		}
+	}
+	
+	/**
+	 * ajax处理评论
+	 */
+	public function ajaxComment($aComments) {
+		$str = '';
+		$i = 0;
+		foreach ($aComments as $key=>$comment) {
+			if(!empty($comment['url'])) {
+				$comment['url'] = 'href="'.$comment['url'].'"';
+			}
+			if(empty($comment['userid'])) {
+				$identity = '(游客)';
+				$avatar = '<img src="'.PATH_PUBLIC.'img/duface.png" >';
+			} else {
+				$identity = '(会员)';
+				$avatar = '<img src="'.LinkAvatar($comment['userid']).'" >';
+			}
+			$str .= '<div id="uyan_cmt_'.$comment['id'].'" class="uyan_cmt_com">
+					<div class="uyan_cmt_avatar">
+						<a class="uyan_avatar_ab" '.$comment['url'].' target="_blank">
+							'.$avatar.'
+						</a>
+						<span><a class="uyan_avatar_an" '.$comment['url'].' target="_blank"></a></span>
+					</div>
+					<div class="uyan_cmt_con">
+						<div class="uyan_con_tit">
+							<span class="uyan_con_uname">
+								<a id="uyan_cmt_uname" '.$comment['url'].' target="_blank">'.$comment['author'].'</a>
+							</span>
+							<span class="uyan_con_ufromname">'.$identity.'</span>
+						</div>
+						<div class="uyan_cmt_txt" >'.stripcslashes($comment['content']).'</div>
+						<div class="uyan_cmt_exp" >
+							<a class="uyan_exp_re" id="uyan_exp_rpy" onclick="getReply('.$comment['id'].',"'.$comment['author'].'");">回复</a>
+							<div class="uyan_exp_date">'.$comment['datetime'].'</div>
+							<div style="clear: both;"></div>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+				</div>';
+				if(!empty($comment['children'])) {
+					foreach ($comment['children'] as $k=>$v) {
+						if(!empty($v['url'])) {
+							$v['url'] = 'href="'.$v['url'].'"';
+						}
+						if(empty($v['userid'])) {
+							$identity = '(游客)';
+							$avatar = '<img src="'.PATH_PUBLIC.'img/duface.png" >';
+						} else {
+							$identity = '(会员)';
+							$avatar = '<img src="'.LinkAvatar($v['userid']).'" >';
+						}
+				$str .='<div id="uyan_cmt_'.$v['id'].'" class="uyan_cmt_com uyan_cmt_reply_60" >
+							<div class="uyan_cmt_avatar">
+								<a class="uyan_avatar_ab" '.$v['url'].' target="_blank">
+									'.$avatar.'
+								</a>
+								<span><a class="uyan_avatar_an" '.$v['url'].' target="_blank"></a></span>
+							</div>
+							<div class="uyan_cmt_con">
+								<div class="uyan_con_tit">
+									<span class="uyan_con_uname">
+										<a id="uyan_cmt_uname" '.$v['url'].' target="_blank">'.$v['author'].'</a>
+									</span>
+									<span class="uyan_con_ufromname">'.$identity.'</span>
+								</div>
+								<div class="uyan_cmt_txt" >'.stripcslashes($v['content']).'</div>
+								<div class="uyan_cmt_exp" >
+									<a class="uyan_exp_re" id="uyan_exp_rpy" onclick="getReply('.$v['id'].',"'.$v['author'].'");">回复</a>
+									<div class="uyan_exp_date">'.$v['datetime'].'</div>
+									<div style="clear: both;"></div>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</div>';
+					if(!empty($v['children'])) {
+						foreach ($v['children'] as $key=>$value) {
+							if(!empty($v['url'])) {
+								$value['url'] = 'href="'.$value['url'].'"';
+							}
+							if(empty($value['userid'])) {
+								$identity = '(游客)';
+								$avatar = '<img src="'.PATH_PUBLIC.'img/duface.png" >';
+							} else {
+								$identity = '(会员)';
+								$avatar = '<img src="'.LinkAvatar($value['userid']).'" >';
+							}
+						$str .='<div id="uyan_cmt_'.$value['id'].'" class="uyan_cmt_com uyan_cmt_reply_120" >
+								<div class="uyan_cmt_avatar">
+									<a class="uyan_avatar_ab" '.$value['url'].' target="_blank">
+										'.$avatar.'
+									</a>
+									<span><a class="uyan_avatar_an" '.$value['url'].' target="_blank"></a></span>
+								</div>
+								<div class="uyan_cmt_con">
+									<div class="uyan_con_tit">
+										<span class="uyan_con_uname">
+											<a id="uyan_cmt_uname" '.$value['url'].' target="_blank">'.$value['author'].'</a>
+										</span>
+										<span class="uyan_con_ufromname">'.$identity.'</span>
+									</div>
+									<div class="uyan_cmt_txt" >'.stripcslashes($value['content']).'</div>
+									<div class="uyan_cmt_exp" >
+										<div class="uyan_exp_date">'.$value['datetime'].'</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div style="clear: both;"></div>
+							</div>';
+						}
+					}
+				}
+			}
+			$i++;
+		}
+		$aRtn['comment'] = $str;
+		$aRtn['num'] = $i;
+		return $aRtn;
 	}
 	
 	

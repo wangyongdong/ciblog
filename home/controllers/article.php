@@ -228,44 +228,118 @@ class Article extends MY_Controller {
 	public function ajaxComment($aComments) {
 		$str = '';
 		$i = 0;
-		foreach ($aComments as $key=>$value) {
-			$str .= '<li>
-							<div class="com_top"><a class="author" href="'.$value['url'].'" target="_black">'.$value['author'].'：</a></div>
-							<span class="cont">'.stripcslashes($value['content']).'</span><br>
-							<span class="time">'.$value['datetime'].'</span>
-							<span class="com"><a class="btn" onclick="getReply('.$value['id'].',"'.$value['author'].'");">评论</a></span>
-							<ul class="children">';
-			if(!empty($value['children'])) {
-				foreach ($value['children'] as $k=>$v) {
-					$str .= '<li class="comrep-list">
-										<div class="com_top">
-											<a class="author" href="'.$v['url'].'" target="_black">'.$v['author'].'：</a>
-										</div>
-										<div class="cont">'.stripcslashes($v['content']).'</div>
-										<div class="time">'.$v['datetime'].'</div>
-										<span class="com"><a class="btn" onclick="getReply('.$v['id'].',"'.$v['author'].'");">评论</a></span>
-										<ul class="children">';
+		foreach ($aComments as $key=>$comment) {
+			if(!empty($comment['url'])) {
+				$comment['url'] = 'href="'.$comment['url'].'"';
+			}
+			if(empty($comment['userid'])) {
+				$identity = '(游客)';
+				$avatar = '<img src="'.PATH_PUBLIC.'img/duface.png" >';
+			} else {
+				$identity = '(会员)';
+				$avatar = '<img src="'.LinkAvatar($comment['userid']).'" >';
+			}
+			$str .= '<div id="uyan_cmt_'.$comment['id'].'" class="uyan_cmt_com">
+					<div class="uyan_cmt_avatar">
+						<a class="uyan_avatar_ab" '.$comment['url'].' target="_blank">
+							'.$avatar.'
+						</a>
+						<span><a class="uyan_avatar_an" '.$comment['url'].' target="_blank"></a></span>
+					</div>
+					<div class="uyan_cmt_con">
+						<div class="uyan_con_tit">
+							<span class="uyan_con_uname">
+								<a id="uyan_cmt_uname" '.$comment['url'].' target="_blank">'.$comment['author'].'</a>
+							</span>
+							<span class="uyan_con_ufromname">'.$identity.'</span>
+						</div>
+						<div class="uyan_cmt_txt" >'.stripcslashes($comment['content']).'</div>
+						<div class="uyan_cmt_exp" >
+							<a class="uyan_exp_re" id="uyan_exp_rpy" onclick="getReply('.$comment['id'].',"'.$comment['author'].'");">回复</a>
+							<div class="uyan_exp_date">'.$comment['datetime'].'</div>
+							<div style="clear: both;"></div>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+				</div>';
+				if(!empty($comment['children'])) {
+					foreach ($comment['children'] as $k=>$v) {
+						if(!empty($v['url'])) {
+							$v['url'] = 'href="'.$v['url'].'"';
+						}
+						if(empty($v['userid'])) {
+							$identity = '(游客)';
+							$avatar = '<img src="'.PATH_PUBLIC.'img/duface.png" >';
+						} else {
+							$identity = '(会员)';
+							$avatar = '<img src="'.LinkAvatar($v['userid']).'" >';
+						}
+				$str .='<div id="uyan_cmt_'.$v['id'].'" class="uyan_cmt_com uyan_cmt_reply_60" >
+							<div class="uyan_cmt_avatar">
+								<a class="uyan_avatar_ab" '.$v['url'].' target="_blank">
+									'.$avatar.'
+								</a>
+								<span><a class="uyan_avatar_an" '.$v['url'].' target="_blank"></a></span>
+							</div>
+							<div class="uyan_cmt_con">
+								<div class="uyan_con_tit">
+									<span class="uyan_con_uname">
+										<a id="uyan_cmt_uname" '.$v['url'].' target="_blank">'.$v['author'].'</a>
+									</span>
+									<span class="uyan_con_ufromname">'.$identity.'</span>
+								</div>
+								<div class="uyan_cmt_txt" >'.stripcslashes($v['content']).'</div>
+								<div class="uyan_cmt_exp" >
+									<a class="uyan_exp_re" id="uyan_exp_rpy" onclick="getReply('.$v['id'].',"'.$v['author'].'");">回复</a>
+									<div class="uyan_exp_date">'.$v['datetime'].'</div>
+									<div style="clear: both;"></div>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</div>';
 					if(!empty($v['children'])) {
-						foreach ($v['children'] as $kr=>$vr) {
-							$str .= '<li class="comrep-list">
-												<div class="com_top">
-													<a class="author" href="'.$vr['url'].'" target="_black">'.$vr['author'].'：</a>
-												</div>
-												<div class="cont">'.stripcslashes($vr['content']).'</div>
-												<div class="time">'.$vr['datetime'].'</div>
-											</li>';
+						foreach ($v['children'] as $key=>$value) {
+							if(!empty($v['url'])) {
+								$value['url'] = 'href="'.$value['url'].'"';
+							}
+							if(empty($value['userid'])) {
+								$identity = '(游客)';
+								$avatar = '<img src="'.PATH_PUBLIC.'img/duface.png" >';
+							} else {
+								$identity = '(会员)';
+								$avatar = '<img src="'.LinkAvatar($value['userid']).'" >';
+							}
+						$str .='<div id="uyan_cmt_'.$value['id'].'" class="uyan_cmt_com uyan_cmt_reply_120" >
+								<div class="uyan_cmt_avatar">
+									<a class="uyan_avatar_ab" '.$value['url'].' target="_blank">
+										'.$avatar.'
+									</a>
+									<span><a class="uyan_avatar_an" '.$value['url'].' target="_blank"></a></span>
+								</div>
+								<div class="uyan_cmt_con">
+									<div class="uyan_con_tit">
+										<span class="uyan_con_uname">
+											<a id="uyan_cmt_uname" '.$value['url'].' target="_blank">'.$value['author'].'</a>
+										</span>
+										<span class="uyan_con_ufromname">'.$identity.'</span>
+									</div>
+									<div class="uyan_cmt_txt" >'.stripcslashes($value['content']).'</div>
+									<div class="uyan_cmt_exp" >
+										<div class="uyan_exp_date">'.$value['datetime'].'</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div style="clear: both;"></div>
+							</div>';
 						}
 					}
-					$str .= ' </ul> </li>';
 				}
 			}
-			$str .= ' </ul> </li>';
 			$i++;
 		}
 		$aRtn['comment'] = $str;
 		$aRtn['num'] = $i;
 		return $aRtn;
-		
 	}
 	
 }

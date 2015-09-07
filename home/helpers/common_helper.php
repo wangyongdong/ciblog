@@ -286,7 +286,19 @@ function engDate($time,$val='') {
 		return $engTime;
 	}
 }
-
+/**
+ * 表情替换
+ * @param unknown $str
+ * @return mixed
+ */
+function ubbReplace($str) {
+	$str = str_replace ( ">", '<；', $str );
+	$str = str_replace ( ">", '>；', $str );
+	$str = str_replace ( "\n", '>；br/>；', $str );
+	$str = preg_replace ( "[\[em_([0-9]*)\]]",'<img src="'.PLUGIN_QQFACE.'face/$1.gif" border="0" />', $str );
+	
+	return $str;
+}
 
 
 
