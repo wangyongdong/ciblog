@@ -87,6 +87,67 @@ class Site_model extends CI_Model  {
     }
     
     /**
+     * 获取事件列表
+     */
+    function getEventList($iStart=0,$iPageNum=10) {
+    	$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
+    	$sql = 'SELECT
+    				*
+    			FROM
+    				blog_event
+    			ORDER BY
+    				id
+    			'.$sLimit;
+    	$res = $this->db->query($sql);
+    	$aList = $res->result_array();
+    	return $aList;
+    }
+    /**
+     * 获取事件信息
+     */
+    function getEventInfo($iEvent='') {
+    	if(empty($iEvent)) {
+    		return false;
+    	}
+    	$sql = 'SELECT
+    				*
+    			FROM
+    				blog_event
+				WHERE
+					id='.$iEvent;
+    	$res = $this->db->query($sql);
+    	$aList = $res->row_array();
+    	return $aList;
+    }
+    /**
+     * 事件添加/修改
+     */
+    function doEvent($data) {
+    	if(empty($data['id'])) {
+    		$this->db->insert('event', $data);
+    		//添加操作log
+    		$this->site_model->addActionLog('event','add');
+    	} else {
+    		$this->db->update('event',$data,array('id'=>$data['id']));
+    		//添加操作log
+    		$this->site_model->addActionLog('event','update');
+    	}
+    	$affect = $this->db->affected_rows();
+    	return $affect;
+    }
+    
+    /**
+     * 执行事件删除
+     */
+    function delEvent($iEvent) {
+    	$affect = $this->db->delete('event',array('id'=>$iEvent));
+    	//添加操作log
+    	$this->site_model->addActionLog('event','delete');
+    	return $affect;
+    }
+    
+    
+    /**
      * 获取notice列表
      */
     function getNotice($iStart=0,$iPageNum=10) {

@@ -419,7 +419,8 @@ function loadMore() {
 		<div class="widget">
 			<ul>
 				<li><a href="/admin">登录blog</a></li>
-				<li><a href="<?=site_url('archive')?>">文章归档</a></li>
+				<li><a href="/archive">文章归档</a></li>
+				<li><a href="/history">博客事件</a></li>
 				<li><a href="/contact">给我留言</a></li>
 				<li><a href="/links">申请友链</a></li>
 			</ul>

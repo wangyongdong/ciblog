@@ -545,6 +545,12 @@ h2#comments-title {
 	margin-top:18px;
 	margin-right:30px;
 }
+#copyright span{
+	float: right;
+	color:white;
+	font-size: 11px;
+	margin: 0 10px 0 20px;
+}
 #copyright a{
 	color:white;
 }

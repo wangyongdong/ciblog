@@ -253,7 +253,6 @@ $(function() {
 		if(this.name) {
 			$("#comment_id").val(this.name);
 		}
-		
 	});
 	$('#myModalC').on('show.bs.modal', function () {
 		//
@@ -308,6 +307,19 @@ function checkPopR() {
 	}
 	if(name.length == 0) {
 		$("#name").addClass('form-pop');
+		return false;
+	}
+	return true;
+}
+function checkPopE() {
+	var title = $("#title").val();
+	var description = $("#description").val();
+	if(title.length == 0) {
+		$("#title").addClass('form-pop');
+		return false;
+	}
+	if(description.length == 0) {
+		$("#description").addClass('form-pop');
 		return false;
 	}
 	return true;

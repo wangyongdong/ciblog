@@ -12,7 +12,6 @@ class Archive extends MY_Controller {
 	 * 文章归档
 	 */
 	public function index() {
-		
 		//文章归档
 		$data['archive_list'] = $this->archive_model->getArchiveList();
 		

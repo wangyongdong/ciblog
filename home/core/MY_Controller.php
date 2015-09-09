@@ -22,6 +22,7 @@ class MY_Controller extends CI_Controller {
 		$this->load->model('links_model');
 		$this->load->model('cms_model');
 		$this->load->model('archive_model');
+		$this->load->model('history_model');
 	}
 	
 	private function addLog() {

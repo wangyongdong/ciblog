@@ -131,6 +131,72 @@ class Site extends MY_Controller {
 	}
 	
 	/**
+	 * 博客事件页
+	 */
+	public function event() {
+		//分页执行
+		$pageId = $this->input->get('page');
+		$arr = $this->public_model->getPage("sort",'site/event?',$pageId);
+		//执行查询
+		$data['list'] = $this->site_model->getEventList($arr['start'],$arr['pagenum']);
+		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'site';
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/event_list',$data);
+		$this->load->view('public/footer',$data);
+	
+	}
+	
+	/**
+	 * 事件修改页
+	 */
+	public function updEvent() {
+		$iEvent = $this->uri->segment(3);
+		$data['list'] = $this->site_model->getEventInfo($iEvent);
+		$data['token'] = getToken($this->tokentype);
+		//导航
+		$data['nav'] = 'site';
+	
+		$this->load->view('public/header',$data);
+		$this->load->view('site/event_edit',$data);
+		$this->load->view('public/footer',$data);
+	}
+	
+	/**
+	 * 事件新增/修改
+	 */
+	public function doEvent() {
+		if(empty($_POST['id'])) {				//添加
+			$data['datetime'] = date("Y-m-d H:i:s",time());
+		} else {
+			$data['id'] = sg($_POST['id'],0);	//修改
+		}
+		$data['title'] = sg($_POST['title']);
+		$data['description'] = sg($_POST['description']);
+		$data['time'] = sg($_POST['time']);
+	
+		//数据验证
+		$arr = array($data['title'],$data['description'],$data['time']);
+		checkEmpty($arr);
+		//token验证
+		checkToken($_POST['token'],$this->tokentype);
+	
+		$this->site_model->doEvent($data);
+		succes(site_url('site/event'));
+	}
+	
+	/**
+	 * 删除事件
+	 */
+	public function delEvent() {
+		$iEvent = sg($_POST['id']);
+		$affect = $this->site_model->delEvent($iEvent);
+		echo $affect;
+	}
+	
+	/**
 	 * 信息统计
 	 */
 	public function statistic() {

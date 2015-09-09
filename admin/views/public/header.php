@@ -307,6 +307,7 @@
 		            <ul>
 		              	<li><a href="<?=site_url('site/web')?>">网站设置</a></li>
 		              	<li><a href="<?=site_url('site/menu')?>">导航管理</a></li>
+		              	<li><a href="<?=site_url('site/event')?>">事件记录</a></li>
 						<li><a href="<?=site_url('site/statistic')?>">信息统计</a></li>
 						<li><a href="<?=site_url('site/action')?>">操作日志</a></li>
 						<li><a href="<?=site_url('site/backup')?>">数据备份</a></li>
