@@ -43,6 +43,6 @@
 			</div>
 		</div>
 		<script src="<?=PATH_PUBLIC;?>js/jquery.js" type="text/javascript"></script>
-		<script src="<?=PATH_PUBLIC;?>js/main.js" type="text/javascript"></script>
+		<script src="<?=PATH_PUBLIC;?>js/history.js" type="text/javascript"></script>
 	</body>
 </html>

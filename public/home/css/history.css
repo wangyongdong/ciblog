@@ -4,7 +4,7 @@ ul, li { list-style:none; }
 h1, h2, h3, h4 { font-size:100%; }
 img, input, textarea { vertical-align: middle; border:0; }
 a { text-decoration:none; color:#787878; outline:none; }
-a:hover { text-decoration:underline; }
+a:hover { text-decoration:none; }
 body { font:12px/1.5 "微软雅黑","tahoma", Verdana, Geneva, sans-serif; color:#666; position:relative;}
 .clearfix:after{content:" "; display:block; height:0; clear:both; visibility:hidden;}
 .clearfix{zoom:1;}
