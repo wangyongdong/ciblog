@@ -24,7 +24,10 @@ body:before {
 }
 #container{
 	text-align: left;
-	clear: both; margin: 0 auto; width: 960px;
+	clear: both;
+	margin: 0 auto;
+	/*width: 1024px;*/
+	width: 960px;
 }
 /* =HEADER
 -------------------------------------------------------------- */
