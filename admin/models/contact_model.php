@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取留言相关信息模型
+ * @author WangYongdong
+ */
 class Contact_model extends CI_Model {
     function __construct() {
         parent::__construct();
@@ -25,7 +28,6 @@ class Contact_model extends CI_Model {
     	$list = $res->result_array();
     	return $list;
     }
-    
     /**
      * 获取留言详情
      */
@@ -43,7 +45,6 @@ class Contact_model extends CI_Model {
     	$list = $res->row_array();
     	return $list;
     }
-    
     /**
      * 获取回复信息
      */
@@ -58,7 +59,6 @@ class Contact_model extends CI_Model {
     	$list = $res->result_array();
     	return $list;
     }
-    
     /**
      * 修改留言
      */
@@ -69,17 +69,17 @@ class Contact_model extends CI_Model {
     	$this->site_model->addActionLog('contact','update');
     	return $affect;
     }
-    
     /**
      * 添加回复
      */
     function doReply($data) {
     	if(empty($data['id'])) {
     		$this->db->insert('contact', $data);
-    		
     		//邮件发送
     		$arr = $this->public_model->contactEmail($data['reply_id'],$data['author'],$data['content']);
-    		$this->public_model->sendMail($arr['email'],$arr['subject'],$arr['content']);
+    		if(!empty($arr['email'])) {
+    			$this->public_model->sendMail($arr['email'],$arr['subject'],$arr['content']);
+    		}
     	} else {
     		$this->db->update('contact',$data,array('id'=>$data['id']));
     	}
@@ -88,7 +88,6 @@ class Contact_model extends CI_Model {
     	$this->site_model->addActionLog('contact','add');
     	return $affect;
     }
-    
     /**
      * 执行删除
      */
@@ -98,7 +97,6 @@ class Contact_model extends CI_Model {
     	$this->site_model->addActionLog('contact','delete');
     	return $affect;
     }
-    
     /**
      * 标记已读状态
      */

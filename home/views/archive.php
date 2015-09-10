@@ -13,7 +13,7 @@ function cutStatus(obj) {
 					<span id="run_time" style="color: #888a13;">1年256天15时36分52秒</span>
 				</div>
 			</header>
-			<?php foreach($archive_list as $key=>$arlist):?>
+			<?php foreach($list as $key=>$arlist):?>
 			<h3 class="year"><?=$key?> 年</h3>
 			<ul class="mon_list">
 				<?php foreach($arlist as $k=>$v):?>
@@ -44,7 +44,7 @@ function cutStatus(obj) {
 		<h3 class="widgettitle">栏目导航</h3>
 		<div class="rnav">
 			<ul>
-				<?php foreach($sort as $list):?>
+				<?php foreach($left_sort as $list):?>
 				<li><a href="<?=site_url('article/sort/'.$list['id'])?>"><?=$list['name']?></a></li>
 				<?php endforeach;?>
 			</ul>
@@ -54,31 +54,20 @@ function cutStatus(obj) {
 			<ul>
 				<?php 
 				$i=0;
-				foreach($article_view as $list):
+				foreach($left_view as $list):
 					$i++;
-					if($i<=3) {
 				?>
 				<li>
-					<span class="num1"><?php echo $i;?></span>
-					<a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
+					<span <?php if($i<=3){echo 'class="num1"';}?>><?php echo $i;?></span>
+					<a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
 				</li>
-				<?php 
-					} else {
-				?>
-				<li>
-					<span><?php echo $i;?></span>
-					<a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
-				</li>
-				<?php 
-					}
-				endforeach;
-				?>
+				<?php endforeach;?>
 			</ul>
 		</div>
 		<h3 class="widgettitle">业内新闻</h3>
 		<div class="widget">
 			<ul>
-				<?php foreach($cms_recom as $list):?>
+				<?php foreach($left_cms as $list):?>
 				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
@@ -86,7 +75,7 @@ function cutStatus(obj) {
 		<h3 class="widgettitle">最新评论</h3>
 		<div class="widget">
 			<ul class="c_comment">
-				<?php foreach($comment as $list):?>
+				<?php foreach($left_comment as $list):?>
 				<li>
 					<a href="<?=$list['url']?>"><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
 					<a href="<?=site_url('cms/view/'.$list['comment_id'])?>">查看>></a>

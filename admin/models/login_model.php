@@ -1,11 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取登录相关信息模型
+ * @author WangYongdong
+ */
 class Login_model extends CI_Model {
     function __construct() {
         parent::__construct();
         $this->load->database();
     }
-	
     /**
      * 用户登录验证
      */
@@ -23,17 +25,13 @@ class Login_model extends CI_Model {
     	if(empty($info)) {
     		return -1; 	//用户信息不存在
     	}
-    	
-    	//获取密码
-    	$password = buildPass($pass, $info['uniquely']);
+    	$password = buildPass($pass, $info['uniquely']);//获取密码
     	if($password != $info['password']) {
     		return -2;	//密码不正确
     	}
-    	
     	if($info['role_id'] == '5') {
     		return -3;	//黑名单
     	}
-    	
     	return $info;
     }
     /**

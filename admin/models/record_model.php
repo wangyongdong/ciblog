@@ -1,11 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取说说相关信息模型
+ * @author WangYongdong
+ */
 class Record_model extends CI_Model  {
     function __construct() {
         parent::__construct();
         $this->load->database();
     }
-    
  	/**
      * 获取说说列表
      */
@@ -25,7 +27,6 @@ class Record_model extends CI_Model  {
     	$aRecord = $res->result_array();
     	return $aRecord;
     }
-    
     /**
      * 执行说说添加
      */
@@ -36,7 +37,6 @@ class Record_model extends CI_Model  {
     	$this->site_model->addActionLog('record','add');
     	return $iInsert;
     }
-    
 	/**
      * 删除说说
      */

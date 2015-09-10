@@ -1,13 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * about me
+ * @author WangYongdong
+ */
 class About extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 	}
-	
 	public function index() {
-		//获取个人信息
-		$list = $this->public_model->getBloggerInfo();
+		$list = $this->public_model->getBloggerInfo();//获取个人信息
 		$data['blogger'] = $list;
 		
 		//设置seo

@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 公共相关类
+ * @author WangYongdong
+ */
 class Common extends MY_Controller {
 	var $tokentype = 'links';
 	

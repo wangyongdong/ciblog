@@ -1,9 +1,9 @@
 <?php
-/*
+/**
  * 留言相关模型
+ * @author WangYongdong
  */
 class Contact_model extends CI_Model{
-	
 	function __construct() {
 		parent::__construct();
 		$this->load->database();

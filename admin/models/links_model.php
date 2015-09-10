@@ -1,15 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取友链相关信息模型
+ * @author WangYongdong
+ */
 class Links_model extends CI_Model  {
     function __construct() {
-        parent::__construct();		//构造函数里面要调用父类的构造方法
-        $this->load->database();	//加载数据库,数据库名称在Config文件里面配置。
+        parent::__construct();
+        $this->load->database();
     }
 	/**
 	 * 获取友链列表
-	 * @param number $start
-	 * @param number $pagenum
-	 * @return unknown
 	 */
     function getLinksList($iStart=0,$iPageNum=10) {
 		$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
@@ -24,7 +24,6 @@ class Links_model extends CI_Model  {
     	$list = $res->result_array();
     	return $list;
     }
-    
     /**
      * 获取友链信息
      */
@@ -42,9 +41,8 @@ class Links_model extends CI_Model  {
     	$list = $res->row_array();
     	return $list;
     }
-    
     /**
-     * 执行添加,修改
+     * 执行添加/修改
      */
     function doLinks($data) {
     	if(empty($data['id'])) {
@@ -59,7 +57,6 @@ class Links_model extends CI_Model  {
     	$affect = $this->db->affected_rows();
     	return $affect;
     }
-    
     /**
      * 执行删除
      */
@@ -69,5 +66,4 @@ class Links_model extends CI_Model  {
     	$this->site_model->addActionLog('links','delete');
     	return $affect;
     }
-    
 }

@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<article>
-			<?php foreach($article_recom as $list):?>
+			<?php foreach($article as $list):?>
 			<div class="post">
 				<header>
 					<h2 class="posttitle">
@@ -81,7 +81,7 @@
 		<h3 class="widgettitle">文章归档</h3>
 		<div class="widget">
 			<ul>
-				<?php foreach($archive as $list):?>
+				<?php foreach($left_archive as $list):?>
 				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
 				<?php endforeach;?>
 			</ul>
@@ -89,7 +89,7 @@
 		<h3 class="widgettitle">最新文章</h3>
 		<div class="widget">
 			<ul>
-				<?php foreach($article_new as $list):?>
+				<?php foreach($left_new as $list):?>
 				<li><a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
@@ -97,7 +97,7 @@
 		<h3 class="widgettitle">业内新闻</h3>
 		<div class="widget">
 			<ul>
-				<?php foreach($cms_recom as $list):?>
+				<?php foreach($left_cms as $list):?>
 				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
@@ -105,7 +105,7 @@
 		<h3 class="widgettitle">友情链接</h3>
 		<div class="widget">
 			<ul class="website">
-				<?php foreach($links as $list):?>
+				<?php foreach($left_links as $list):?>
 				<li><a target="_blank" href="<?=$list['siteurl']?>"><?=$list['sitename']?></a></li>
 				<?php endforeach;?>
 			</ul>

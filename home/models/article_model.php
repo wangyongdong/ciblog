@@ -1,19 +1,15 @@
 <?php
-/*
+/**
  * 获取文章相关信息模型
+ * @author WangYongdong
  */
 class Article_model extends CI_Model{
-	
 	function __construct() {
 		parent::__construct();
 		$this->load->database();
 	}
 	/**
 	 * 获取文章列表
-	 * @param string $sOrder	排序方式：时间，阅读量，评论数
-	 * @param number $iStart
-	 * @param number $iPageNum
-	 * @return array
 	 */
 	function getArticleList($sOrder='datetime',$iStart=0,$iPageNum=10,$aFilter='') {
 		$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
@@ -22,7 +18,8 @@ class Article_model extends CI_Model{
     			FROM
     				blog_article
     			WHERE
-    				sortid != "2" ';
+    				status = "show"
+					AND sortid != "2" ';
 		if(!empty($aFilter['q'])) {
 			$sql .= ' AND title LIKE"%'.$aFilter['q'].'%"';
 		}
@@ -32,7 +29,6 @@ class Article_model extends CI_Model{
 		$aList = $res->result_array();
 		return $aList;
 	}
-	
 	/**
 	 * 获取文章详情
 	 */
@@ -45,23 +41,48 @@ class Article_model extends CI_Model{
     			FROM
     				blog_article
     			WHERE
-    				id='.$iArticle;
+					status = "show"
+					AND id='.$iArticle;
 		$res = $this->db->query($sql);
 		$aList = $res->row_array();
 		return $aList;
 	}
-	
 	/**
 	 * 获取上一篇、下一篇
 	 */
-	function getLastNext($iArticle) {
+	function getLastNext($iArticle,$sType='') {
+		if($sType == 'cms') {
+			$sWhere = ' AND sortid = "2" ';
+		} else {
+			$sWhere = ' AND sortid != "2" ';
+		}
 		//下一篇
-		$sql = 'SELECT id,title FROM blog_article WHERE id<'.$iArticle.' ORDER BY id DESC limit 0,1';
+		$sql = 'SELECT 
+					id,title 
+				FROM 
+					blog_article 
+				WHERE 
+					status="show" 
+					'.$sWhere.'
+					AND id<'.$iArticle.' 
+				ORDER BY 
+					id DESC 
+				limit 0,1';
 		$res = $this->db->query($sql);
 		$next = $res->row_array();
 		
 		//上一篇
-		$sql = 'SELECT id,title FROM blog_article WHERE id>'.$iArticle.' ORDER BY id DESC limit 0,1';
+		$sql = 'SELECT 
+					id,title 
+				FROM 
+					blog_article 
+				WHERE 
+					status="show" 
+					'.$sWhere.'
+					AND id>'.$iArticle.' 
+				ORDER BY 
+					id DESC 
+				limit 0,1';
 		$res = $this->db->query($sql);
 		$last = $res->row_array();
 		
@@ -69,7 +90,6 @@ class Article_model extends CI_Model{
 		$list['last'] = sg($last);
 		return $list;
 	}
-	
 	/**
 	 * 获取相关文章
 	 */
@@ -94,9 +114,6 @@ class Article_model extends CI_Model{
 		}
 		return $list;
 	}
-	
-	
-	
 	/**
 	 * 文章访问数+1
 	 */
@@ -109,6 +126,5 @@ class Article_model extends CI_Model{
     				id='.$iArticle;
 		$res = $this->db->query($sql);
 	}
-	
 	
 }

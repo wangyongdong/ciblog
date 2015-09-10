@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 事件相关类
+ * @author WangYongdong
+ */
 class History extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
@@ -11,6 +14,5 @@ class History extends MY_Controller {
 		$data['list'] = $this->history_model->getEvent();
 		$this->load->view('history',$data);
 	}
-	
 	
 }

@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 说说相关类
+ * @author WangYongdong
+ */
 class Record extends MY_Controller {
 	
 	public function __construct() {

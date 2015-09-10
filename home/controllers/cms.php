@@ -1,11 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * CMS相关类
+ * @author WangYongdong
+ */
 class Cms extends MY_Controller {
+	var $tokentype = 'article';
 	const ARTICLE_VIEWS = 'views';
 	const ARTICLE_COM = 'comnum';
 	const ARTICLE_NEW = 'datetime';
-	var $tokentype = 'article';
-	
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('contact_model');
@@ -16,24 +18,14 @@ class Cms extends MY_Controller {
 	public function index() {
 		//执行分页
 		$pageId = $this->input->get('page');
-		//获取系统变量，文章数量
-		$sPageNum = getSet('article_nums');
+		$sPageNum = getSet('article_nums');//获取系统变量，文章数量
 		$sFilter = 'AND sortid="2" ';
 		$arr = $this->public_model->getPage("article",'cms?',$pageId,$sPageNum,$sFilter);
-		//文章列表
 		$data['cms'] = $this->cms_model->getCmsList(self::ARTICLE_NEW,$arr['start'],$arr['pagenum']);
-		
-		//cms文章点击排行
-		$data['cms_view'] = $this->cms_model->getCmsList(self::ARTICLE_VIEWS);
-		
-		//首页cms文章推荐
-		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
-		
-		//最新评论
-		$data['comment'] = $this->comment_model->getNewComment('cms');
-
-		//文章归档
-		$data['archive'] = $this->archive_model->getArchive(5);
+		$data['left_view'] = $this->cms_model->getCmsList(self::ARTICLE_VIEWS);	//cms文章点击排行
+		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);	//cms文章推荐
+		$data['left_comment'] = $this->comment_model->getNewComment('cms');	//最新评论
+		$data['left_archive'] = $this->archive_model->getArchive(5);		//文章归档
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
@@ -47,33 +39,17 @@ class Cms extends MY_Controller {
 	 * 文章详情页
 	 */
 	public function view() {
-		//获取文章详情
 		$iArticle = $this->uri->segment(3);
 		$data['article'] = $this->article_model->getArticleInfo($iArticle);
+		$data['article_near'] = $this->article_model->getLastNext($iArticle,'cms');	//上一篇文章,下一篇文章
+		$data['article_related'] = $this->article_model->getRelated($iArticle);		//获取相关文章
 		
-		//上一篇文章,下一篇文章
-		$data['article_near'] = $this->cms_model->getLastNext($iArticle);
-		
-		//获取相关文章
-		$data['article_related'] = $this->cms_model->getRelated($iArticle);
-		
-		//文章点击排行榜
-		$data['cms_view'] = $this->cms_model->getcmsList(self::ARTICLE_VIEWS);
-		
-		//首页cms文章推荐
-		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
-		
-		//文章归档
-		$data['archive'] = $this->archive_model->getArchive(5);
-		
-		//文章评论
-		$data['comment'] = $this->getComment($iArticle);
-		
-		//token
-		$data['token'] = getToken($this->tokentype);
-		
-		//文章访问+1
-		//$this->article_model->addArticleViews($iArticle);
+		$data['left_view'] = $this->cms_model->getcmsList(self::ARTICLE_VIEWS);		//文章点击排行榜
+		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);//cms文章推荐
+		$data['left_archive'] = $this->archive_model->getArchive(5);		//文章归档
+		$data['article_comment'] = $this->getComment($iArticle);			//文章评论
+		$data['token'] = getToken($this->tokentype);						//token
+		$this->article_model->addArticleViews($iArticle);					//文章访问+1
 		
 		//设置seo
 		$seo_info = $this->config->item('info_seo');
@@ -82,16 +58,13 @@ class Cms extends MY_Controller {
 		$aMeta['description'] = $data['article']['title'].$data['article']['keyword'];
 		$sHeader = 'cms';
 		$this->public_model->loadView($aMeta,$sHeader,'cms_view',$data);
-		
 	}
-	
 	/**
 	 * 获取文章评论
 	 */
 	public function getComment($iArticle='',$iComment='',$iStart=0,$iPageNum=5) {
 		if(empty($iArticle)) {
 			$iArticle = sg($_POST['id']);
-			//$iComment = '';
 		}
 		if(!empty($_POST['start'])) {
 			$iStart = sg($_POST['start']);
@@ -107,7 +80,6 @@ class Cms extends MY_Controller {
 		}
 		return $aComments;
 	}
-	
 	/**
 	 * 获取文章回复
 	 */
@@ -125,7 +97,6 @@ class Cms extends MY_Controller {
 			return $aComment;
 		}
 	}
-	
 	/**
 	 * ajax处理评论
 	 */
@@ -245,6 +216,5 @@ class Cms extends MY_Controller {
 		$aRtn['num'] = $i;
 		return $aRtn;
 	}
-	
 	
 }

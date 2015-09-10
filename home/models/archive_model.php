@@ -1,9 +1,9 @@
 <?php
-/*
+/**
  * 获取归档相关信息模型
+ * @author WangYongdong
  */
 class Archive_model extends CI_Model{
-	
 	function __construct() {
 		parent::__construct();
 		$this->load->database();
@@ -17,6 +17,8 @@ class Archive_model extends CI_Model{
 					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m") as datetime, count(*) as num 
 				from 
 					blog_article 
+				WHERE
+					status="show" 
 				GROUP BY 
 					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m")
 				ORDER BY 
@@ -28,7 +30,6 @@ class Archive_model extends CI_Model{
 		$aList = $res->result_array();
 		return $aList;
 	}
-	
 	/**
 	 * 获取全部归档列表
 	 */
@@ -46,7 +47,6 @@ class Archive_model extends CI_Model{
 				$arr = '';
 			}
 			$asr = $aLists;
-			
 		}
 		return $asr;
 	}
@@ -58,6 +58,8 @@ class Archive_model extends CI_Model{
 					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y") as year
 				from
 					blog_article
+				WHERE 
+					status="show" 
 				GROUP BY
 					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y")
 				ORDER BY
@@ -74,8 +76,9 @@ class Archive_model extends CI_Model{
 					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%m") as month, count(*) as num 
 				from 
 					blog_article 
-				WHERE 
-					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y") = "'.$sYear.'"
+				WHERE
+					status="show"  
+					AND FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y") = "'.$sYear.'"
 				GROUP BY 
 					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%m")
 				ORDER BY 
@@ -84,7 +87,6 @@ class Archive_model extends CI_Model{
 		$aList = $res->result_array();
 		return $aList;
 	}
-	
 	/**
 	 * 根据归档时间获取文章列表
 	 */
@@ -95,7 +97,8 @@ class Archive_model extends CI_Model{
 				FROM
 					blog_article
 				WHERE
-					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m") = "'.$sTime.'"
+					status="show"
+					AND FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m") = "'.$sTime.'"
 				ORDER BY
 					datetime DESC
 				'.$sLimit;
@@ -111,7 +114,6 @@ class Archive_model extends CI_Model{
 		$data['article'] = getStatis('article');
 		$data['contact'] = getStatis('contact',' WHERE userid=0 ');
 		$data['comment'] = getStatis('comment');
-		
 		return $data;
 	}
 }

@@ -1,11 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取公共信息模型
+ * @author WangYongdong
+ */
 class Public_model extends CI_Model  {
     function __construct() {
         parent::__construct();
         $this->load->database();
     }
-    
     /**
      * 调用分页类
      */
@@ -58,7 +60,7 @@ class Public_model extends CI_Model  {
     public function commentEmail($iComment,$sAuthor,$sContent) {
     	//添加邮件提醒
     	$list = getEmail('comment',$iComment);
-    	$arr['email'] = $list['email'];
+    	$arr['email'] = sg($list['email'],'');
     	$arr['subject'] = ' [王永东博客] 评论回复';
     	$arr['subject'] = "=?UTF-8?B?".base64_encode($arr['subject'])."?=";
     	$arr['content'] = '
@@ -86,7 +88,7 @@ class Public_model extends CI_Model  {
     public function contactEmail($iContact,$sAuthor,$sContent) {
     	//添加邮件提醒
     	$list = getEmail('contact',$iContact);
-    	$arr['email'] = $list['email'];
+    	$arr['email'] = sg($list['email'],'');
     	$arr['subject'] = ' [王永东博客] 留言回复';
     	$arr['subject'] = "=?UTF-8?B?".base64_encode($arr['subject'])."?=";
     	$arr['content'] = '

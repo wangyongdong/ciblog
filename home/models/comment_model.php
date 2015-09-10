@@ -1,14 +1,13 @@
 <?php
-/*
+/**
  * 评论相关模型
+ * @author WangYongdong
  */
 class Comment_model extends CI_Model{
-	
 	function __construct() {
 		parent::__construct();
 		$this->load->database();
 	}
-	
 	/**
 	 * 获取最近评论信息
 	 */
@@ -34,20 +33,18 @@ class Comment_model extends CI_Model{
 		$list = $res->result_array();
 		return $list;
 	}
-	
 	/**
 	 * 修改文章评论数量
 	 */
-	function updArticle($iArticle,$sNum) {
+	function updArticle($iArticle) {
 		$sql = 'UPDATE
     				blog_article
     			SET
-    				 comnum=comnum+'.$sNum.'
+    				 comnum=comnum+1
     			WHERE
     				id='.$iArticle;
 		$res = $this->db->query($sql);
 	}
-	
 	/**
 	 * 获取评论信息
 	 */

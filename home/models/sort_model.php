@@ -1,14 +1,13 @@
 <?php
-/*
+/**
  * 分类相关信息模型
+ * @author WangYongdong
  */
 class Sort_model extends CI_Model{
-	
 	function __construct() {
 		parent::__construct();
 		$this->load->database();
 	}
-	
 	/**
 	 * 获取文章分类
 	 */
@@ -40,7 +39,8 @@ class Sort_model extends CI_Model{
 				FROM
 					blog_article
 				WHERE
-					sortid='.$iType.'
+					status="show" 
+					AND sortid='.$iType.'
 				ORDER BY
 					datetime DESC '.$sLimit;
 		$res = $this->db->query($sql);

@@ -155,7 +155,6 @@ function delActionLog() {
 		})
 	}
 }
-
 //弹出提示框
 function popTips(val) {
 	var win_str = '<div id="myModal" class="modal fade in" style="display: block;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog win-min"><div class="modal-content"><div class="modal-header win-header"><button type="button" class="close" onclick="close_pop();">×</button><h4 class="modal-title">&nbsp;</h4></div><div class="modal-body"><p class="center">'+val+'</p></div><div class="modal-footer win-footer"></div></div></div></div><div class="modal-backdrop fade in"></div>';
@@ -165,9 +164,35 @@ function popTips(val) {
 }
 //关闭提示框
 function close_pop() {
-	$(document.body).addClass("");
+	$(document.body).removeClass("modal-open");
 	$(".pop_tips").html("");
 }
+//添加内容
+$(function() {
+	$(".btn-cc").click(function() {
+		$("#reply_id").val(this.id);
+		if(this.name) {
+			$("#comment_id").val(this.name);
+		}
+	});
+	$('#myModalC').on('show.bs.modal', function () {
+		//
+	})
+});
+//清除内容
+$(function() {
+	$('#myModalC').on('hidden.bs.modal', function () {
+		$("#reply_id").val("");
+		$("#comment_id").val("");
+	});
+	/* 清楚提醒 */
+	$("input").focus(function(){
+		$(this).removeClass("form-pop");
+	});
+	$("textarea").focus(function(){
+		$(this).removeClass("form-pop");
+	})
+});
 //数据验证
 function checkFormA() {
 	var title = $("#title").val();
@@ -246,25 +271,6 @@ function checkPopL() {
 	}
 	return true;
 }
-//添加内容
-$(function() {
-	$(".btn-cc").click(function() {
-		$("#reply_id").val(this.id);
-		if(this.name) {
-			$("#comment_id").val(this.name);
-		}
-	});
-	$('#myModalC').on('show.bs.modal', function () {
-		//
-	})
-});
-//清除内容
-$(function() {
-	$('#myModalC').on('hidden.bs.modal', function () {
-		$("#reply_id").val("");
-		$("#comment_id").val("");
-	})
-});
 function checkPopCom(id) {
 	var content = $("#reply_content").val();
 	if(content.length == 0) {

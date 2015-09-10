@@ -1,12 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取文章相关信息模型
+ * @author WangYongdong
+ */
 class Article_model extends CI_Model {
     function __construct() {
         parent::__construct();
         $this->load->database();
         $this->load->model('sort_model');
     }
-	
     /**
      * 获取文章列表
      */
@@ -33,7 +35,6 @@ class Article_model extends CI_Model {
     	$aList = $res->result_array();
     	return $aList;
     }
-    
     /**
      * 获取文章详情
      */
@@ -51,16 +52,14 @@ class Article_model extends CI_Model {
     	$list = $res->row_array();
     	return $list;
     }
-    
     /**
      * 执行文章添加,修改
      */
     function doArticle($data) {
     	if(empty($data['id'])) {
     		$this->db->insert('article',$data);
-    		$this->updSortNum($data['sortid'],"1");
-    		//添加操作log
-    		$this->site_model->addActionLog('article','add');
+    		$this->updSortNum($data['sortid'],"1");				//修改类别数量
+    		$this->site_model->addActionLog('article','add');	//添加操作log
     	} else {
     		changeImg('article', $data['id'], $data['img']);
     		//获取文章原分类
@@ -69,13 +68,11 @@ class Article_model extends CI_Model {
     		//原类别数量减少和新类别数量增加
     		$this->updSortNum($iSort,"-1");
     		$this->updSortNum($data['sortid'],"1");
-    		//添加操作log
-    		$this->site_model->addActionLog('article','update');
+    		$this->site_model->addActionLog('article','update');//添加操作log
     	}
    	 	$affect = $this->db->affected_rows();
     	return $affect;
     }
-    
     /**
      * 执行删除
      */
@@ -86,8 +83,7 @@ class Article_model extends CI_Model {
     	if($affect) {
     		$affects = $this->updSortNum($iSort,"-1"); 	//执行类别数量减少
     	}
-    	//添加操作log
-    	$this->site_model->addActionLog('article','delete');
+    	$this->site_model->addActionLog('article','delete');//添加操作log
     	return $affect;	
     }
     /**
@@ -97,8 +93,7 @@ class Article_model extends CI_Model {
     	$data = array('topway'=>$sTop);
     	$this->db->update('article',$data,array('id'=>$iArticle));
     	$affect = $this->db->affected_rows();
-    	//添加操作log
-    	$this->site_model->addActionLog('article','update');
+    	$this->site_model->addActionLog('article','update');//添加操作log
     	return $affect;
     }
     /**

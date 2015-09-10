@@ -1,21 +1,17 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 友链相关类
+ * @author WangYongdong
+ */
 class Links extends MY_Controller {
 	var $tokentype = 'links';
-	
 	public function __construct() {
 		parent::__construct();
 	}
 	
-	/**
-	 * 友情链接页
-	 */
 	public function index() {
-		//token
-		$data['token'] = getToken($this->tokentype);
-		
-		//首页右侧个人信息
-		$data['blogger'] = $this->public_model->getBloggerInfo();
+		$data['blogger'] = $this->public_model->getBloggerInfo();//首页右侧个人信息
+		$data['token'] = getToken($this->tokentype);//token
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
@@ -39,8 +35,7 @@ class Links extends MY_Controller {
 		if (empty($data['email']) || empty($data['sitename']) || empty($data['siteurl']) || empty($data['description'])) {
 			localCommon('数据信息不完整。');
 		}
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);//token验证
 		
 		$iInsert = $this->links_model->doLinks($data);
 		if(!empty($iInsert)) {

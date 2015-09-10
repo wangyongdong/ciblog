@@ -5,27 +5,21 @@
  */
 class Site extends MY_Controller {
 	var $tokentype = 'site';
-	
 	public function __construct() {
 		parent::__construct();
 	}
-	
 	/**
 	 * 网站设置
 	 */
 	public function web() {
 		$data['list'] = $this->site_model->getSiteWeb();
-		
-		//token
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_web',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 执行网站信息修改
 	 */
@@ -64,7 +58,6 @@ class Site extends MY_Controller {
 		$this->site_model->doSiteWeb($data);
 		succes(site_url('site/web'));
 	}
-	
 	/**
 	 * Menu设置
 	 */
@@ -72,36 +65,29 @@ class Site extends MY_Controller {
 		//分页执行
 		$pageId = $this->input->get('page');
 		$arr = $this->public_model->getPage("menu",'site/menu?',$pageId);
-		//执行查询
 		$data['list'] = $this->site_model->getSiteMenu('',$arr['start'],$arr['pagenum']);
-		//token
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_menu',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 获取修改导航页面
 	 */
 	public function updateMenu() {
 		$id = $this->uri->segment(3);
 		$data['list'] = $this->site_model->getSiteMenu($id);
-		//token
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_menu_edit',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
-	 * 添加,修改 menu
+	 * 执行menu添加/修改
 	 */
 	public function doMenu() {
 		$data = array();
@@ -113,14 +99,12 @@ class Site extends MY_Controller {
 		$data['menu_desc'] = sg($_POST['desc']);
 		$data['status'] = sg($_POST['status']);
 		
-		//数据验证
-		$arr = array($data['menu_name'],$data['menu_alias']);
+		$arr = array($data['menu_name'],$data['menu_alias']);//数据验证
 		checkEmpty($arr);
 		
 		$this->site_model->doMenu($data);
 		succes(site_url('site/menu'));
 	}
-	
 	/**
 	 * 删除menu
 	 */
@@ -129,7 +113,6 @@ class Site extends MY_Controller {
 		$affect = $this->site_model->delMenu($id);
 		echo $affect;
 	}
-	
 	/**
 	 * 博客事件页
 	 */
@@ -137,18 +120,14 @@ class Site extends MY_Controller {
 		//分页执行
 		$pageId = $this->input->get('page');
 		$arr = $this->public_model->getPage("sort",'site/event?',$pageId);
-		//执行查询
 		$data['list'] = $this->site_model->getEventList($arr['start'],$arr['pagenum']);
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'site';
 	
 		$this->load->view('public/header',$data);
 		$this->load->view('site/event_list',$data);
 		$this->load->view('public/footer',$data);
-	
 	}
-	
 	/**
 	 * 事件修改页
 	 */
@@ -156,37 +135,32 @@ class Site extends MY_Controller {
 		$iEvent = $this->uri->segment(3);
 		$data['list'] = $this->site_model->getEventInfo($iEvent);
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'site';
 	
 		$this->load->view('public/header',$data);
 		$this->load->view('site/event_edit',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 事件新增/修改
 	 */
 	public function doEvent() {
-		if(empty($_POST['id'])) {				//添加
+		if(empty($_POST['id'])) {
 			$data['datetime'] = date("Y-m-d H:i:s",time());
 		} else {
-			$data['id'] = sg($_POST['id'],0);	//修改
+			$data['id'] = sg($_POST['id'],0);
 		}
 		$data['title'] = sg($_POST['title']);
 		$data['description'] = sg($_POST['description']);
 		$data['time'] = sg($_POST['time']);
-	
-		//数据验证
-		$arr = array($data['title'],$data['description'],$data['time']);
+		
+		$arr = array($data['title'],$data['description'],$data['time']);//数据验证
 		checkEmpty($arr);
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);//token验证
 	
 		$this->site_model->doEvent($data);
 		succes(site_url('site/event'));
 	}
-	
 	/**
 	 * 删除事件
 	 */
@@ -195,7 +169,6 @@ class Site extends MY_Controller {
 		$affect = $this->site_model->delEvent($iEvent);
 		echo $affect;
 	}
-	
 	/**
 	 * 信息统计
 	 */
@@ -209,30 +182,26 @@ class Site extends MY_Controller {
 		
 		$data['data'] = $this->site_model->getVisitStatistic();
 		$data['arr'] = $this->site_model->getmoduleStatistic();
-		//导航
+		
 		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_statistic',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 操作日志
 	 */
 	public function action() {
 		$data['aFilter']['start'] = sg($this->input->get('ds'));
 		$data['aFilter']['end'] = sg($this->input->get('de'));
-		//执行查询
-		$data['list'] = $this->site_model->getAction($data['aFilter']);
-		//导航
+		$data['list'] = $this->site_model->getAction($data['aFilter']);//执行查询
 		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_log_action',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 删除操作日志
 	 */
@@ -240,7 +209,6 @@ class Site extends MY_Controller {
 		$affect = $this->site_model->delActionLog();
 		return $affect;
 	}
-	
 	/**
 	 * notice
 	 */
@@ -249,16 +217,13 @@ class Site extends MY_Controller {
 		//分页执行
 		$pageId = $this->input->get('page');
 		$arr = $this->public_model->getPage("notice",'site/notice?',$pageId);
-		//执行查询
 		$data['notice'] = $this->site_model->getNotice($arr['start'],$arr['pagenum']);
-		//导航
 		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_notice',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 删除notice
 	 */
@@ -266,7 +231,7 @@ class Site extends MY_Controller {
 		$sId = sg($_POST['id']);
 		//将获取到的值进行拆分，重组
 		$aId = explode(",",trim($sId,','));
-		//遍历删除
+		//遍历执行
 		$affects = 0;
 		for($i=0;$i<count($aId);$i++) {
 			$affect = $this->site_model->delNotice($aId[$i]);
@@ -274,7 +239,6 @@ class Site extends MY_Controller {
 		}
 		echo $affects;
 	}
-	
 	/**
 	 * 修改notice
 	 */
@@ -282,7 +246,7 @@ class Site extends MY_Controller {
 		$sId = sg($_POST['id']);
 		//将获取到的值进行拆分，重组
 		$aId = explode(",",trim($sId,','));
-		//遍历删除
+		//遍历执行
 		$affects = 0;
 		for($i=0;$i<count($aId);$i++) {
 			$affect = $this->site_model->updNotice($aId[$i]);
@@ -290,20 +254,17 @@ class Site extends MY_Controller {
 		}
 		echo $affects;
 	}
-	
 	/**
 	 * 数据备份
 	 */
 	public function backup() {
-		$data['data'] = 1;
-		//导航
+		$data['data'] = '';
 		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_backup',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 执行备份
 	 */
@@ -319,13 +280,11 @@ class Site extends MY_Controller {
 			$this->site_model->upBackup();
 		}
 	}
-	
 	/**
 	 * 缓存
 	 */
 	public function cache() {
-		$data['data'] = 1;
-		//导航
+		$data['data'] = '';
 		$data['nav'] = 'site';
 		
 		$this->load->view('public/header',$data);

@@ -1,19 +1,19 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 留言相关类
+ * @author WangYongdong
+ */
 class Contact extends MY_Controller {
 	var $tokentype = 'contact';
-	
 	public function __construct() {
 		parent::__construct();
 	}
-	
+	/**
+	 * 留言页
+	 */
 	public function index() {
-		//token
-		$data['token'] = getToken($this->tokentype);
-		
-		//首页右侧个人信息
-		$data['blogger'] = $this->public_model->getBloggerInfo();
-		
+		$data['blogger'] = $this->public_model->getBloggerInfo();//首页右侧个人信息
+		$data['token'] = getToken($this->tokentype);//token
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
 		$aMeta['title'] = '给我留言'.$seo_info['title'];
@@ -21,9 +21,7 @@ class Contact extends MY_Controller {
 		$aMeta['description'] = $seo_info['description'];
 		$sHeader = 'contact';
 		$this->public_model->loadView($aMeta,$sHeader,'contact',$data);
-		
 	}
-	
 	/**
 	 * 添加留言信息
 	 */
@@ -44,8 +42,7 @@ class Contact extends MY_Controller {
 		} else if (mb_strlen($data['content']) < 2 || mb_strlen($data['content']) > 500) {
 			localCommon('评论内容在2-500个字符。');
 		}
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);//token验证
 		
 		$this->load->model('contact_model');
 		$iInsert = $this->contact_model->doContact($data);
@@ -58,5 +55,4 @@ class Contact extends MY_Controller {
 			localCommon('留言成功，请等待回复，回复内容会已邮件的形式通知您');
 		}
 	}
-	
 }

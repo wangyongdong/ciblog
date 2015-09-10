@@ -5,11 +5,9 @@
  */
 class Contact extends MY_Controller {
 	var $tokentype = 'contact';
-	
 	public function __construct() {
 		parent::__construct();
 	}
-	
 	/**
 	 * 获取留言列表
 	 */
@@ -19,15 +17,10 @@ class Contact extends MY_Controller {
 		$pageId = $this->input->get('page');
 		$sFilter = ' AND author LIKE"%'.$data['aFilter']['keyword'].'%"';
 		$arr = $this->public_model->getPage("contact",'contact?',$pageId,$sFilter);
-		//留言信息
 		$data['list'] = $this->contact_model->getContact('contact',$arr['start'],$arr['pagenum'],$data['aFilter']);
-		//token
 		$data['token'] = getToken($this->tokentype);
-		
-		//标记已读
-		$this->contact_model->doRead();
-		//导航
 		$data['nav'] = 'comcon';
+		$this->contact_model->doRead();//标记已读
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('contact/contact_list',$data);
@@ -39,11 +32,8 @@ class Contact extends MY_Controller {
 	public function update() {
 		$iContact = $this->uri->segment(3);
 		$data['list'] = $this->contact_model->getContactInfo($iContact);
-		
 		$data['reply'] = $this->contact_model->getContactReply($iContact);
-		//token
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'comcon';
 		
 		$this->load->view('public/header',$data);
@@ -55,18 +45,16 @@ class Contact extends MY_Controller {
 	 */
 	public function doContact() {
 		$data = array();
-		$data['id'] = sg($_POST['id']);				//id
-		$data['author'] = sg($_POST['author']);		//留言者
-		$data['email'] = sg($_POST['email']);		//email
-		$data['url'] = sg($_POST['url']);			//url
-		$data['content'] = sg($_POST['content']);	//内容
-		$data['status'] = sg($_POST['status']);		//状态
+		$data['id'] = sg($_POST['id']);
+		$data['author'] = sg($_POST['author']);
+		$data['email'] = sg($_POST['email']);
+		$data['url'] = sg($_POST['url']);
+		$data['content'] = sg($_POST['content']);
+		$data['status'] = sg($_POST['status']);
 		
-		//数据验证
-		$arr = array($data['content']);
+		$arr = array($data['content']);//数据验证
 		checkEmpty($arr);
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);//token验证
 		
 		$this->contact_model->doContact($data);
 		succes(site_url('contact'));
@@ -79,15 +67,14 @@ class Contact extends MY_Controller {
 		if(!empty($_POST['id'])) {
 			$data['id'] = sg($_POST['id']);
 		}
-		$data['reply_id'] = sg($_POST['reply_id']);		//回复id
-		$data['userid'] = UserId();						//userid
-		$data['author'] = UserName();					//用户名
-		$data['content'] = sg($_POST['reply_content']);		//内容
+		$data['reply_id'] = sg($_POST['reply_id']);
+		$data['userid'] = UserId();
+		$data['author'] = UserName();
+		$data['content'] = sg($_POST['reply_content']);
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
 		$data['datetime'] = date("Y-m-d H:i:s",time());
 		
-		//数据验证
 		$arr = array($data['author'],$data['content']);
 		checkEmpty($arr);
 	

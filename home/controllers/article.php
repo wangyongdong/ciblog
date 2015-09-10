@@ -1,10 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 文章归档相关类
+ * @author WangYongdong
+ */
 class Article extends MY_Controller {
+	var $tokentype = 'article';
 	const ARTICLE_VIEWS = 'views';
 	const ARTICLE_COM = 'comnum';
 	const ARTICLE_NEW = 'datetime';
-	var $tokentype = 'article';
 	
 	public function __construct() {
 		parent::__construct();
@@ -17,9 +20,9 @@ class Article extends MY_Controller {
 		$data['aFilter']['q'] = sg($this->input->get('q'));
 		//执行分页
 		$pageId = $this->input->get('page');
-		//获取系统变量，文章数量
-		$sPageNum = getSet('article_nums');
-		$sFilter = 'AND sortid != "2" ';
+		
+		$sPageNum = getSet('article_nums');//获取系统变量，文章数量
+		$sFilter = ' AND status="show" AND sortid != "2" ';
 		if(!empty($data['aFilter']['q'])) {
 			$sFilter .= ' AND title LIKE"%'.$data['aFilter']['q'].'%" ';
 		}
@@ -29,23 +32,13 @@ class Article extends MY_Controller {
 			$sUrl = 'article?q='.$data['aFilter']['q'];
 		}
 		$arr = $this->public_model->getPage("article",$sUrl,$pageId,$sPageNum,$sFilter);
-		//文章列表
 		$data['article'] = $this->article_model->getArticleList(self::ARTICLE_NEW,$arr['start'],$arr['pagenum'],$data['aFilter']);
 		
-		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
-		
-		//首页cms文章推荐
-		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
-		
-		//文章分类
-		$data['sort'] = $this->sort_model->getSort();
-		
-		//最新评论
-		$data['comment'] = $this->comment_model->getNewComment();
-
-		//文章归档
-		$data['archive'] = $this->archive_model->getArchive(5);
+		$data['left_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);//文章点击排行榜
+		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);//首页cms文章推荐
+		$data['left_sort'] = $this->sort_model->getSort();//文章分类
+		$data['left_comment'] = $this->comment_model->getNewComment();//最新评论
+		$data['left_archive'] = $this->archive_model->getArchive(5);//文章归档
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
@@ -59,37 +52,17 @@ class Article extends MY_Controller {
 	 * 文章详情页
 	 */
 	public function view() {
-		//获取文章详情
 		$iArticle = $this->uri->segment(3);
 		$data['article'] = $this->article_model->getArticleInfo($iArticle);
-		
-		//上一篇文章,下一篇文章
-		$data['article_near'] = $this->article_model->getLastNext($iArticle);
-		
-		//获取相关文章
-		$data['article_related'] = $this->article_model->getRelated($iArticle);
-		
-		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
-		
-		//首页cms文章推荐
-		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
-		
-		//文章分类
-		$data['sort'] = $this->sort_model->getSort();
-		
-		//文章归档
-		$data['archive'] = $this->archive_model->getArchive(5);
-		
-		//文章评论
-		$data['comment'] = $this->getComment($iArticle);
-		//文章评论数量
-		
-		//token
-		$data['token'] = getToken($this->tokentype);
-		
-		//文章访问+1
-		$this->article_model->addArticleViews($iArticle);
+		$data['article_near'] = $this->article_model->getLastNext($iArticle);			//上一篇文章,下一篇文章
+		$data['article_related'] = $this->article_model->getRelated($iArticle);			//获取相关文章
+		$data['left_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);	//文章点击排行榜
+		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);			//首页cms文章推荐
+		$data['left_sort'] = $this->sort_model->getSort();				//文章分类
+		$data['left_archive'] = $this->archive_model->getArchive(5);	//文章归档
+		$data['article_comment'] = $this->getComment($iArticle);		//文章评论
+		$data['token'] = getToken($this->tokentype);					//token
+		$this->article_model->addArticleViews($iArticle);				//文章访问+1
 		
 		//设置seo
 		$seo_info = $this->config->item('info_seo');
@@ -98,38 +71,23 @@ class Article extends MY_Controller {
 		$aMeta['description'] = $data['article']['title'].$data['article']['keyword'];
 		$sHeader = 'article';
 		$this->public_model->loadView($aMeta,$sHeader,'article_view',$data);
-		
 	}
-	
 	/**
 	 * 根据分类获取文章
 	 */
 	public function sort() {
-		//文章类别
 		$iType = $this->uri->segment(3);
 		//分页执行
 		$pageId = $this->input->get('page');
 		$sPageNum = getSet('article_nums');
 		$sFilter = ' AND sortid='.$iType;
 		$arr = $this->public_model->getPage("article",'article/sort/'.$iType.'?',$pageId,$sPageNum,$sFilter);
-		
-		//根据分类获取文章列表
 		$data['article'] = $this->sort_model->getArticleBySort($iType,$arr['start'],$arr['pagenum']);
-		
-		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
-		
-		//文章分类
-		$data['sort'] = $this->sort_model->getSort();
-		
-		//首页cms文章推荐
-		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
-		
-		//最新评论
-		$data['comment'] = $this->comment_model->getNewComment();
-		
-		//文章归档
-		$data['archive'] = $this->archive_model->getArchive(5);
+		$data['left_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);//文章点击排行榜
+		$data['left_sort'] = $this->sort_model->getSort();					//文章分类
+		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);//首页cms文章推荐
+		$data['left_comment'] = $this->comment_model->getNewComment();		//最新评论
+		$data['left_archive'] = $this->archive_model->getArchive(5);		//文章归档
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
@@ -138,9 +96,7 @@ class Article extends MY_Controller {
 		$aMeta['description'] = $seo_info['description'];
 		$sHeader = 'article';
 		$this->public_model->loadView($aMeta,$sHeader,'article',$data);
-		
 	}
-	
 	/**
 	 * 按归档时间查看文章
 	 */
@@ -153,24 +109,12 @@ class Article extends MY_Controller {
 		$sPageNum = getSet('article_nums');
 		$sFilter = 'AND FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m") = "'.$sTime.'"';
 		$arr = $this->public_model->getPage("article",'article/archive/'.$sTime.'?',$pageId,$sPageNum,$sFilter);
-		
-		//根据时间获取文章列表
 		$data['article'] = $this->archive_model->getArticleByArchive($sTime,$arr['start'],$arr['pagenum']);
-		
-		//文章点击排行榜
-		$data['article_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);
-		
-		//文章分类
-		$data['sort'] = $this->sort_model->getSort();
-		
-		//文章归档
-		$data['archive'] = $this->archive_model->getArchive();
-		
-		//首页cms文章推荐
-		$data['cms_recom'] = $this->cms_model->getCmsList(self::ARTICLE_COM);
-		
-		//最新评论
-		$data['comment'] = $this->comment_model->getNewComment();
+		$data['left_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);//文章点击排行榜
+		$data['left_sort'] = $this->sort_model->getSort();					//文章分类
+		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);//首页cms文章推荐
+		$data['left_comment'] = $this->comment_model->getNewComment();		//最新评论
+		$data['left_archive'] = $this->archive_model->getArchive(5);		//文章归档
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');
@@ -180,14 +124,12 @@ class Article extends MY_Controller {
 		$sHeader = 'article';
 		$this->public_model->loadView($aMeta,$sHeader,'article',$data);
 	}
-	
 	/**
 	 * 获取文章评论
 	 */
 	public function getComment($iArticle='',$iComment='',$iStart=0,$iPageNum=5) {
 		if(empty($iArticle)) {
 			$iArticle = sg($_POST['id']);
-			//$iComment = '';
 		}
 		if(!empty($_POST['start'])) {
 			$iStart = sg($_POST['start']);
@@ -203,7 +145,6 @@ class Article extends MY_Controller {
 		}
 		return $aComments;
 	}
-	
 	/**
 	 * 获取文章回复
 	 */
@@ -221,7 +162,6 @@ class Article extends MY_Controller {
 			return $aComment;
 		}
 	}
-	
 	/**
 	 * ajax处理评论
 	 */

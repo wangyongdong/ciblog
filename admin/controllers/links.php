@@ -5,11 +5,9 @@
  */
 class Links extends MY_Controller {
 	var $tokentype = 'links';
-	
 	public function __construct() {
 		parent::__construct();
 	}
-	
 	/**
 	 * 获取列表
 	 */
@@ -17,44 +15,35 @@ class Links extends MY_Controller {
 		//分页执行
 		$pageId = $this->input->get('page');
 		$arr = $this->public_model->getPage("links",'links?',$pageId);
-		//执行查询
 		$data['list'] = $this->links_model->getLinksList($arr['start'],$arr['pagenum']);
-
-		//token
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'links';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('links/links_list',$data);
 		$this->load->view('public/footer',$data);
-		
 	}
-	
 	/**
 	 * 获取修改页
 	 */
 	public function update() {
 		$iLinks = $this->uri->segment(3);
 		$data['list'] = $this->links_model->getLinksInfo($iLinks);
-		//token
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'links';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('links/links_edit',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 新增信息
 	 */
 	public function doLinks() {
 		$data = array();
-		if(!empty($_POST['id'])) {		//修改
+		if(!empty($_POST['id'])) {
 			$data['id'] = sg($_POST['id']);
-		} else {						//添加
+		} else {
 			$data['datetime'] =  date("Y-m-d H:i:s",time());
 		}
 		$data['sitename'] = sg($_POST['name']);
@@ -62,17 +51,13 @@ class Links extends MY_Controller {
 		$data['description'] = sg($_POST['description']);
 		$data['status'] = sg($_POST['status']);
 		
-		//数据验证
-		$arr = array($data['sitename'],$data['siteurl']);
+		$arr = array($data['sitename'],$data['siteurl']);//数据验证
 		checkEmpty($arr);
-		
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);//token验证
 		
 		$this->links_model->doLinks($data);
 		succes(site_url('links'));
 	}
-	
 	/**
 	 * 删除类别
 	 */

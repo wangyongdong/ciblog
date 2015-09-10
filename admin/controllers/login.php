@@ -9,26 +9,21 @@ class login extends CI_Controller {
 		parent::__construct();
 		$this->load->model('login_model');
 	}
-	
 	/**
 	 * 获取登陆页
 	 */
 	public function index() {
 		$this->load->view('public/login');
 	}
-	
 	/**
 	 * 执行用户登录
 	 */
 	public function loginIn() {
 		$name = sg($_POST['name']);
 		$pass = sg($_POST['pass']);
-		//验证
-		$arr = array($name,$pass);
+		$arr = array($name,$pass);//验证
 		checkEmpty($arr);
-		//查询用户信息
-		$res = $this->login_model->checkUserLogin($name,$pass);
-		
+		$res = $this->login_model->checkUserLogin($name,$pass);//查询用户信息
 		switch ($res) {
 			case '-1':
 				$data['status'] = -1;
@@ -54,7 +49,6 @@ class login extends CI_Controller {
 		}
 		echo json_encode($data);
 	}
-	
 	/**
 	 * 登出操作
 	 */
@@ -63,7 +57,6 @@ class login extends CI_Controller {
 		$this->auth->useLoginOut();
 		header("location:".base_url());
 	}
-	
 	/**
 	 * 添加登录日志
 	 */

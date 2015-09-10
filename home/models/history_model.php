@@ -8,7 +8,6 @@ class History_model extends CI_Model {
 		parent::__construct();
 		$this->load->database();
 	}
-	
 	/**
 	 * 获取时间轴
 	 */
@@ -17,13 +16,10 @@ class History_model extends CI_Model {
 		foreach ($list as $key=>$value) {
 			$arr['year'] = $value['year'];
 			$arr['list'] = $this->getMonthByYear($value['year']);
-			
 			$aList[] = $arr;
-				
 		}
 		return $aList;
 	}
-	
 	/**
 	 * 获取年份
 	 */

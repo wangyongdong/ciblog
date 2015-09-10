@@ -41,7 +41,7 @@
 		<h3 class="widgettitle">栏目导航</h3>
 		<div class="rnav">
 			<ul>
-				<?php foreach($sort as $list):?>
+				<?php foreach($left_sort as $list):?>
 				<li><a href="<?=site_url('article/sort/'.$list['id'])?>"><?=$list['name']?></a></li>
 				<?php endforeach;?>
 			</ul>
@@ -49,7 +49,7 @@
 		<h3 class="widgettitle">文章归档</h3>
 		<div class="widget">
 			<ul>
-				<?php foreach($archive as $list):?>
+				<?php foreach($left_archive as $list):?>
 				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
 				<?php endforeach;?>
 			</ul>
@@ -59,7 +59,7 @@
 			<ul>
 				<?php 
 				$i=0;
-				foreach($article_view as $list):
+				foreach($left_view as $list):
 					$i++;
 					if($i<=3) {
 				?>
@@ -83,7 +83,7 @@
 		<h3 class="widgettitle">业内新闻</h3>
 		<div class="widget">
 			<ul>
-				<?php foreach($cms_recom as $list):?>
+				<?php foreach($left_cms as $list):?>
 				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
@@ -91,7 +91,7 @@
 		<h3 class="widgettitle">最新评论</h3>
 		<div class="widget">
 			<ul class="c_comment">
-				<?php foreach($comment as $list):?>
+				<?php foreach($left_comment as $list):?>
 				<li>
 					<a <?php if(!empty($list['url'])){echo 'href="'.$list['url'].'"';} ?>><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
 					<a href="<?=site_url('cms/view/'.$list['comment_id'])?>">查看>></a>

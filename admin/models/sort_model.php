@@ -1,9 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取分类相关信息模型
+ * @author WangYongdong
+ */
 class Sort_model extends CI_Model  {
     function __construct() {
-        parent::__construct();		//构造函数里面要调用父类的构造方法
-        $this->load->database();	//加载数据库,数据库名称在Config文件里面配置。
+        parent::__construct();
+        $this->load->database();
     }
     /**
      * 获取类别列表
@@ -54,7 +57,6 @@ class Sort_model extends CI_Model  {
     	$affect = $this->db->affected_rows();
     	return $affect;
     }
-    
     /**
      * 执行删除
      */
@@ -64,6 +66,5 @@ class Sort_model extends CI_Model  {
     	$this->site_model->addActionLog('sort','delete');
     	return $affect;
     }
-    
     
 }

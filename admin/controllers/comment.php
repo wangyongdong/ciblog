@@ -5,7 +5,6 @@
  */
 class Comment extends MY_Controller {
 	var $tokentype = 'comment';
-	
 	public function __construct() {
 		parent::__construct();
 	}
@@ -26,34 +25,24 @@ class Comment extends MY_Controller {
 			}
 		}
 		$arr = $this->public_model->getPage("comment",'comment?',$pageId,$sFilter);
-		//文章评论
 		$data['list'] = $this->comment_model->getComment($arr['start'],$arr['pagenum'],$data['aFilter']);
-		//token
 		$data['token'] = getToken($this->tokentype);
-		
-		$data['footer'] = 'upload';
-		
-		//标记已读
-		$this->comment_model->doRead();
-		//导航
 		$data['nav'] = 'comcon';
+		$data['footer'] = 'upload';
+		$this->comment_model->doRead();//标记已读
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('comment/comment_list',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 获取评论修改页
 	 */
 	public function update() {
 		$iComment = $this->uri->segment(3);
 		$data['list'] = $this->comment_model->getCommentInfo($iComment);
-		
 		$data['reply'] = $this->comment_model->getCommentReply($iComment);
-		//token
 		$data['token'] = getToken($this->tokentype);
-		//导航
 		$data['nav'] = 'comcon';
 		
 		$this->load->view('public/header',$data);
@@ -65,18 +54,16 @@ class Comment extends MY_Controller {
 	 */
 	public function doComment() {
 		$data = array();
-		$data['id'] = sg($_POST['id']);				//id
-		$data['author'] = sg($_POST['author']);		//评论人
-		$data['email'] = sg($_POST['email']);		//email
-		$data['url'] = sg($_POST['url']);			//url
-		$data['content'] = sg($_POST['content']);	//内容
-		$data['status'] = sg($_POST['status']);		//状态
+		$data['id'] = sg($_POST['id']);
+		$data['author'] = sg($_POST['author']);
+		$data['email'] = sg($_POST['email']);
+		$data['url'] = sg($_POST['url']);
+		$data['content'] = sg($_POST['content']);
+		$data['status'] = sg($_POST['status']);
 		
-		//数据验证
-		$arr = array($data['content']);
+		$arr = array($data['content']);//数据验证
 		checkEmpty($arr);
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);//token验证
 	
 		$this->comment_model->doComment($data);
 		succes(site_url('comment'));
@@ -89,22 +76,19 @@ class Comment extends MY_Controller {
 		if(!empty($_POST['id'])) {
 			$data['id'] = sg($_POST['id']);
 		} else {
-			$data['reply_id'] = sg($_POST['reply_id']);		//回复id
-			$data['comment_id'] = sg($_POST['comment_id']);	//文章id
-			$data['userid'] = UserId();						//userid
-			$data['author'] = UserName();					//用户名
+			$data['reply_id'] = sg($_POST['reply_id']);
+			$data['comment_id'] = sg($_POST['comment_id']);
+			$data['userid'] = UserId();
+			$data['author'] = UserName();
 		}
-		
-		$data['content'] = sg($_POST['reply_content']);			//内容
+		$data['content'] = sg($_POST['reply_content']);
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
 		$data['datetime'] = date("Y-m-d H:i:s",time());
-	
-		//数据验证
-		$arr = array($data['content']);
+		
+		$arr = array($data['content']);//数据验证
 		checkEmpty($arr);
 		
-	
 		$this->comment_model->doReply($data);
 		succes(site_url('comment'));
 	}
@@ -116,7 +100,6 @@ class Comment extends MY_Controller {
 		$affect = $this->comment_model->doDel($iComment);
 		echo $affect;
 	}
-	
 	/**
 	 * 批量删除
 	 */
@@ -124,7 +107,7 @@ class Comment extends MY_Controller {
 		$sId = sg($_POST['id']);
 		//将获取到的值进行拆分，重组
 		$aId = explode(",",trim($sId,','));
-		//遍历删除
+		//遍历执行
 		$affects = 0;
 		for($i=0;$i<count($aId);$i++) {
 			$affect = $this->comment_model->doDel($aId[$i]);
@@ -132,7 +115,6 @@ class Comment extends MY_Controller {
 		}
 		echo $affects;
 	}
-	
 	/**
 	 * 标记隐藏状态
 	 */
@@ -140,7 +122,7 @@ class Comment extends MY_Controller {
 		$sId = sg($_POST['id']);
 		//将获取到的值进行拆分，重组
 		$aComment = explode(",",trim($sId,','));
-		//遍历删除
+		//遍历执行
 		$affects = 0;
 		for($i=0;$i<count($aComment);$i++) {
 			$affect = $this->comment_model->doHide($aComment[$i]);

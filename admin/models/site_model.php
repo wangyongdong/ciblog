@@ -1,11 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取文章相关信息模型
+ * @author WangYongdong
+ */
 class Site_model extends CI_Model  {
     function __construct() {
-        parent::__construct();		//构造函数里面要调用父类的构造方法
-        $this->load->database();	//加载数据库,数据库名称在Config文件里面配置。
+        parent::__construct();
+        $this->load->database();
     }
-    
     /**
      * 获取网站设置信息
      */
@@ -23,7 +25,6 @@ class Site_model extends CI_Model  {
     	}
     	return $list;
     }
-    
     /**
      * 执行网站信息配置修改
      */
@@ -58,9 +59,8 @@ class Site_model extends CI_Model  {
     	}
     	return $list;
     }
-    
     /**
-     * 添加,修改menu
+     * 添加/修改menu
      */
     function doMenu($data) {
     	if(!empty($data['id'])) {
@@ -75,7 +75,6 @@ class Site_model extends CI_Model  {
     	$affect = $this->db->affected_rows();
     	return $affect;
     }
-    
     /**
      * 执行menu删除
      */
@@ -85,7 +84,6 @@ class Site_model extends CI_Model  {
     	$this->site_model->addActionLog('site_menu','delete');
     	return $affect;
     }
-    
     /**
      * 获取事件列表
      */
@@ -135,7 +133,6 @@ class Site_model extends CI_Model  {
     	$affect = $this->db->affected_rows();
     	return $affect;
     }
-    
     /**
      * 执行事件删除
      */
@@ -145,8 +142,6 @@ class Site_model extends CI_Model  {
     	$this->site_model->addActionLog('event','delete');
     	return $affect;
     }
-    
-    
     /**
      * 获取notice列表
      */
@@ -208,7 +203,6 @@ class Site_model extends CI_Model  {
     	$list = $res->result_array();
     	return $list;
     }
-    
     /**
      * 添加操作log
      */
@@ -225,7 +219,6 @@ class Site_model extends CI_Model  {
     	$iInsert = $this->db->insert_id();
     	return $iInsert;
     }
-    
     /**
      * 执行删除操作日志
      */
@@ -234,7 +227,6 @@ class Site_model extends CI_Model  {
     	$affect = $this->db->query($sql);
     	return 1;
     }
-    
     /**
      * 获取访问统计
      */
@@ -320,7 +312,6 @@ class Site_model extends CI_Model  {
     	
     	return $arr;
     }
-    
     /**
      * 数据库备份
      */
@@ -347,7 +338,6 @@ class Site_model extends CI_Model  {
     	$this->load->helper('download');
     	force_download('ciblog_backup.sql', $backup);
     }
-    
     /**
      * 上传图片资源备份
      */
@@ -360,7 +350,6 @@ class Site_model extends CI_Model  {
     	// Download the file to your desktop. Name it "my_backup.zip"
     	$this->zip->download('upload_backup.zip');
     }
-    
     /**
      * 全站资源备份
      */
@@ -373,7 +362,6 @@ class Site_model extends CI_Model  {
     	// Download the file to your desktop. Name it "my_backup.zip"
     	$this->zip->download('ciblog_backup.zip');
     }
-    
     /**
      * 数据库备份
      */

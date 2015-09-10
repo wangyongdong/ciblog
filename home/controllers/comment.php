@@ -1,12 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 评论相关类
+ * @author WangYongdong
+ */
 class Comment extends MY_Controller {
 	var $tokentype = 'article';
-	
 	public function __construct() {
 		parent::__construct();
 	}
-	
 	/**
 	 * 添加文章评论
 	 */
@@ -31,12 +32,11 @@ class Comment extends MY_Controller {
 		} else if (mb_strlen($data['content']) < 2 || mb_strlen($data['content']) > 500) {
 			localCommon('评论内容在2-500个字符。');
 		}
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);//token验证
 		
 		$iInsert = $this->comment_model->doComment($data);
 		if(!empty($iInsert)) {
-			$this->comment_model->updArticle($data['comment_id'],'1');
+			$this->comment_model->updArticle($data['comment_id']);//修改数量
 			//添加提醒
 			$aNotice = array();
 			$aNotice['type'] = 'comment';
@@ -47,5 +47,4 @@ class Comment extends MY_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
-	
 }

@@ -8,7 +8,6 @@ class Links_model extends CI_Model {
 		parent::__construct();
 		$this->load->database();
 	}
-	
 	/**
 	 * 获取首页友情链接
 	 */
@@ -26,7 +25,6 @@ class Links_model extends CI_Model {
 		$list = $res->result_array();
 		return $list;
 	}
-	
 	/**
 	 * 友情链接申请
 	 */

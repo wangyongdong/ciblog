@@ -8,7 +8,6 @@ class Public_model extends CI_Model{
 		parent::__construct();
 		$this->load->database();
 	}
-	
 	/**
 	 * 加载页面
 	 * @param string $sTitle
@@ -31,7 +30,6 @@ class Public_model extends CI_Model{
 		$this->load->view($sView,$aData);
 		$this->load->view('public/footer');
 	}
-	
 	/**
 	 * 获取网站标题和说明
 	 */
@@ -50,7 +48,6 @@ class Public_model extends CI_Model{
     	}
     	return $list;
 	}
-	
 	/**
 	 * 获取首页个人信息
 	 */
@@ -66,7 +63,6 @@ class Public_model extends CI_Model{
 		$list = $res->row_array();
 		return $list;
 	}
-	
 	/**
 	 * 调用分页类
 	 */
@@ -109,13 +105,13 @@ class Public_model extends CI_Model{
 		$iInsert = $this->db->insert_id();
 		return $iInsert;
 	}
-	
 	/**
 	 * 添加访问log
 	 */
 	public function addLog() {
 		$data = array();
 		$data['url'] = uri_string();
+		$data['referer_url'] = sg($_SERVER['HTTP_REFERER'],'');
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
 		$data['datetime'] = date("Y-m-d H:i:s",time());
@@ -125,12 +121,4 @@ class Public_model extends CI_Model{
 		return $iInsert;
 	}
 	
-	/**
-	 * 友情链接申请
-	 */
-	public function doLinks($data) {
-		$this->db->insert('links',$data);
-		$iInsert = $this->db->insert_id();
-		return $iInsert;
-	}
 }

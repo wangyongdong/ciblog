@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * 获取用户相关信息模型
+ * @author WangYongdong
+ */
 class Member_model extends CI_Model  {
     function __construct() {
         parent::__construct();
@@ -29,9 +32,8 @@ class Member_model extends CI_Model  {
     	}
     	return $list;
     }
-    
     /**
-     * 执行用户信息添加,修改
+     * 执行用户信息添加/修改
      */
     function doUser($data) {
     	if(!empty($data['id'])) {
@@ -44,11 +46,9 @@ class Member_model extends CI_Model  {
     		//添加操作log
     		$this->site_model->addActionLog('member','add');
     	}
-    	
     	$affect = $this->db->affected_rows();
     	return $affect;
     }
-    
     /**
      * 执行删除
      */
@@ -58,7 +58,6 @@ class Member_model extends CI_Model  {
     	$this->site_model->addActionLog('member','delete');
     	return $affect;
     }
-    
     /**
      * 获取角色列表
      */
@@ -75,7 +74,6 @@ class Member_model extends CI_Model  {
     	$list = $res->result_array();
     	return $list;
     }
-    
     /**
      * 获取角色信息
      */

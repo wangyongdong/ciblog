@@ -1,16 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 /**
  * 定义文章相关类
  * @author WangYongdong
  */
 class Article extends MY_Controller {
 	var $tokentype = 'article';
-	
 	public function __construct() {
 		parent::__construct();
 	}
-	
 	/**
 	 * 文章列表页
 	 */
@@ -35,33 +32,26 @@ class Article extends MY_Controller {
 			$sFilter = ' AND uid = '.$data['aFilter']['author'];
 		}
 		$arr = $this->public_model->getPage("article",'article?',$pageId,$sFilter);
-		
-		//执行查询
 		$data['list'] = $this->article_model->getArticleList($arr['start'],$arr['pagenum'],$data['aFilter']);
-		//导航
 		$data['nav'] = 'article';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_list',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 文章发表页面
 	 */
 	public function create() {
 		$data['sort'] = $this->sort_model->getSortList();
-		//token
 		$data['token'] = getToken($this->tokentype);
 		$data['footer'] = 'upload';
-		//导航
 		$data['nav'] = 'article';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_new',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
 	 * 获取文章修改页
 	 */
@@ -69,19 +59,16 @@ class Article extends MY_Controller {
 		$iArticle = $this->uri->segment(3);
 		$data['list'] = $this->article_model->getArticleInfo($iArticle);
 		$data['sort'] = $this->sort_model->getSortList();
-		//token
 		$data['token'] = getToken($this->tokentype);
 		$data['footer'] = 'upload';
-		//导航
 		$data['nav'] = 'article';
 		
 		$this->load->view('public/header',$data);
 		$this->load->view('article/article_edit',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
 	/**
-	 * 执行文章发表，和修改
+	 * 执行文章发表/修改
 	 */
 	public function doArticle() {
 		$data = array();
@@ -90,25 +77,22 @@ class Article extends MY_Controller {
 		} else {
 			$data['datetime'] = date("Y-m-d H:i:s",time());
 		}
-		$data['uid'] = UserId();						//用户id
-		$data['title'] = sg($_POST['title']);			//标题
-		$data['content'] = sg($_POST['content']);		//内容
-		$data['keyword'] = sg($_POST['keyword']);		//关键词
-		$data['sortid'] = sg($_POST['sortid']);			//类型
-		$data['img'] = sg($_POST['img']);				//配图
-		$data['topway'] = sg($_POST['topway']);			//置顶方式
-		$data['status'] = sg($_POST['status']);			//显示状态
+		$data['uid'] = UserId();
+		$data['title'] = sg($_POST['title']);
+		$data['content'] = sg($_POST['content']);
+		$data['keyword'] = sg($_POST['keyword']);
+		$data['sortid'] = sg($_POST['sortid']);
+		$data['img'] = sg($_POST['img']);
+		$data['topway'] = sg($_POST['topway']);
+		$data['status'] = sg($_POST['status']);
 		
-		//数据验证
-		$arr = array($data['title'],$data['content']);
+		$arr = array($data['title'],$data['content']);//数据验证
 		checkEmpty($arr);
-		//token验证
-		checkToken($_POST['token'],$this->tokentype);
+		checkToken($_POST['token'],$this->tokentype);//token验证
 		
 		$this->article_model->doArticle($data);
 		succes(site_url('article'));
 	}
-	
 	/**
 	 * 删除操作
 	 */
@@ -117,7 +101,6 @@ class Article extends MY_Controller {
 		$affect = $this->article_model->doDel($iArticle);
 		echo $affect;
 	}
-	
 	/**
 	 * 批量删除
 	 */
@@ -125,7 +108,7 @@ class Article extends MY_Controller {
 		$sId = sg($_POST['id']);
 		//将获取到的值进行拆分，重组
 		$aId = explode(",",trim($sId,','));
-		//遍历删除
+		//遍历执行
 		$affects = 0;
 		for($i=0;$i<count($aId);$i++) {
 			$affect = $this->article_model->doDel($aId[$i]);
@@ -133,7 +116,6 @@ class Article extends MY_Controller {
 		}
 		echo $affects;
 	}
-	
 	/**
 	 * 文章置顶操作
 	 */
@@ -153,7 +135,6 @@ class Article extends MY_Controller {
 		}
 		echo $affects;
 	}
-	
 	/**
 	 * 移动类别
 	 */
