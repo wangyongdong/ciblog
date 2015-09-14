@@ -140,12 +140,12 @@ function loadMore() {
 				<?php 
 				if(!empty($article_near['last'])) {
 				?>
-				<p> 上一篇：<a href="<?=site_url('article/view/'.$article_near['last']['id'])?>"><?=$article_near['last']['title']?></a></p>
+				<p> 上一篇：<a href="<?=site_url('article/'.$article_near['last']['id'])?>"><?=$article_near['last']['title']?></a></p>
 				<?php 
 				}
 				if(!empty($article_near['next'])) {
 				?>
-				<p> 下一篇：<a href="<?=site_url('article/view/'.$article_near['next']['id'])?>"><?=$article_near['next']['title']?></a></p>
+				<p> 下一篇：<a href="<?=site_url('article/'.$article_near['next']['id'])?>"><?=$article_near['next']['title']?></a></p>
 				<?php } ?>
 			</div>
 			<div class="otherlink">
@@ -153,7 +153,7 @@ function loadMore() {
 				<ul>
 					<?php foreach($article_related as $list):?>
 					<li>
-						<a title="<?=$list['title']?>" href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],18)?></a>
+						<a title="<?=$list['title']?>" href="<?=site_url('article/'.$list['id'])?>"><?=cutTab($list['title'],18)?></a>
 					</li>
 					<?php endforeach;?>
 				</ul>
@@ -375,7 +375,7 @@ function loadMore() {
 		<div class="widget">
 			<ul>
 				<?php foreach($left_archive as $list):?>
-				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
+				<li><a href="<?=site_url('archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -383,7 +383,7 @@ function loadMore() {
 		<div class="widget">
 			<ul>
 				<?php foreach($left_cms as $list):?>
-				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=$list['title']?></a></li>
+				<li><a href="<?=site_url('cms/'.$list['id'])?>"><?=$list['title']?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -397,7 +397,7 @@ function loadMore() {
 				?>
 				<li>
 					<span <?php if($i<=3){echo 'class="num1"';}?>><?php echo $i;?></span>
-					<a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
+					<a href="<?=site_url('article/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
 				</li>
 				<?php endforeach;?>
 			</ul>

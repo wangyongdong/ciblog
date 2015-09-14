@@ -5,7 +5,7 @@
 			<div class="post">
 				<header>
 					<h3 class="posttitle">
-						<a href="<?=site_url('cms/view/'.$list['id'])?>" rel="bookmark"><?=stripcslashes($list['title'])?></a>
+						<a href="<?=site_url('cms/'.$list['id'])?>" rel="bookmark"><?=stripcslashes($list['title'])?></a>
 					</h3>
 				</header>
 				<div class="postcontent"><?=cutTab($list['content'],150)?></div>
@@ -31,7 +31,7 @@
 		<div class="widget">
 			<ul>
 				<?php foreach($left_archive as $list):?>
-				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
+				<li><a href="<?=site_url('archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -39,7 +39,7 @@
 		<div class="widget">
 			<ul>
 				<?php foreach($left_cms as $list):?>
-				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
+				<li><a href="<?=site_url('cms/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -53,7 +53,7 @@
 				?>
 				<li>
 					<span <?php if($i<=3){echo 'class="num1"';}?>><?php echo $i;?></span>
-					<a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
+					<a href="<?=site_url('cms/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
 				</li>
 				<?php endforeach;?>
 			</ul>
@@ -64,7 +64,7 @@
 				<?php foreach($left_comment as $list):?>
 				<li>
 					<a <?php if(!empty($list['url'])){echo 'href="'.$list['url'].'"';} ?>><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
-					<a href="<?=site_url('cms/view/'.$list['comment_id'])?>">查看>></a>
+					<a href="<?=site_url('cms/'.$list['comment_id'])?>">查看>></a>
 				</li>
 				<?php endforeach;?>
 			</ul>

@@ -29,7 +29,7 @@ class Article extends MY_Controller {
 		if(empty($data['aFilter']['q'])) {
 			$sUrl = 'article?';
 		} else {
-			$sUrl = 'article?q='.$data['aFilter']['q'];
+			$sUrl = 'article?q='.$data['aFilter']['q'].'&';
 		}
 		$arr = $this->public_model->getPage("article",$sUrl,$pageId,$sPageNum,$sFilter);
 		$data['article'] = $this->article_model->getArticleList(self::ARTICLE_NEW,$arr['start'],$arr['pagenum'],$data['aFilter']);
@@ -52,7 +52,7 @@ class Article extends MY_Controller {
 	 * 文章详情页
 	 */
 	public function view() {
-		$iArticle = $this->uri->segment(3);
+		$iArticle = $this->uri->segment(2);
 		$data['article'] = $this->article_model->getArticleInfo($iArticle);
 		$data['article_near'] = $this->article_model->getLastNext($iArticle);			//上一篇文章,下一篇文章
 		$data['article_related'] = $this->article_model->getRelated($iArticle);			//获取相关文章
@@ -76,7 +76,7 @@ class Article extends MY_Controller {
 	 * 根据分类获取文章
 	 */
 	public function sort() {
-		$iType = $this->uri->segment(3);
+		$iType = $this->uri->segment(2);
 		//分页执行
 		$pageId = $this->input->get('page');
 		$sPageNum = getSet('article_nums');
@@ -97,33 +97,7 @@ class Article extends MY_Controller {
 		$sHeader = 'article';
 		$this->public_model->loadView($aMeta,$sHeader,'article',$data);
 	}
-	/**
-	 * 按归档时间查看文章
-	 */
-	public function archive() {
-		$sYear = $this->uri->segment(3);
-		$sMonth = $this->uri->segment(4);
-		$sTime = $sYear.'/'.$sMonth;
-		//分页执行
-		$pageId = $this->input->get('page');
-		$sPageNum = getSet('article_nums');
-		$sFilter = 'AND FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m") = "'.$sTime.'"';
-		$arr = $this->public_model->getPage("article",'article/archive/'.$sTime.'?',$pageId,$sPageNum,$sFilter);
-		$data['article'] = $this->archive_model->getArticleByArchive($sTime,$arr['start'],$arr['pagenum']);
-		$data['left_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);//文章点击排行榜
-		$data['left_sort'] = $this->sort_model->getSort();					//文章分类
-		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);//首页cms文章推荐
-		$data['left_comment'] = $this->comment_model->getNewComment();		//最新评论
-		$data['left_archive'] = $this->archive_model->getArchive(5);		//文章归档
-		
-		//设置seo
-		$seo_info = $this->config->item('list_seo');
-		$aMeta['title'] = '学无止境'.$seo_info['title'];
-		$aMeta['keywords'] = $seo_info['keywords'];
-		$aMeta['description'] = $seo_info['description'];
-		$sHeader = 'article';
-		$this->public_model->loadView($aMeta,$sHeader,'article',$data);
-	}
+	
 	/**
 	 * 获取文章评论
 	 */

@@ -40,6 +40,10 @@
 //配置默认控制器
 $route['default_controller'] = "home";
 $route['404_override'] = '';
-
+$route['article/:num'] = 'article/view';	//文章详细
+$route['cms/:num'] = 'cms/view';		//cms详细
+$route['archive/(:any)'] = 'archive/view';//文章归档详细列表
+$route['sort/(:any)'] = 'article/sort';//文章归档详细列表
+//http://ciblog.local/record?&page=2
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

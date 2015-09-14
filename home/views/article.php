@@ -5,7 +5,7 @@
 			<div class="post">
 				<header>
 					<h3 class="posttitle">
-						<a href="<?=site_url('article/view/'.$list['id'])?>" rel="bookmark"><?=$list['title']?></a>
+						<a href="<?=site_url('article/'.$list['id'])?>" rel="bookmark"><?=$list['title']?></a>
 					</h3>
 				</header>
 				<div class="postdate">
@@ -32,9 +32,7 @@
 			<?php endforeach;?>
 		</article>
 		<div class="pagination">
-			<?php 
-				echo $this->pagination->create_links();
-			?>
+			<?php echo $this->pagination->create_links();?>
 		</div>
 	</div>
 	<div id="right">
@@ -42,7 +40,7 @@
 		<div class="rnav">
 			<ul>
 				<?php foreach($left_sort as $list):?>
-				<li><a href="<?=site_url('article/sort/'.$list['id'])?>"><?=$list['name']?></a></li>
+				<li><a href="<?=site_url('sort/'.$list['id'])?>"><?=$list['name']?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -50,7 +48,7 @@
 		<div class="widget">
 			<ul>
 				<?php foreach($left_archive as $list):?>
-				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
+				<li><a href="<?=site_url('archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -61,30 +59,19 @@
 				$i=0;
 				foreach($left_view as $list):
 					$i++;
-					if($i<=3) {
 				?>
 				<li>
-					<span class="num1"><?php echo $i;?></span>
-					<a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
+					<span <?php if($i<=3){echo 'class="num1"';}?>><?php echo $i;?></span>
+					<a href="<?=site_url('article/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
 				</li>
-				<?php 
-					} else {
-				?>
-				<li>
-					<span><?php echo $i;?></span>
-					<a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
-				</li>
-				<?php 
-					}
-				endforeach;
-				?>
+				<?php endforeach;?>
 			</ul>
 		</div>
 		<h3 class="widgettitle">业内新闻</h3>
 		<div class="widget">
 			<ul>
 				<?php foreach($left_cms as $list):?>
-				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
+				<li><a href="<?=site_url('cms/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -94,7 +81,7 @@
 				<?php foreach($left_comment as $list):?>
 				<li>
 					<a <?php if(!empty($list['url'])){echo 'href="'.$list['url'].'"';} ?>><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
-					<a href="<?=site_url('cms/view/'.$list['comment_id'])?>">查看>></a>
+					<a href="<?=site_url('cms/'.$list['comment_id'])?>">查看>></a>
 				</li>
 				<?php endforeach;?>
 			</ul>

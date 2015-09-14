@@ -39,7 +39,7 @@
 				<div id="access" role="navigation">
 					<div class="menu">
 						<ul>
-							<li <?php if($header == 'home') {echo 'class="current"';}?>><a href="<?=site_url("home")?>">Home</a></li>
+							<li <?php if($header == 'home') {echo 'class="current"';}?>><a href="/">Home</a></li>
 							<li <?php if($header == 'record') {echo 'class="current"';}?>><a href="<?=site_url('record')?>">闲言碎语</a></li>
 							<li <?php if($header == 'article') {echo 'class="current"';}?>><a href="<?=site_url('article')?>">学无止境</a></li>
 							<li <?php if($header == 'cms') {echo 'class="current"';}?>><a href="<?=site_url('cms')?>">业内新闻</a></li>

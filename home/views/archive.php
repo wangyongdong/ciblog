@@ -24,7 +24,7 @@ function cutStatus(obj) {
 						<li>
 							<span class='i-ico'></span>
 							<?=dateFor($aV['datetime'],'d')?>日:
-							<a target="_blank" href="<?=site_url('article/view/'.$aV['id'])?>" style="color: #888a13;">
+							<a target="_blank" href="<?=site_url('article/'.$aV['id'])?>" style="color: #888a13;">
 								<?=$aV['title']?>
 							</a>
 							<span class="ac">
@@ -45,7 +45,7 @@ function cutStatus(obj) {
 		<div class="rnav">
 			<ul>
 				<?php foreach($left_sort as $list):?>
-				<li><a href="<?=site_url('article/sort/'.$list['id'])?>"><?=$list['name']?></a></li>
+				<li><a href="<?=site_url('sort/'.$list['id'])?>"><?=$list['name']?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -59,7 +59,7 @@ function cutStatus(obj) {
 				?>
 				<li>
 					<span <?php if($i<=3){echo 'class="num1"';}?>><?php echo $i;?></span>
-					<a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
+					<a href="<?=site_url('article/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a>
 				</li>
 				<?php endforeach;?>
 			</ul>
@@ -68,7 +68,7 @@ function cutStatus(obj) {
 		<div class="widget">
 			<ul>
 				<?php foreach($left_cms as $list):?>
-				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
+				<li><a href="<?=site_url('cms/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -78,7 +78,7 @@ function cutStatus(obj) {
 				<?php foreach($left_comment as $list):?>
 				<li>
 					<a href="<?=$list['url']?>"><?=cutTab($list['author'],5)?></a>：<?=cutTab($list['content'],14)?>
-					<a href="<?=site_url('cms/view/'.$list['comment_id'])?>">查看>></a>
+					<a href="<?=site_url('article/'.$list['comment_id'])?>">查看>></a>
 				</li>
 				<?php endforeach;?>
 			</ul>

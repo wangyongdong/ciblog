@@ -45,7 +45,7 @@
 			<div class="post">
 				<header>
 					<h2 class="posttitle">
-						<a href="<?=site_url('article/view/'.$list['id'])?>" rel="bookmark"><?=$list['title']?></a>
+						<a href="<?=site_url('article/'.$list['id'])?>" rel="bookmark"><?=$list['title']?></a>
 					</h2>
 				</header>
 				<div class="postdate">
@@ -82,7 +82,7 @@
 		<div class="widget">
 			<ul>
 				<?php foreach($left_archive as $list):?>
-				<li><a href="<?=site_url('article/archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
+				<li><a href="<?=site_url('archive/'.$list['datetime'])?>"><?=engDate($list['datetime'],'yd')?></a>&nbsp;(<?=$list['num']?>)</li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -90,7 +90,7 @@
 		<div class="widget">
 			<ul>
 				<?php foreach($left_new as $list):?>
-				<li><a href="<?=site_url('article/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
+				<li><a href="<?=site_url('article/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
@@ -98,7 +98,7 @@
 		<div class="widget">
 			<ul>
 				<?php foreach($left_cms as $list):?>
-				<li><a href="<?=site_url('cms/view/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
+				<li><a href="<?=site_url('cms/'.$list['id'])?>"><?=cutTab($list['title'],14)?></a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
