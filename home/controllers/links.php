@@ -7,6 +7,7 @@ class Links extends MY_Controller {
 	var $tokentype = 'links';
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('links_model');
 	}
 	
 	public function index() {

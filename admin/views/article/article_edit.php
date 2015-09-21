@@ -30,13 +30,13 @@
                                   	<div class="form-group">
                                     	<label class="control-label col-lg-3" for="title">标题</label>
                                     	<div class="col-lg-9"> 
-                                      		<input type="text" class="form-control" id="title" name="title" value="<?=$list['title']?>" >
+                                      		<input type="text" class="form-control" id="title" name="title" value="<?=stripcslashes($list['title'])?>" >
                                     	</div>
                                   	</div>
                                   	<div class="form-group">
                                     	<label class="control-label col-lg-3" for="content">内容</label>
-                                    	<div class="col-lg-9"> 
-                                      		<?=ArticleUedit(stripcslashes($list['content']));?>
+                                    	<div class="col-lg-9">
+                                      		<?=ArticleUedit($list['content']);?>
                                     	</div>
                                   	</div>
 									<div class="form-group">

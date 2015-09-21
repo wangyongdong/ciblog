@@ -36,6 +36,7 @@ class Show extends MY_Controller {
 	public function error() {
 		$sInfo = $this->uri->segment(3);
 		$data['info'] = urldecode($sInfo);
+		$data['nav'] = '';
 		$data['refer'] = sg($_SERVER['HTTP_REFERER'],'/admin');
 		$this->load->view('public/header',$data);
 		$this->load->view('public/common',$data);

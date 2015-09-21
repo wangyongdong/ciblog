@@ -10,10 +10,8 @@
 	  	</div>
 	</footer> 
 	<!-- Footer ends -->
-	
 	<!-- Scroll to top -->
-	<span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span> 
-	
+	<span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span>
 	<!-- JS -->
 	<?php if(sg($footer) !== 'upload'){ ?>
 	<script src="<?=ADMIN_PUBLIC?>js/jquery.js"></script> <!-- jQuery -->
@@ -24,11 +22,8 @@
 	<script src="<?=ADMIN_PUBLIC?>js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
 	<script src="<?=ADMIN_PUBLIC?>js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
 	<script src="<?=ADMIN_PUBLIC?>js/sparklines.js"></script> <!-- Sparklines -->
-	<script src="<?=ADMIN_PUBLIC?>js/charts.js"></script> <!-- Charts & Graphs 图表 -->
-	
-	<script src="<?=ADMIN_PUBLIC?>js/custom.js"></script> <!-- Custom codes -->
+	<script src="<?=ADMIN_PUBLIC?>js/charts.min.js"></script> <!-- Charts & Graphs 图表 -->
+	<script src="<?=ADMIN_PUBLIC?>js/custom.min.js"></script> <!-- Custom codes -->
 	<script src="<?=ADMIN_PUBLIC?>js/blog.js"></script> <!-- My custom -->
-	
-	
 	</body>
 </html>

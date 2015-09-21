@@ -236,7 +236,7 @@ $config['cookie_secure']	= FALSE;
 | Determines whether the XSS filter is always active when GET, POST or
 | COOKIE data is encountered
 */
-$config['global_xss_filtering'] = TRUE;//xss过滤
+$config['global_xss_filtering'] = FALSE;//xss过滤
 
 /*
 |--------------------------------------------------------------------------

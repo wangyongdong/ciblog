@@ -7,6 +7,7 @@ class Sort extends MY_Controller {
 	var $tokentype = 'sort';
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('sort_model');
 	}
 	/**
 	 * 文章类别页

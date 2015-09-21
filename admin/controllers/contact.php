@@ -7,6 +7,7 @@ class Contact extends MY_Controller {
 	var $tokentype = 'contact';
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('contact_model');
 	}
 	/**
 	 * 获取留言列表

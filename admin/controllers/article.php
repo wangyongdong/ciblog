@@ -7,6 +7,9 @@ class Article extends MY_Controller {
 	var $tokentype = 'article';
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('article_model');
+		$this->load->model('sort_model');
+		$this->load->model('member_model');
 	}
 	/**
 	 * 文章列表页

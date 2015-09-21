@@ -3,6 +3,7 @@
  * 文章编辑器定制
  */
 function ArticleUedit($sContent='') {
+	$sContent = stripcslashes($sContent);
 	$sUedit = '
 			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCore.js"></script>
 			<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'third-party/SyntaxHighlighter/shCoreDefault.css"></script>
@@ -11,10 +12,9 @@ function ArticleUedit($sContent='') {
 				//SyntaxHighlighter.highlight();
 			</script>
 			';
-	$sUedit .= '
+	$sUedit = '
     		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.config.js"></script>
     		<script type="text/javascript" charset="utf-8" src="'.PLUGIN_UEDITOR.'ueditor.all.min.js"> </script>
-			
     		<script type="text/javascript">
 			    var ue = UE.getEditor("editor",{
 	    			maximumWords:50000,
@@ -23,9 +23,7 @@ function ArticleUedit($sContent='') {
 					initialFrameHeight: 400
 	    		});
 			</script>
-			<script id="editor" name="content" type="text/plain">
-			'.$sContent.'		
-			</script>';
+			<script id="editor" name="content" type="text/plain">'.$sContent.'</script>';
 	echo $sUedit;
 }
 /**
@@ -51,9 +49,7 @@ function RecordUedit($sContent='') {
 					wordCount:false
 		    	});
 			</script>
-			<script id="editor" name="content" type="text/plain">
-			'.$sContent.'
-			</script>';
+			<script id="editor" name="content" type="text/plain">'.$sContent.'</script>';
 	echo $sUedit;
 }
 /**

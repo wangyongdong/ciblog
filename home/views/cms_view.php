@@ -113,27 +113,10 @@ function loadMore() {
 				<div class="keybq">
 					<p><span>关键词</span>：<?=$article['keyword'];?></p>
 				</div>
-				<!-- JiaThis Button BEGIN -->
-				<div class="fenxiang">
-					<span class="tit_jia">文章分享到：</span>
-					<div class="jiathis_style_24x24">
-						<a class="jiathis_button_qzone"></a>
-						<a class="jiathis_button_tsina"></a>
-						<a class="jiathis_button_tqq"></a>
-						<a class="jiathis_button_weixin"></a>
-						<a class="jiathis_button_renren"></a>
-						<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-						<a class="jiathis_counter_style"></a>
-					</div>
-				</div>
-				<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-				<script>
-					var contents = $(".posttitle").text();
-					var jiathis_config = {
-						title:'我找到了一篇好的文章，“'+contents+'”，来自：王永东个人博客 ，博客地址:<?=HOST?>。'
-					}
-				</script>
-				<!-- JiaThis Button END -->
+				<!-- Baidu Button BEGIN -->
+				<div class="bdsharebuttonbox"><a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a><a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a><a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a><a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a><a title="分享到豆瓣网" href="#" class="bds_douban" data-cmd="douban"></a><a href="#" class="bds_more" data-cmd="more"></a></div>
+				<script>var contents = $(".posttitle").text();window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"我找到了一篇好的文章，“"+contents+"”，来自：王永东个人博客 ，博客地址:<?=HOST?>。","bdMini":"2","bdMiniList":["mshare","qzone","tsina","weixin","renren","tqq","kaixin001","tieba","sqq","douban","ty","twi","fbook","mail","copy","print"],"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+				<!-- Baidu Button END -->
 			</div>
 			<div class="clear"></div>
 			<div class="nextinfo">

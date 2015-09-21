@@ -6,6 +6,7 @@
 class Record extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('record_model');
 	}
 	/**
 	 * 说说

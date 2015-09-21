@@ -7,6 +7,7 @@ class Comment extends MY_Controller {
 	var $tokentype = 'article';
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('comment_model');
 	}
 	/**
 	 * 添加文章评论

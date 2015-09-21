@@ -7,6 +7,7 @@ class Member extends MY_Controller {
 	var $tokentype = 'member';
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('member_model');
 	}
 	/**
 	 * 获取用户列表

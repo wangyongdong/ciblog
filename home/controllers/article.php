@@ -11,7 +11,11 @@ class Article extends MY_Controller {
 	
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('contact_model');
+		$this->load->model('article_model');
+		$this->load->model('comment_model');
+		$this->load->model('sort_model');
+		$this->load->model('cms_model');
+		$this->load->model('archive_model');
 	}
 	/**
 	 * 文章列表页

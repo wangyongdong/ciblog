@@ -6,6 +6,7 @@
 class History extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('history_model');
 	}
 	/**
 	 * 博客时间轴

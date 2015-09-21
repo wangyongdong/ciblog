@@ -30,13 +30,13 @@ class MY_Controller extends CI_Controller {
 	}
 	//实例化model
 	private function loadModel() {
-		$this->load->model('record_model');
-		$this->load->model('article_model');
-		$this->load->model('sort_model');
-		$this->load->model('comment_model');
-		$this->load->model('contact_model');
-		$this->load->model('links_model');
-		$this->load->model('member_model');
+		//$this->load->model('record_model');
+		//$this->load->model('article_model');
+		//$this->load->model('sort_model');
+		//$this->load->model('comment_model');
+		//$this->load->model('contact_model');
+		//$this->load->model('links_model');
+		//$this->load->model('member_model');
 		$this->load->model('site_model');
 		$this->load->model('public_model');
 	}
