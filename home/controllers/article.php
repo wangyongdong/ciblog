@@ -85,7 +85,7 @@ class Article extends MY_Controller {
 		$pageId = $this->input->get('page');
 		$sPageNum = getSet('article_nums');
 		$sFilter = ' AND sortid='.$iType;
-		$arr = $this->public_model->getPage("article",'article/sort/'.$iType.'?',$pageId,$sPageNum,$sFilter);
+		$arr = $this->public_model->getPage("article",'sort/'.$iType.'?',$pageId,$sPageNum,$sFilter);
 		$data['article'] = $this->sort_model->getArticleBySort($iType,$arr['start'],$arr['pagenum']);
 		$data['left_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);//文章点击排行榜
 		$data['left_sort'] = $this->sort_model->getSort();					//文章分类

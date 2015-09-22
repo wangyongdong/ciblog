@@ -12,20 +12,30 @@ class Cms_model extends CI_Model{
 	 * 获取cms文章列表
 	 */
 	function getCmsList($sOrder='datetime',$iStart=0,$iPageNum=10) {
-		$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
-		$sql = 'SELECT
-    				*
-    			FROM
-    				blog_article
-				WHERE
-					status="show" 
-					AND sortid = "2" 
-    			ORDER BY 
-    			'.$sOrder.' DESC
-    			'.$sLimit;
-		$res = $this->db->query($sql);
-		$aList = $res->result_array();
-		return $aList;
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('cms_list('.$iStart.'-'.$iPageNum.')');
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
+			$sql = 'SELECT
+	    				*
+	    			FROM
+	    				blog_article
+					WHERE
+						status="show" 
+						AND sortid = "2" 
+	    			ORDER BY 
+	    			'.$sOrder.' DESC
+	    			'.$sLimit;
+			$res = $this->db->query($sql);
+			$list = $res->result_array();
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
+		}
+		
+		return $list;
 	}
 	
 }

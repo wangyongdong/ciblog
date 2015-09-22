@@ -12,7 +12,13 @@ class Links_model extends CI_Model {
 	 * 获取首页友情链接
 	 */
 	public function getLinks() {
-		$sql = 'SELECT 
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('links_list');
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			$sql = 'SELECT 
 					sitename,siteurl,description 
 				FROM 
 					blog_links 
@@ -21,8 +27,12 @@ class Links_model extends CI_Model {
 				ORDER BY 
 					id ASC 
 				LIMIT 5';
-		$res = $this->db->query($sql);
-		$list = $res->result_array();
+			$res = $this->db->query($sql);
+			$list = $res->result_array();
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
+		}
+		
 		return $list;
 	}
 	/**

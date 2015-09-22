@@ -12,25 +12,35 @@ class Comment_model extends CI_Model{
 	 * 获取最近评论信息
 	 */
 	public function getNewComment($iSort='') {
-		if(!empty($iSort)) {
-			$sWhere = ' AND a.sortid = "2" ';
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('new_comment'.$iSort);
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
 		} else {
-			$sWhere = ' AND a.sortid != "2" ';
+			if(!empty($iSort)) {
+				$sWhere = ' AND a.sortid = "2" ';
+			} else {
+				$sWhere = ' AND a.sortid != "2" ';
+			}
+			$sql = 'SELECT
+						c.id,c.comment_id,c.author,c.url,c.content
+					FROM
+						blog_comment c,blog_article a
+					WHERE
+						c.comment_id = a.id
+						AND c.userid = 0
+						'.$sWhere.'
+					ORDER BY
+						c.datetime DESC
+					LIMIT
+						10';
+			$res = $this->db->query($sql);
+			$list = $res->result_array();
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
 		}
-		$sql = 'SELECT
-					c.id,c.comment_id,c.author,c.url,c.content
-				FROM
-					blog_comment c,blog_article a
-				WHERE
-					c.comment_id = a.id
-					AND c.userid = 0
-					'.$sWhere.'
-				ORDER BY
-					c.datetime DESC
-				LIMIT
-					10';
-		$res = $this->db->query($sql);
-		$list = $res->result_array();
+		
 		return $list;
 	}
 	/**

@@ -32,7 +32,7 @@
 			                          	<th>父ID</th>
 			                          	<th>级别</th>
 			                          	<th>描述</th>
-			                          	<th>文章数量</th>
+			                          	<th>数量</th>
 			                          	<th></th>
 		                        	</tr>
 		                      	</thead>
@@ -103,7 +103,7 @@
 	                                      	</div>
 	                                      	<div class="form-group">
 	                                        	<label class="control-label col-lg-3" for="alias">分类位置</label>
-	                                        	<div class="uni pull-left s-select">
+	                                        	<div class="col-lg-9">
 	                                          		<select class="form-control" name="parent_id">
 								                    	<option value='0'>默认：根分类</option>
 								                    	<optgroup label='一级分类'></optgroup>

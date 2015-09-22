@@ -39,11 +39,12 @@
 															<h4 class="modal-title">&nbsp;</h4>
 														</div>
 														<div class="modal-body">
-															<p>One fine body…</p>
+															<p>静态化文件</p>
+															<p>数据缓存</p>
 														</div>
 														<div class="modal-footer">
-															<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-															<button type="button" class="btn btn-primary">Save changes</button>
+															<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
+															<button type="button" class="btn btn-primary">全部更新</button>
 														</div>
 													</div>
 												</div>

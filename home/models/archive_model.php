@@ -13,7 +13,13 @@ class Archive_model extends CI_Model{
 	 * 获取文章归档信息
 	 */
 	function getArchive($sLimit='') {
-		$sql = 'select 
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('archive_limit');
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			$sql = 'select 
 					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m") as datetime, count(*) as num 
 				from 
 					blog_article 
@@ -23,32 +29,45 @@ class Archive_model extends CI_Model{
 					FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m")
 				ORDER BY 
 					datetime DESC';
-		if(!empty($sLimit)) {
-			$sql .= ' LIMIT '.$sLimit;
+			if(!empty($sLimit)) {
+				$sql .= ' LIMIT '.$sLimit;
+			}
+			$res = $this->db->query($sql);
+			$list = $res->result_array();
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
 		}
-		$res = $this->db->query($sql);
-		$aList = $res->result_array();
-		return $aList;
+		
+		return $list;
 	}
 	/**
 	 * 获取全部归档列表
 	 */
 	function getArchiveList() {
-		$list = $this->getYearArchive();
-		foreach ($list as $key=>$value) {
-			$aList = $this->getMonthArchive($value['year']);
-			foreach ($aList as $k=>$v) {
-				$sTime = $value['year'].'/'.$v['month'];
-				$arr['article'] = $this->getArticleByArchive($sTime);
-				$arr['month'] = $v['month'];
-				$arr['num'] = $v['num'];
-				$arr['year'] = $value['year'];
-				$aLists[$value['year']][] = $arr;
-				$arr = '';
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('archive_list');
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			$aYear = $this->getYearArchive();
+			foreach ($aYear as $key=>$value) {
+				$aList = $this->getMonthArchive($value['year']);
+				foreach ($aList as $k=>$v) {
+					$sTime = $value['year'].'/'.$v['month'];
+					$arr['article'] = $this->getArticleByArchive($sTime);
+					$arr['month'] = $v['month'];
+					$arr['num'] = $v['num'];
+					$arr['year'] = $value['year'];
+					$aLists[$value['year']][] = $arr;
+					$arr = '';
+				}
+				$list = $aLists;
 			}
-			$asr = $aLists;
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
 		}
-		return $asr;
+		return $list;
 	}
 	/**
 	 * 获取归档年份

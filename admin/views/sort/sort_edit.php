@@ -41,7 +41,7 @@
                                   	</div>
                                   	<div class="form-group">
 										<label class="control-label col-lg-3" for="alias">分类位置</label>
-                                        <div class="uni pull-left s-select">
+                                        <div class="col-lg-9">
                                         	<select class="form-control" name="parent_id">
 							                	<option value='0'>默认：根分类</option>
 							                    <optgroup label='一级分类'></optgroup>

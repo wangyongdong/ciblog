@@ -299,9 +299,42 @@ function ubbReplace($str) {
 	
 	return $str;
 }
+/**
+ * 读取缓存
+ */
+function readCache($filename) {
+	$time = time();
+	@include $filename;
+	if($time < @$arr['expiration'] && @$arr['expiration'] != '' && !empty($arr['info'])) {
+		return true;
+	} else {
+		return false;
+	}
+}
+/**
+ * 写入缓存
+ */
+function writeCache($aData,$sFile,$sTime) {
+	$path = dirname($sFile);
+	if(!is_dir($path)) {
+		mkdir($path,"0777",TRUE);
+	}
 
+	$array['expiration'] = time() + $sTime;
+	$array['info'] = $aData;
 
-
+	$txt = var_export($array,TRUE);
+	$handle = fopen($sFile, "wb");
+	fwrite($handle, "<?php \n \$arr=$txt; \n?>");
+	fclose($handle);
+}
+/**
+ * 获取缓存模块目录
+ */
+function CacheModule($sFile) {
+	$path = $_SERVER['DOCUMENT_ROOT'].'/home/cache/DataCache/';
+	return $path.$sFile.'.cache.php';
+}
 
 
 

@@ -19,7 +19,8 @@
 			<div class="history">
 				<div class="history-date">
 					<ul>
-					<?php 
+					<?php
+						if(!empty($list)) { 
 						$i = 1;
 						foreach($list as $key=>$value):
 					?>
@@ -37,6 +38,7 @@
 					<?php 
 						$i++;
 						endforeach;
+						}
 					?>
 					</ul>
 				</div>

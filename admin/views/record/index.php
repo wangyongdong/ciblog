@@ -50,7 +50,7 @@
 									</div>
 									<div class="chat-content">
 										<div class="chat-meta">
-											王永东 <span class="pull-right">3 hours ago</span>
+											王永东 <span class="pull-right"><?=timeTran($list['datetime'])?></span>
 										</div>
 										<?=stripcslashes($list['content'])?>
 										<div class="pull-right">

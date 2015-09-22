@@ -12,13 +12,23 @@ class History_model extends CI_Model {
 	 * 获取时间轴
 	 */
 	public function getEvent() {
-		$list = $this->getYearList();
-		foreach ($list as $key=>$value) {
-			$arr['year'] = $value['year'];
-			$arr['list'] = $this->getMonthByYear($value['year']);
-			$aList[] = $arr;
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('event_list');
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			$aList = $this->getYearList();
+			foreach ($aList as $key=>$value) {
+				$arr['year'] = $value['year'];
+				$arr['list'] = $this->getMonthByYear($value['year']);
+				$list[] = $arr;
+			}
+			//写入缓存
+			writeCache(@$list, $cache_path, $cache_time['time']);
 		}
-		return $aList;
+		
+		return @$list;
 	}
 	/**
 	 * 获取年份

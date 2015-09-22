@@ -48,7 +48,7 @@
 		                          	<th>评论者</th>
 		                          	<th>所属文章</th>
 		                          	<th>日期</th>
-		                          	<th></th>
+		                          	<th>操作</th>
 	                        	</tr>
 	                      	</thead>
           					<tbody>

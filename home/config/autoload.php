@@ -62,7 +62,7 @@ $autoload['helper'] = array('url','common');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('seo_info');
+$autoload['config'] = array('seo_info','cache_time');
 
 /*
 | -------------------------------------------------------------------

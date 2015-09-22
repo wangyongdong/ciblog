@@ -34,17 +34,26 @@ class Public_model extends CI_Model{
 	 * 获取网站标题和说明
 	 */
 	public function getWebInfo() {
-		$sql = 'SELECT 
-					option_name,option_value 
-				FROM 
-					blog_options 
-				LIMIT 2';
-		$res = $this->db->query($sql);
-    	$result = $res->result_array();
-    	foreach ($result as $row) {
-    		$name = $row['option_name'];
-    		$arr[$name] = $row['option_value'];	//已name值做键
-    		$list = $arr;
+    	$cache_time = $this->config->item('data_cache');
+    	$cache_path = CacheModule('web_info');
+    	if(readCache($cache_path)) {
+    		@include $cache_path;
+    		$list = @$arr['info'];
+    	} else {
+	    	$sql = 'SELECT 
+						option_name,option_value 
+					FROM 
+						blog_options 
+					LIMIT 2';
+			$res = $this->db->query($sql);
+	    	$result = $res->result_array();
+	    	foreach ($result as $row) {
+	    		$name = $row['option_name'];
+	    		$arr[$name] = $row['option_value'];	//已name值做键
+	    		$list = $arr;
+	    	}
+    		//写入缓存
+    		writeCache($list, $cache_path, $cache_time['time']);
     	}
     	return $list;
 	}
@@ -52,15 +61,24 @@ class Public_model extends CI_Model{
 	 * 获取首页个人信息
 	 */
 	public function getBloggerInfo() {
-		$uid = empty($_SESSION['uid']) ? 1 : $_SESSION['uid'];
-		$sql = 'SELECT 
-					username,job,address,email,qq,about_me 
-				FROM 
-					blog_member 
-				WHERE 
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('blogger_info');
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			$uid = empty($_SESSION['uid']) ? 1 : $_SESSION['uid'];
+			$sql = 'SELECT
+					username,job,address,email,qq,about_me
+				FROM
+					blog_member
+				WHERE
 					id='.$uid;
-		$res = $this->db->query($sql);
-		$list = $res->row_array();
+			$res = $this->db->query($sql);
+			$list = $res->row_array();
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
+		}
 		return $list;
 	}
 	/**
