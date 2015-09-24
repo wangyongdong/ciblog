@@ -1,40 +1,16 @@
-<!-- 首页轮播图设定 start -->
-<script type="text/javascript" src="<?=PATH_PUBLIC;?>js/jquery_cycle.js"></script>
-<script type="text/javascript">
-	jQuery('#featured_slider ul').cycle({ 
-		fx: 'fade',
-		prev: '.feat_prev',
-		next: '.feat_next',
-		speed:  3000, 
-		timeout: 2000, 
-		pager:  null
-	});
-</script>
 <div id="main" role="main" class="clearfix">
 	<div id="left">
 		<div id="sliderwrap">
 			<div id="featured_slider">
 				<ul style="position: relative;" id="slider">
+					<?php foreach($top_article as $top_article):?>
 					<li>
-						<h2><a href="#">Welcome to Busby – This is the Layout Test</a></h2>
-						<a href="#"><img src="<?=PATH_PUBLIC;?>img/skater.jpg"></a>
+						<h2><a href="<?=site_url('article/'.$top_article['id'])?>"><?=$top_article['title']?></a></h2>
+						<a href="<?=site_url('article/'.$top_article['id'])?>">
+							<img src="<?=LinkImg($top_article['img'])?>" class="slider_img">
+						</a>
 					</li>
-					<li>
-						<h2><a href="#">Look here for a Readability Test</a></h2>
-						<a href="#"><img src="<?=PATH_PUBLIC;?>img/skater-in-air.jpg"></a>
-					</li>
-					<li>
-						<h2><a href="#">How about an Images Test ?</a></h2>
-						<a href="#"><img src="<?=PATH_PUBLIC;?>img/skaters.jpg"></a>
-					</li>
-					<li>
-						<h2><a href="#">Comment Test</a></h2>
-						<a href="#"><img src="<?=PATH_PUBLIC;?>img/south-bank-graffiti.jpg"></a>
-					</li>
-					<li>
-						<h2><a href="#">Many Tags Many Tags Many Tags</a></h2>
-						<a href="#"><img src="<?=PATH_PUBLIC;?>img/spray-paint.jpg"></a>
-					</li>
+					<?php endforeach;?>
 				</ul>
 				<div class="feat_next"></div>
 				<div class="feat_prev"></div>
@@ -51,7 +27,7 @@
 				<div class="postdate">
 					<p><span class="postdateno"><?=dateFor($list['datetime'],"d")?></span><br><?=engDate($list['datetime'],'m')?></p>
 				</div>
-				<div class="postcontent"><?=cutTab($list['content'],120)?></div>
+				<div class="postcontent"><?=cutTags($list['content'],150)?></div>
 				<div class="postdetails">
 					<p class="postedby">
 						<span class="sep">Posted on</span>
@@ -137,3 +113,15 @@
 		</div>
 	</div>
 </div>
+<!-- 首页轮播图设定 start -->
+<script type="text/javascript" src="<?=PATH_PUBLIC;?>js/jquery_cycle.js"></script>
+<script type="text/javascript">
+	jQuery('#featured_slider ul').cycle({ 
+		fx: 'fade',
+		prev: '.feat_prev',
+		next: '.feat_next',
+		speed:  3000, 
+		timeout: 2000, 
+		pager:  null
+	});
+</script>

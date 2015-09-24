@@ -48,6 +48,24 @@ class Article_model extends CI_Model{
 		return $aList;
 	}
 	/**
+	 * 获取置顶文章
+	 */
+	public function getTopArticle() {
+		$sql = 'SELECT
+    				id,title,img
+    			FROM
+    				blog_article
+    			WHERE
+					topway = "home"
+					AND img <> ""
+				ORDER BY
+					datetime DESC 
+				LIMIT 5';
+		$res = $this->db->query($sql);
+		$aList = $res->result_array();
+		return $aList;
+	}
+	/**
 	 * 获取上一篇、下一篇
 	 */
 	function getLastNext($iArticle,$sType='') {

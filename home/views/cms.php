@@ -8,7 +8,7 @@
 						<a href="<?=site_url('cms/'.$list['id'])?>" rel="bookmark"><?=stripcslashes($list['title'])?></a>
 					</h3>
 				</header>
-				<div class="postcontent"><?=cutTab($list['content'],150)?></div>
+				<div class="postcontent"><?=cutTags($list['content'],150)?></div>
 				<div class="postdetails">
 					<p class="meta-pos">
 						<span class="meta-info author">Author: <a><?=getUserInfo($list['uid'],'username')?></a></span>

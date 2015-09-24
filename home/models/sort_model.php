@@ -59,7 +59,9 @@ class Sort_model extends CI_Model{
 					ORDER BY
 						datetime DESC '.$sLimit;
 			$res = $this->db->query($sql);
-			$list = $res->result_array();
+			$aList = $res->result_array();
+			//分类置顶操作
+			$list = topwaySort($aList);
 			//写入缓存
 			writeCache($list, $cache_path, $cache_time);
 		}

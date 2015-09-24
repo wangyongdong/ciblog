@@ -182,6 +182,12 @@ function LinkAvatar($uid) {
 	return $url;
 }
 /**
+ * 生成文章配图
+ */
+function LinkImg($str) {
+	return UPLOAD_PUBLIC.'article/'.$str;
+}
+/**
  * 截取函数
  */
 function cutStr($string,$length,$dot='…') {
@@ -226,7 +232,7 @@ function cutTab($string, $length='15', $dot = '…') {
 		$res = mb_substr($string, 0, $length, 'UTF-8');
 		return stripcslashes($res).$dot;
 	}
-
+	
 	//计算标签位置
 	$html_start = ceil(strpos($string, '<img') / 3);
 	$html_end = ceil(strpos($string, '/>') / 3);
@@ -237,7 +243,7 @@ function cutTab($string, $length='15', $dot = '…') {
 	}
 
 	if($length > $html_start) {
-
+	
 		$res_html = mb_substr($text_str, 0, $length-1, 'UTF-8');
 
 		preg_match('/<img[^>]*\>/',$string,$result_html);
@@ -246,7 +252,13 @@ function cutTab($string, $length='15', $dot = '…') {
 		$res = $before.$result_html[0].$after;
 		return stripcslashes($res).$dot;
 	}
-
+}
+/**
+ * 截取并去掉html
+ */
+function cutTags($str, $length='15') {
+	$str = strip_tags($str);
+	return cutStr($str,$length);
 }
 /**
  * 时间友好显示
@@ -353,7 +365,28 @@ function CacheModule($sFile) {
 	} */
 	return $path.$sFile.'.cache.php';
 }
-
+/**
+ * 执行分类置顶先获取
+ */
+function topwaySort($aList) {
+	if(empty($aList)) {
+		return '';
+	}
+	$list = '';
+	foreach ($aList as $key=>$value) {
+		if($value['topway'] == 'sort') {
+			$aTmp = $value;
+			$list[] = $aTmp;
+		}
+	}
+	foreach ($aList as $key=>$value) {
+		if($value['topway'] != 'sort') {
+			$aTmp = $value;
+			$list[] = $aTmp;
+		}
+	}
+	return $list;
+}
 
 
 

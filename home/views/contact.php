@@ -1,37 +1,3 @@
-<script>
-$(function() {
-	$("#subform").click(function() {  
-		var name = $('input[name=name]').val();
-		var email = $('input[name=email]').val();
-		var content = $('textarea').val();
-		
-		if($.trim(name).length < 2 || $.trim(name).length > 16) {
-			$("#form_contact .input_name").text('* 用户名由2-16个字符组成');
-			return false;
-		} else if(email == '') {
-			$("#form_contact .input_email").text('* 请填写邮箱地址');
-			return false;
-		} else if (!email.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
-			$("#form_contact .input_email").text('* 邮箱格式不正确！请重新输入！');
-			return false;
-		} else if($.trim(content).length < 2 || $.trim(content).length > 500) {
-			$("#form_contact .input_content").text('* 内容请控制在2-500字以内');
-			return false;
-		} else {
-			$("#form_contact").submit();
-		}
-	});
-	$('#form_contact input[name=name]').focus(function() {
-		$('.input_name').text('');
-	});
-	$('#form_contact input[name=email]').focus(function() {
-		$('.input_email').text('');
-	});
-	$('#form_contact textarea').focus(function() {
-		$('.input_content').text('');
-	});
-})
-</script>
 <div class="t_title">
 	<h1 class="t_nav"><span><?=getPageDesc('contact');?></span></h1>
 </div>
@@ -84,3 +50,37 @@ $(function() {
 		</div>
 	</div>
 </div>
+<script>
+$(function() {
+	$("#subform").click(function() {  
+		var name = $('input[name=name]').val();
+		var email = $('input[name=email]').val();
+		var content = $('textarea').val();
+		
+		if($.trim(name).length < 2 || $.trim(name).length > 16) {
+			$("#form_contact .input_name").text('* 用户名由2-16个字符组成');
+			return false;
+		} else if(email == '') {
+			$("#form_contact .input_email").text('* 请填写邮箱地址');
+			return false;
+		} else if (!email.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
+			$("#form_contact .input_email").text('* 邮箱格式不正确！请重新输入！');
+			return false;
+		} else if($.trim(content).length < 2 || $.trim(content).length > 500) {
+			$("#form_contact .input_content").text('* 内容请控制在2-500字以内');
+			return false;
+		} else {
+			$("#form_contact").submit();
+		}
+	});
+	$('#form_contact input[name=name]').focus(function() {
+		$('.input_name').text('');
+	});
+	$('#form_contact input[name=email]').focus(function() {
+		$('.input_email').text('');
+	});
+	$('#form_contact textarea').focus(function() {
+		$('.input_content').text('');
+	});
+})
+</script>

@@ -552,7 +552,7 @@ function changeImg($sType,$id,$sFile) {
 	$res = $db->query($sql);
 	$list = $res->row_array();
 	if(!empty($list) && $list['img'] != $sFile) {
-		$res = unlink($path.$list['img']);
+		$res = @unlink($path.$list['img']);
 	}
 }
 /**

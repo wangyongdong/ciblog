@@ -1,79 +1,3 @@
-<script type="text/javascript" src="<?=PLUGIN_UEDITOR?>third-party/SyntaxHighlighter/shCore.js"></script>
-<link rel="stylesheet" href="<?=PLUGIN_UEDITOR?>third-party/SyntaxHighlighter/shCoreDefault.css">
-<script>SyntaxHighlighter.all();</script>
-<script type="text/javascript" src="<?=PLUGIN_QQFACE?>jquery.qqFace.js"></script>
-<script>
-function getReply(id,val) {
-	if($("#uyan_cmt_"+id+" .rep_box").html()) {
-		$("#uyan_cmt_"+id+" .rep_box").html("");
-	} else {
-		$("#uyan_cmt_"+id+" #r_id").val(id);
-		var com_box = $(".com-box").html();
-		com_box = com_box.replace('class="ds-replybox"','class="ds-replybox dis sm-box"');
-		com_box = com_box.replace('name="r_id" id="r_id" value=""','name="r_id" id="r_id" value="'+id+'"');
-		//qqface
-		com_box = com_box.replace('box:""','box:"'+id+'"');
-		com_box = com_box.replace('id="comment"','id="comment'+id+'"');
-		//warn
-		com_box = com_box.replace('onclick="formPost();"',"onclick=formPost('dis');");
-		$("#uyan_cmt_"+id+" .rep_box").append(com_box);
-	}
-}
-function formPost(val) {
-	if(val){
-		val = '.'+val+' ';
-	} else {
-		val = '';
-	}
-	var name = $(''+val+'#form_contact .name').val();
-	var email = $(''+val+'#form_contact .email').val();
-	var comment = $(''+val+'.comment').val();
-	if($.trim(name).length < 2 || $.trim(name).length > 16) {
-		$(''+val+'#form_contact .name').addClass('b_red');
-		$(''+val+'#form_contact .input_warn').text('* 用户名为2-16个字符');
-		return false;
-	} else if(email == '') {
-		$(''+val+'#form_contact .email').addClass('b_red');
-		$(''+val+'#form_contact .input_warn').text('* 填写邮箱地址');
-		return false;
-	} else if (!email.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
-		$(''+val+'#form_contact .email').addClass('b_red');
-		$(''+val+'#form_contact .input_warn').text('* 邮箱格式不正确！');
-		return false;
-	} else if($.trim(comment).length < 2 || $.trim(comment).length > 500) {
-		$(''+val+'#form_contact .ds-textarea-wrapper').addClass('b_red');
-		$(''+val+'#form_contact .input_warn').text('* 内容控制在2-500字');
-		return false;
-	} else {
-		$(''+val+'#form_contact').submit();
-	}
-}
-// load more
-function loadMore() {
-	$("#uyan_more_cmt span").text("加载评论中");
-	var start = $("#start").val();
-	var limit = $("#limit").val();
-	var id = $("#id").val();
-	$.post(
-		__A+'article/getComment',
-		{id:id,start:start,limit:limit,type:'ajax'},
-		function(data) {
-			if(!data.comment) {
-				setTimeout(function(){$("#uyan_more_cmt").slideUp("slow")},1000);
-			}
-			$("#comment_list").append(data.comment);
-			startq = Number(start) + Number(limit);
-			$("#start").val(startq);
-			$("#uyan_more_cmt span").text('查看更多评论');
-			if(data.num<5) {
-				$("#uyan_more_cmt span").text('查看更多评论');
-				setTimeout(function(){$("#uyan_more_cmt").slideUp("slow")},1000);
-			}
-		},
-		'json'
-	);
-}
-</script>
 <div class="t_title">
 	<h1 class="t_nav"><span><?=getPageDesc('article');?></span></h1>
 </div>
@@ -397,3 +321,79 @@ function loadMore() {
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="<?=PLUGIN_UEDITOR?>third-party/SyntaxHighlighter/shCore.js"></script>
+<link rel="stylesheet" href="<?=PLUGIN_UEDITOR?>third-party/SyntaxHighlighter/shCoreDefault.css">
+<script>SyntaxHighlighter.all();</script>
+<script type="text/javascript" src="<?=PLUGIN_QQFACE?>jquery.qqFace.js"></script>
+<script>
+function getReply(id,val) {
+	if($("#uyan_cmt_"+id+" .rep_box").html()) {
+		$("#uyan_cmt_"+id+" .rep_box").html("");
+	} else {
+		$("#uyan_cmt_"+id+" #r_id").val(id);
+		var com_box = $(".com-box").html();
+		com_box = com_box.replace('class="ds-replybox"','class="ds-replybox dis sm-box"');
+		com_box = com_box.replace('name="r_id" id="r_id" value=""','name="r_id" id="r_id" value="'+id+'"');
+		//qqface
+		com_box = com_box.replace('box:""','box:"'+id+'"');
+		com_box = com_box.replace('id="comment"','id="comment'+id+'"');
+		//warn
+		com_box = com_box.replace('onclick="formPost();"',"onclick=formPost('dis');");
+		$("#uyan_cmt_"+id+" .rep_box").append(com_box);
+	}
+}
+function formPost(val) {
+	if(val){
+		val = '.'+val+' ';
+	} else {
+		val = '';
+	}
+	var name = $(''+val+'#form_contact .name').val();
+	var email = $(''+val+'#form_contact .email').val();
+	var comment = $(''+val+'.comment').val();
+	if($.trim(name).length < 2 || $.trim(name).length > 16) {
+		$(''+val+'#form_contact .name').addClass('b_red');
+		$(''+val+'#form_contact .input_warn').text('* 用户名为2-16个字符');
+		return false;
+	} else if(email == '') {
+		$(''+val+'#form_contact .email').addClass('b_red');
+		$(''+val+'#form_contact .input_warn').text('* 填写邮箱地址');
+		return false;
+	} else if (!email.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
+		$(''+val+'#form_contact .email').addClass('b_red');
+		$(''+val+'#form_contact .input_warn').text('* 邮箱格式不正确！');
+		return false;
+	} else if($.trim(comment).length < 2 || $.trim(comment).length > 500) {
+		$(''+val+'#form_contact .ds-textarea-wrapper').addClass('b_red');
+		$(''+val+'#form_contact .input_warn').text('* 内容控制在2-500字');
+		return false;
+	} else {
+		$(''+val+'#form_contact').submit();
+	}
+}
+// load more
+function loadMore() {
+	$("#uyan_more_cmt span").text("加载评论中");
+	var start = $("#start").val();
+	var limit = $("#limit").val();
+	var id = $("#id").val();
+	$.post(
+		__A+'article/getComment',
+		{id:id,start:start,limit:limit,type:'ajax'},
+		function(data) {
+			if(!data.comment) {
+				setTimeout(function(){$("#uyan_more_cmt").slideUp("slow")},1000);
+			}
+			$("#comment_list").append(data.comment);
+			startq = Number(start) + Number(limit);
+			$("#start").val(startq);
+			$("#uyan_more_cmt span").text('查看更多评论');
+			if(data.num<5) {
+				$("#uyan_more_cmt span").text('查看更多评论');
+				setTimeout(function(){$("#uyan_more_cmt").slideUp("slow")},1000);
+			}
+		},
+		'json'
+	);
+}
+</script>

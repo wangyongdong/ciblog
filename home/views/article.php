@@ -11,7 +11,7 @@
 				<div class="postdate">
 					<p><span class="postdateno"><?=dateFor($list['datetime'],"d")?></span><br><?=engDate($list['datetime'],'m')?></p>
 				</div>
-				<div class="postcontent"><?=cutTab($list['content'],150)?></div>
+				<div class="postcontent"><?=cutTags($list['content'],150)?></div>
 				<div class="postdetails">
 					<p class="meta-pos">
 						<span class="meta-info author">

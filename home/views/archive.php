@@ -1,8 +1,3 @@
-<script>
-function cutStatus(obj) {
-	$("#"+obj).toggle();
-}
-</script>
 <div id="main" role="main" class="clearfix">
 	<div id="left">
 		<div class="archives">
@@ -95,3 +90,8 @@ function cutStatus(obj) {
 		</div>
 	</div>
 </div>
+<script>
+function cutStatus(obj) {
+	$("#"+obj).toggle();
+}
+</script>
