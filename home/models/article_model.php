@@ -12,46 +12,70 @@ class Article_model extends CI_Model{
 	 * 获取文章列表
 	 */
 	function getArticleList($sOrder='datetime',$iStart=0,$iPageNum=10,$aFilter='') {
-		$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
-		$sql = 'SELECT
-    				*
-    			FROM
-    				blog_article
-    			WHERE
-    				status = "show"
-					AND sortid != "2" ';
-		if(!empty($aFilter['q'])) {
-			$sql .= ' AND title LIKE"%'.$aFilter['q'].'%"';
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('article_list('.$iStart.'-'.$iPageNum.')');
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
+			$sql = 'SELECT
+	    				*
+	    			FROM
+	    				blog_article
+	    			WHERE
+	    				status = "show"
+						AND sortid != "2" ';
+			if(!empty($aFilter['q'])) {
+				$sql .= ' AND title LIKE"%'.$aFilter['q'].'%"';
+			}
+			$sql .= ' ORDER BY
+	    				'.$sOrder.' DESC '.$sLimit;
+			$res = $this->db->query($sql);
+			$list = $res->result_array();
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
 		}
-		$sql .= ' ORDER BY
-    				'.$sOrder.' DESC '.$sLimit;
-		$res = $this->db->query($sql);
-		$aList = $res->result_array();
-		return $aList;
+		return $list;
 	}
 	/**
 	 * 获取文章详情
 	 */
 	public function getArticleInfo($iArticle) {
-		if(empty($iArticle)) {
-			return false;
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('article_view_'.$iArticle);
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			if(empty($iArticle)) {
+				return false;
+			}
+			$sql = 'SELECT
+	    				*
+	    			FROM
+	    				blog_article
+	    			WHERE
+						status = "show"
+						AND id='.$iArticle;
+			$res = $this->db->query($sql);
+			$list = $res->row_array();
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
 		}
-		$sql = 'SELECT
-    				*
-    			FROM
-    				blog_article
-    			WHERE
-					status = "show"
-					AND id='.$iArticle;
-		$res = $this->db->query($sql);
-		$aList = $res->row_array();
-		return $aList;
+		return $list;
 	}
 	/**
 	 * 获取置顶文章
 	 */
 	public function getTopArticle() {
-		$sql = 'SELECT
+		$cache_time = $this->config->item('data_cache');
+		$cache_path = CacheModule('article_top');
+		if(readCache($cache_path)) {
+			@include $cache_path;
+			$list = @$arr['info'];
+		} else {
+			$sql = 'SELECT
     				id,title,img
     			FROM
     				blog_article
@@ -61,9 +85,12 @@ class Article_model extends CI_Model{
 				ORDER BY
 					datetime DESC 
 				LIMIT 5';
-		$res = $this->db->query($sql);
-		$aList = $res->result_array();
-		return $aList;
+			$res = $this->db->query($sql);
+			$list = $res->result_array();
+			//写入缓存
+			writeCache($list, $cache_path, $cache_time['time']);
+		}
+		return $list;
 	}
 	/**
 	 * 获取上一篇、下一篇
