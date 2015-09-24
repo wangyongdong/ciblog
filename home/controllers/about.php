@@ -8,7 +8,7 @@ class About extends MY_Controller {
 		parent::__construct();
 	}
 	public function index() {
-		$list = $this->public_model->getBloggerInfo();//获取个人信息
+		$list = $this->public_model->getBloggerInfo();
 		$data['blogger'] = $list;
 		
 		//设置seo

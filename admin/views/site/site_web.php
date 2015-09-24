@@ -76,7 +76,7 @@
 												<input id="web_status" type="radio" value="y" name="web_status" <?php if($list['web_status']=='y'){echo 'checked';}?>> 是
 											</label>
 											<label class="radio-inline">
-												<input id="web_status" type="radio" value="n" name="web_status" <?php if($list['web_status']=='y'){echo 'checked';}?>> 否
+												<input id="web_status" type="radio" value="n" name="web_status" <?php if($list['web_status']=='n'){echo 'checked';}?>> 否
 											</label>
 										</div>
 									</div>

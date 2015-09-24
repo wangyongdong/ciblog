@@ -567,4 +567,56 @@ function getEmail($sType,$id) {
 		return $list;
 	}
 }
-
+/**
+ * 获取文件数量
+ */
+function FileCount($dir) {
+	$count = 0;
+	if(is_dir($dir) && file_exists($dir)) {
+		$ob = scandir($dir);
+		foreach($ob as $file) {
+			if($file=="." || $file==".." || $file==".htaccess") {
+				continue;
+			}
+			$file = $dir."/".$file;
+			if(is_file($file)) {
+				$count++;
+			}
+		}
+	}
+	return $count;
+}
+/**
+ * 删除文件
+ */
+function delFile($dir,$type,$module='') {
+	$count = 0;
+	if(is_dir($dir) && file_exists($dir)) {
+		$ob = scandir($dir);
+		foreach($ob as $file) {
+			if($file=="." || $file==".." || $file==".htaccess") {
+				continue;
+			}
+			$sfile = $dir."/".$file;
+			if(is_file($sfile)) {
+				if($type == 'all') {
+					@unlink($sfile);
+					$count++;
+				} else if($type == 'view') {
+					@unlink($sfile);
+					$count++;
+				} else {
+					if(!empty($module)) {
+						for ($i=0;$i<=count($module);$i++) {
+							if(strpos($file, $module[$i]) !== false) {
+								@unlink($sfile);
+								$count++;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return $count;
+}

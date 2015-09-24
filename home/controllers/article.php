@@ -40,9 +40,9 @@ class Article extends MY_Controller {
 		
 		$data['left_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);//文章点击排行榜
 		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);//首页cms文章推荐
-		$data['left_sort'] = $this->sort_model->getSort();//文章分类
-		$data['left_comment'] = $this->comment_model->getNewComment();//最新评论
-		$data['left_archive'] = $this->archive_model->getArchive(5);//文章归档
+		$data['left_sort'] = $this->sort_model->getSort();					//文章分类
+		$data['left_comment'] = $this->comment_model->getNewComment();		//最新评论
+		$data['left_archive'] = $this->archive_model->getArchive(5);		//文章归档
 		
 		//设置seo
 		$seo_info = $this->config->item('list_seo');

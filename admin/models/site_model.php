@@ -452,5 +452,52 @@ class Site_model extends CI_Model  {
     	
     	echo $sqldump;
     }
-    
+    /**
+     * 获取缓存设置
+     */
+    function getCache() {
+    	$sql = 'SELECT
+    				*
+    			FROM
+    				blog_options
+    			WHERE
+    				id in(22,23,24)';
+    	$res = $this->db->query($sql);
+    	$result = $res->result_array();
+    	foreach ($result as $row) {
+    		$name = $row['option_name'];
+    		$arr[$name] = $row['option_value'];
+    		$list = $arr;
+    	}
+    	return $list;
+    }
+    /**
+     * 执行网站信息配置修改
+     */
+    function doCache($aData) {
+    	$data = array('option_value'=>$aData['option_value']);
+    	$this->db->update('options',$data,array('option_name'=>$aData['option_name']));
+    	$affect = $this->db->affected_rows();
+    	//添加操作log
+    	$this->site_model->addActionLog('site_cache','update');
+    	return $affect;
+    }
+    /**
+     * 执行网站信息配置修改
+     */
+    function upCache($type,$module) {
+    	$vc_path = $_SERVER['DOCUMENT_ROOT'].'/home/cache';
+    	$dc_path = $_SERVER['DOCUMENT_ROOT'].'/home/cache/DataCache';
+    	if($type == 'all') {
+    		$affect = delFile($vc_path,$type);
+    		$affect += delFile($dc_path,$type);
+    	}
+    	if($type == 'view') {
+    		//$affect = delFile($vc_path,$module);
+    	}
+    	if($type == 'data') {
+    		$affect = delFile($dc_path,$type,$module);
+    	}
+    	return $affect;
+    }
 }

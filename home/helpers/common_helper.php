@@ -296,15 +296,25 @@ function ubbReplace($str) {
 	$str = str_replace ( ">", '>；', $str );
 	$str = str_replace ( "\n", '>；br/>；', $str );
 	$str = preg_replace ( "[\[em_([0-9]*)\]]",'<img src="'.PLUGIN_QQFACE.'face/$1.gif" border="0" />', $str );
-	
 	return $str;
 }
+
 /**
  * 读取缓存
  */
 function readCache($filename) {
 	$time = time();
-	@include $filename;
+	if(file_exists($filename)) {
+		@include $filename;
+	} else {
+		return false;
+	}
+	
+	$all_cache = getSet('all_cache');
+	$data_cache = getSet('data_cache');
+	if($all_cache == 'n' || $data_cache == 'n') {
+		return false;
+	}
 	if($time < @$arr['expiration'] && @$arr['expiration'] != '' && !empty($arr['info'])) {
 		return true;
 	} else {
@@ -315,6 +325,11 @@ function readCache($filename) {
  * 写入缓存
  */
 function writeCache($aData,$sFile,$sTime) {
+	$all_cache = getSet('all_cache');
+	$data_cache = getSet('data_cache');
+	if($all_cache == 'n' || $data_cache == 'n') {
+		return;
+	}
 	$path = dirname($sFile);
 	if(!is_dir($path)) {
 		mkdir($path,"0777",TRUE);
@@ -333,8 +348,12 @@ function writeCache($aData,$sFile,$sTime) {
  */
 function CacheModule($sFile) {
 	$path = $_SERVER['DOCUMENT_ROOT'].'/home/cache/DataCache/';
+	/* if(!is_dir($path)) {
+		mkdir($path,"0777",TRUE);
+	} */
 	return $path.$sFile.'.cache.php';
 }
+
 
 
 

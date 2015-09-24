@@ -49,7 +49,6 @@ class Sort_model extends CI_Model{
 			if(!empty($iPageNum)) {
 				$sLimit = 'LIMIT '.$iStart.','.$iPageNum;
 			}
-		
 			$sql = 'SELECT
 						*
 					FROM
@@ -64,7 +63,6 @@ class Sort_model extends CI_Model{
 			//写入缓存
 			writeCache($list, $cache_path, $cache_time);
 		}
-		
 		return $list;
 	}
 }

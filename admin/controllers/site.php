@@ -284,12 +284,36 @@ class Site extends MY_Controller {
 	 * 缓存
 	 */
 	public function cache() {
-		$data['data'] = '';
+		$vc_path = $_SERVER['DOCUMENT_ROOT'].'/home/cache';
+		$dc_path = $_SERVER['DOCUMENT_ROOT'].'/home/cache/DataCache';
+		$data['view_num'] = FileCount($vc_path);
+		$data['data_num'] = FileCount($dc_path);
+		$data['data'] = $this->site_model->getCache();
 		$data['nav'] = 'site';
-		
 		$this->load->view('public/header',$data);
 		$this->load->view('site/site_cache',$data);
 		$this->load->view('public/footer',$data);
 	}
-	
+	/**
+	 * 缓存修改
+	 */
+	public function doCache() {
+		$data = array();
+		
+		$data['option_name'] = sg($_POST['ck']);
+		$data['option_value'] = sg($_POST['val']);
+		$affect = $this->site_model->doCache($data);
+		echo $affect;
+	}
+	/**
+	 * 缓存更新
+	 */
+	public function upCache() {
+		$module = sg($_POST['type']);
+		$sId = sg($_POST['val']);
+		//将获取到的值进行拆分，重组
+		$aId = explode(",",trim($sId,','));
+		$affect = $this->site_model->upCache($module,$aId);
+		echo $affect;
+	}
 }

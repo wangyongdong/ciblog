@@ -37,7 +37,6 @@ class Archive_model extends CI_Model{
 			//写入缓存
 			writeCache($list, $cache_path, $cache_time['time']);
 		}
-		
 		return $list;
 	}
 	/**

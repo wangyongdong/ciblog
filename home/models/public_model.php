@@ -16,6 +16,14 @@ class Public_model extends CI_Model{
 	 * @param array $aData
 	 */
 	public function loadView($aMeta,$sHeader,$sView,$aData='') {
+		$all_cache = getSet('all_cache');
+		$view_cache = getSet('view_cache');
+		if($all_cache == 'y' && $view_cache == 'y') {
+			//开启网页缓存
+			$cache_time = $this->config->item('web_cache');
+			$this->output->cache($cache_time[$sView]);
+		}
+		
 		//获取首页站点标题信息，和导航信息
 		$info = $this->getWebInfo();
 		$data['webinfo'] = $info;

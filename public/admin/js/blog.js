@@ -330,3 +330,61 @@ function checkPopE() {
 	}
 	return true;
 }
+//缓存开启
+$(function() {
+	$(".cache_up").click(function() {
+		var text = $(this).text();
+		var id = $(this).attr("id");
+		if(text == '开启') {
+			var ck = id;
+			var val = 'y';
+		}
+		if(text == '关闭') {
+			var ck = id;
+			var val = 'n';
+		}
+		$.ajax({
+			url:__A+'site/doCache',
+			data:'ck='+ck+'&val='+val,
+			type:'post',
+			success:function(data) {
+				if(data) {
+					window.location.reload();
+				} else {
+					alert("开启失败");
+				}
+			}
+		})
+	});
+});
+//更新缓存
+function upCache(obj) {
+	if(confirm("确定要更新吗？")) {
+		if(obj == 'all') {
+			val = 'all';
+		} else {
+			var strid = '';
+			//获取所有选中条目的id
+			$(".list-"+obj+" input[type='checkbox']:checked").each(function() {
+				strid += $(this).attr("id") + ",";
+			});
+			if(strid == "," || strid == "") {
+				return false;
+			}
+			val = strid;
+		}
+		
+		$.ajax({
+			url:__A+'site/upCache',
+			data:'type='+obj+'&val='+val,
+			type:'post',
+			success:function(data) {
+				if(data) {
+					window.location.reload();
+				} else {
+					alert("更新失败");
+				}
+			}
+		})
+	}
+}
