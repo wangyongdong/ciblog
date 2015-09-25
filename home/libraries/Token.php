@@ -7,13 +7,13 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Token {
 
 	//令牌在session存储的名称，数组形式存在，键值是操作类型的编码，用于区分同页面不同form提交时的令牌
-	const TOKEN_KEY = "tokenKey";
+	const TOKEN_KEY = 'tokenKey';
 	
 	//用过的令牌在session中存储的名称，数组形式存在，数组的最后一个元素表示刚刚使用过的令牌
-	const USED_TOKEN = "tokenKeyUsed";
+	const USED_TOKEN = 'tokenKeyUsed';
 	
 	//令牌的加密算法
-	const ENCRYPT_KEY = "blog";
+	const ENCRYPT_KEY = 'blog';
 	
 	//验证令牌后得到的结果
 	const TOKECHECK_EXTERNSUBMIT = -1;     //令牌验证未通过，因为检查到表单提交来自外部伪造
@@ -41,7 +41,7 @@ class Token {
 	 * @return 生成的令牌
 	 */
 	public function granteToken($actiontype) {
-		$token = $this->encrypt($actiontype . ":" . session_id(), Token::ENCRYPT_KEY);
+		$token = $this->encrypt($actiontype . ':' . session_id(), Token::ENCRYPT_KEY);
 		$this->setToken($token,$actiontype);
 		return $token;
 	}
@@ -68,7 +68,7 @@ class Token {
 	 * @return 令牌中附加的sessionid
 	 */
 	private function getSessionidFromToken($token) {
-		$source = explode(":", $this->decrypt($token, Token::ENCRYPT_KEY));
+		$source = explode(':', $this->decrypt($token, Token::ENCRYPT_KEY));
 		$sid = $source[1];
 		return $sid;
 	}
@@ -90,7 +90,7 @@ class Token {
 	 */
 	private function pushToken($token,$actiontype) {
 		@array_push($this->session[Token::USED_TOKEN],$token);
-		$this->session[Token::TOKEN_KEY][$actiontype] = "";
+		$this->session[Token::TOKEN_KEY][$actiontype] = '';
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Token {
 	private function keyED($txt, $encrypt_key) {
 		$encrypt_key = md5($encrypt_key);
 		$ctr = 0;
-		$tmp = "";
+		$tmp = '';
 		for ($i = 0; $i < strlen($txt); $i++) {
 			if ($ctr == strlen($encrypt_key))
 				$ctr = 0;
@@ -119,9 +119,9 @@ class Token {
 	 * @return 加密后得到的令牌
 	 */
 	private function encrypt($txt, $key) {
-		$encrypt_key = md5(((float) date("YmdHis") + rand(10000000000000000, 99999999999999999)) . rand(100000, 999999));
+		$encrypt_key = md5(((float) date('YmdHis') + rand(10000000000000000, 99999999999999999)) . rand(100000, 999999));
 		$ctr = 0;
-		$tmp = "";
+		$tmp = '';
 		for ($i = 0; $i < strlen($txt); $i++) {
 			if ($ctr == strlen($encrypt_key))
 				$ctr = 0;
@@ -139,7 +139,7 @@ class Token {
 	 */
 	private function decrypt($txt, $key) {
 		$txt = $this->keyED(base64_decode($txt), $key);
-		$tmp = "";
+		$tmp = '';
 		for ($i = 0; $i < strlen($txt); $i++) {
 			$md5 = substr($txt, $i, 1);
 			$i++;

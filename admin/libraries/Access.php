@@ -22,17 +22,17 @@ class Access {
 			return true;
 		}
 		if($arr['role_name'] == 'ban') {
-			show_error("黑名单用户禁止访问");
+			show_error('黑名单用户禁止访问');
 			exit;
 		}
 		//查看页
 		if(!empty($sAction) && empty($sFunction)) {
 			if($arr['role_name'] !== 'super') {
 				if(empty($arr['function']['select'])) {
-					show_error("您没有操作权限");
+					show_error('您没有操作权限');
 				}
 				if(!in_array($sAction,$arr['function']['select'])) {
-					show_error("您没有查看权限");
+					show_error('您没有查看权限');
 				}
 			}
 		}
@@ -40,10 +40,10 @@ class Access {
 		if(!empty($sAction) && !empty($sFunction)) {
 			if($arr['role_name'] !== 'super') {
 				if(empty($arr['function']['update'])) {
-					show_error("您没有操作权限");
+					show_error('您没有操作权限');
 				}
 				if(!in_array($sAction,$arr['function']['update'])) {
-					show_error("您没有操作权限");
+					show_error('您没有操作权限');
 				}
 			}
 		}

@@ -45,7 +45,7 @@ class Archive extends MY_Controller {
 		$pageId = $this->input->get('page');
 		$sPageNum = getSet('article_nums');
 		$sFilter = 'AND FROM_UNIXTIME(UNIX_TIMESTAMP(datetime), "%Y/%m") = "'.$sTime.'"';
-		$arr = $this->public_model->getPage("article",'article/archive/'.$sTime.'?',$pageId,$sPageNum,$sFilter);
+		$arr = $this->public_model->getPage('article','article/archive/'.$sTime.'?',$pageId,$sPageNum,$sFilter);
 		$data['article'] = $this->archive_model->getArticleByArchive($sTime,$arr['start'],$arr['pagenum']);
 		$data['left_view'] = $this->article_model->getArticleList(self::ARTICLE_VIEWS);//文章点击排行榜
 		$data['left_sort'] = $this->sort_model->getSort();					//文章分类

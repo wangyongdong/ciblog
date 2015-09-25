@@ -204,7 +204,7 @@ function cutStr($string,$length,$dot='…') {
  * 去掉img标签并截取
  */
 function cutShes($string,$length) {
-	$string = preg_replace("/<img.*?>/si","",$string);
+	$string = preg_replace('/<img.*?>/si','',$string);
 	return cutStr($string,$length);
 }
 /**
@@ -220,9 +220,9 @@ function cutShes($string,$length) {
  * @return string
  */
 function cutTab($string, $length='15', $dot = '…') {
-	$_lenth = mb_strlen($string, "utf-8");
-	$text_str = preg_replace("/<img.*?>/si","",$string);
-	$text_lenth = mb_strlen($text_str, "utf-8") - 1;
+	$_lenth = mb_strlen($string, 'utf-8');
+	$text_str = preg_replace('/<img.*?>/si','',$string);
+	$text_lenth = mb_strlen($text_str, 'utf-8') - 1;
 
 	if($text_lenth <= $length) {
 		return stripcslashes($string);
@@ -248,7 +248,7 @@ function cutTab($string, $length='15', $dot = '…') {
 
 		preg_match('/<img[^>]*\>/',$string,$result_html);
 		$before = mb_substr($res_html, 0, $html_start, 'UTF-8');
-		$after = mb_substr($res_html, $html_start, mb_strlen($res_html, "utf-8"), 'UTF-8');
+		$after = mb_substr($res_html, $html_start, mb_strlen($res_html, 'utf-8'), 'UTF-8');
 		$res = $before.$result_html[0].$after;
 		return stripcslashes($res).$dot;
 	}
@@ -267,7 +267,7 @@ function dateFor($time,$val='') {
 	if(!empty($val)) {
 		return date($val,strtotime($time));
 	} else {
-		return date("Y-m-d",strtotime($time));
+		return date('Y-m-d',strtotime($time));
 	}
 }
 /**
@@ -275,21 +275,21 @@ function dateFor($time,$val='') {
  */
 function engDate($time,$val='') {
 	$Month_E = array(
-		1 => "January",
-		2 => "February",
-		3 => "March",
-		4 => "April",
-		5 => "May",
-		6 => "June",
-		7 => "July",
-		8 => "August",
-		9 => "September",
-		10 => "October",
-		11 => "November",
-		12 => "December"
+		1 => 'January',
+		2 => 'February',
+		3 => 'March',
+		4 => 'April',
+		5 => 'May',
+		6 => 'June',
+		7 => 'July',
+		8 => 'August',
+		9 => 'September',
+		10 => 'October',
+		11 => 'November',
+		12 => 'December'
 	);
 	if($val == 'm') {
-		$month = date("m",strtotime($time));
+		$month = date('m',strtotime($time));
 		return $Month_E[intval($month)];
 	} else if($val == 'yd') {
 		$arr = explode('/', $time);
@@ -304,10 +304,10 @@ function engDate($time,$val='') {
  * @return mixed
  */
 function ubbReplace($str) {
-	$str = str_replace ( ">", '<；', $str );
-	$str = str_replace ( ">", '>；', $str );
-	$str = str_replace ( "\n", '>；br/>；', $str );
-	$str = preg_replace ( "[\[em_([0-9]*)\]]",'<img src="'.PLUGIN_QQFACE.'face/$1.gif" border="0" />', $str );
+	$str = str_replace ( '>', '<；', $str );
+	$str = str_replace ( '>', '>；', $str );
+	$str = str_replace ( '\n', '>；br/>；', $str );
+	$str = preg_replace ( '[\[em_([0-9]*)\]]','<img src="'.PLUGIN_QQFACE.'face/$1.gif" border="0" />', $str );
 	return $str;
 }
 
@@ -351,7 +351,7 @@ function writeCache($aData,$sFile,$sTime) {
 	$array['info'] = $aData;
 
 	$txt = var_export($array,TRUE);
-	$handle = fopen($sFile, "wb");
+	$handle = fopen($sFile, 'wb');
 	fwrite($handle, "<?php \n \$arr=$txt; \n?>");
 	fclose($handle);
 }
@@ -360,9 +360,6 @@ function writeCache($aData,$sFile,$sTime) {
  */
 function CacheModule($sFile) {
 	$path = $_SERVER['DOCUMENT_ROOT'].'/home/cache/DataCache/';
-	/* if(!is_dir($path)) {
-		mkdir($path,"0777",TRUE);
-	} */
 	return $path.$sFile.'.cache.php';
 }
 /**

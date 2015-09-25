@@ -58,7 +58,7 @@ class Article_model extends CI_Model {
     function doArticle($data) {
     	if(empty($data['id'])) {
     		$this->db->insert('article',$data);
-    		$this->updSortNum($data['sortid'],"1");				//修改类别数量
+    		$this->updSortNum($data['sortid'],'1');				//修改类别数量
     		$this->site_model->addActionLog('article','add');	//添加操作log
     	} else {
     		changeImg('article', $data['id'], $data['img']);
@@ -66,8 +66,8 @@ class Article_model extends CI_Model {
     		$iSort = getArticleField($data['id'],'sortid');
     		$this->db->update('article',$data,array('id'=>$data['id']));
     		//原类别数量减少和新类别数量增加
-    		$this->updSortNum($iSort,"-1");
-    		$this->updSortNum($data['sortid'],"1");
+    		$this->updSortNum($iSort,'-1');
+    		$this->updSortNum($data['sortid'],'1');
     		$this->site_model->addActionLog('article','update');//添加操作log
     	}
    	 	$affect = $this->db->affected_rows();
@@ -81,7 +81,7 @@ class Article_model extends CI_Model {
     	$iSort = getArticleField($iArticle,'sortid'); //获取该文章原属于的类别
     	$affect = $this->db->delete('article',array('id'=>$iArticle));
     	if($affect) {
-    		$affects = $this->updSortNum($iSort,"-1"); 	//执行类别数量减少
+    		$affects = $this->updSortNum($iSort,'-1'); 	//执行类别数量减少
     	}
     	$this->site_model->addActionLog('article','delete');//添加操作log
     	return $affect;	
@@ -105,8 +105,8 @@ class Article_model extends CI_Model {
     	$this->db->update('article',$data,array('id'=>$iArticle));
     	$affect = $this->db->affected_rows();
     	if($affect) {
-    		$this->updSortNum($iSort,"1");
-    		$this->updSortNum($sortid,"-1");
+    		$this->updSortNum($iSort,'1');
+    		$this->updSortNum($sortid,'-1');
     	}
     	//添加操作log
     	$this->site_model->addActionLog('article','update');

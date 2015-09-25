@@ -32,7 +32,7 @@ class Links extends MY_Controller {
 		$data['siteurl'] = prep_url(sg($this->input->post('url', TRUE)));
 		$data['description'] = sg($this->input->post('desc', TRUE));
 		$data['status'] = 'hide';
-		$data['datetime'] = date("Y-m-d H:i:s",time());
+		$data['datetime'] = date('Y-m-d H:i:s',time());
 		if (empty($data['email']) || empty($data['sitename']) || empty($data['siteurl']) || empty($data['description'])) {
 			localCommon('数据信息不完整。');
 		}

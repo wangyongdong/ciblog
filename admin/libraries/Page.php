@@ -42,7 +42,7 @@ class Page {
 		$config['num_tag_open'] = '';		//“数字”链接的打开标签。
 		$config['num_tag_close'] = '';		//“数字”链接的关闭标签。
 		
-		$config['anchor_class'] = "class='page-othor'";		//给链接添加 CSS 类
+		$config['anchor_class'] = 'class="page-othor"';		//给链接添加 CSS 类
 		$config['page_query_string'] = TRUE;				//以?id=3&name=4
 		$config['query_string_segment'] = 'page';			//设置分页参数
 				

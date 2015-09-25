@@ -131,14 +131,14 @@ function checkPass($val1,$val2) {
  */
 function errors($sInfo) {
 	$sInfo = urlencode($sInfo);
-	header("Location:".site_url('show/error/'.$sInfo));
+	header('Location:'.site_url('show/error/'.$sInfo));
 	exit;
 }
 /**
  * 跳转成功
  */
 function succes($sUrl) {
-	header("Location:".$sUrl);
+	header('Location:'.$sUrl);
 	exit;
 }
 /**
@@ -198,7 +198,7 @@ function getRole($iUser='',$sField='list') {
 	$db = DB('default');
 	$res = $db->query($sql);
 	$list = $res->row_array();
-	if($sField == "list") {
+	if($sField == 'list') {
 		return $list;
 	} else {
 		return $list[$sField];
@@ -357,7 +357,7 @@ function cutStr($string,$length,$dot='…') {
  * 去掉img标签并截取
  */
 function cutShes($string,$length) {
-	$string = preg_replace("/<img.*?>/si","",$string);
+	$string = preg_replace('/<img.*?>/si','',$string);
 	return cutStr($string,$length);
 }
 /**
@@ -373,9 +373,9 @@ function cutShes($string,$length) {
  * @return string
  */
 function cutTab($string, $length='15', $dot = '…') {
-	$_lenth = mb_strlen($string, "utf-8");
-	$text_str = preg_replace("/<img.*?>/si","",$string);
-	$text_lenth = mb_strlen($text_str, "utf-8") - 1;
+	$_lenth = mb_strlen($string, 'utf-8');
+	$text_str = preg_replace('/<img.*?>/si','',$string);
+	$text_lenth = mb_strlen($text_str, 'utf-8') - 1;
 	
 	if($text_lenth <= $length) {
 		return stripcslashes($string);
@@ -401,7 +401,7 @@ function cutTab($string, $length='15', $dot = '…') {
 		
 		preg_match('/<img[^>]*\>/',$string,$result_html);
 		$before = mb_substr($res_html, 0, $html_start, 'UTF-8');
-		$after = mb_substr($res_html, $html_start, mb_strlen($res_html, "utf-8"), 'UTF-8');
+		$after = mb_substr($res_html, $html_start, mb_strlen($res_html, 'utf-8'), 'UTF-8');
 		$res = $before.$result_html[0].$after;
 		return stripcslashes($res).$dot;
 	}
@@ -498,12 +498,12 @@ function getNotice() {
  * 时间转换函数
  */
 function timeTran($sTime) {
-	$now_time = date("Y-m-d H:i:s", time());
+	$now_time = date('Y-m-d H:i:s', time());
 	$now_time = strtotime($now_time);
 	$show_time = strtotime($sTime);
 	$dur = $now_time - $show_time;
 	if ($dur < 0) {
-		return date("Y-m-d",$show_time);
+		return date('Y-m-d',$show_time);
 	} else {
 		if ($dur < 60) {
 			return $dur . '秒前';
@@ -575,10 +575,10 @@ function FileCount($dir) {
 	if(is_dir($dir) && file_exists($dir)) {
 		$ob = scandir($dir);
 		foreach($ob as $file) {
-			if($file=="." || $file==".." || $file==".htaccess") {
+			if($file=='.' || $file=='..' || $file=='.htaccess') {
 				continue;
 			}
-			$file = $dir."/".$file;
+			$file = $dir.'/'.$file;
 			if(is_file($file)) {
 				$count++;
 			}
@@ -594,10 +594,10 @@ function delFile($dir,$type,$module='') {
 	if(is_dir($dir) && file_exists($dir)) {
 		$ob = scandir($dir);
 		foreach($ob as $file) {
-			if($file=="." || $file==".." || $file==".htaccess") {
+			if($file=='.' || $file=='..' || $file=='.htaccess') {
 				continue;
 			}
-			$sfile = $dir."/".$file;
+			$sfile = $dir.'/'.$file;
 			if(is_file($sfile)) {
 				if($type == 'all') {
 					@unlink($sfile);

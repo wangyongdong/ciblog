@@ -343,20 +343,19 @@ class Site_model extends CI_Model  {
      */
     public function upBackup() {
     	$this->load->library('zip');
-    	$path = trim($_SERVER['DOCUMENT_ROOT'],'/').'/upload/';
+    	$path = trim($_SERVER['DOCUMENT_ROOT'],'/').'/public/upload/';
     	 
-    	$this->zip->read_dir($path,FALSE);
+    	$this->zip->read_dir($path);
     	 
     	// Download the file to your desktop. Name it "my_backup.zip"
     	$this->zip->download('upload_backup.zip');
     }
     /**
-     * 全站资源备份
+     * 全站备份
      */
     public function reBackup() {
     	$this->load->library('zip');
     	$path = trim($_SERVER['DOCUMENT_ROOT'],'/').'/';
-    	
     	$this->zip->read_dir($path);
     	
     	// Download the file to your desktop. Name it "my_backup.zip"
@@ -493,7 +492,7 @@ class Site_model extends CI_Model  {
     		$affect += delFile($dc_path,$type);
     	}
     	if($type == 'view') {
-    		//$affect = delFile($vc_path,$module);
+    		$affect = delFile($vc_path,$module);
     	}
     	if($type == 'data') {
     		$affect = delFile($dc_path,$type,$module);

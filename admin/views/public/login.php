@@ -17,7 +17,6 @@
 		<![endif]-->
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="<?=ADMIN_PUBLIC?>img/favicon/favicon.png">
-		
 	</head>
 	<body>
 		<div class="admin-form">

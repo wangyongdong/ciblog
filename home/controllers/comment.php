@@ -22,7 +22,7 @@ class Comment extends MY_Controller {
 		$data['content'] = sg($this->input->post('comment', TRUE));
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
-		$data['datetime'] = date("Y-m-d H:i:s",time());
+		$data['datetime'] = date('Y-m-d H:i:s',time());
 		$data['content'] = ubbReplace($data['content']);
 		if (empty($data['comment_id']) || empty($data['author']) || empty($data['email']) || empty($data['content'])) {
 			localCommon('数据信息不完整。');

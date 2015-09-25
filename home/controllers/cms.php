@@ -23,7 +23,7 @@ class Cms extends MY_Controller {
 		$pageId = $this->input->get('page');
 		$sPageNum = getSet('article_nums');//获取系统变量，文章数量
 		$sFilter = 'AND sortid="2" ';
-		$arr = $this->public_model->getPage("article",'cms?',$pageId,$sPageNum,$sFilter);
+		$arr = $this->public_model->getPage('article','cms?',$pageId,$sPageNum,$sFilter);
 		$data['cms'] = $this->cms_model->getCmsList(self::ARTICLE_NEW,$arr['start'],$arr['pagenum']);
 		$data['left_view'] = $this->cms_model->getCmsList(self::ARTICLE_VIEWS);	//cms文章点击排行
 		$data['left_cms'] = $this->cms_model->getCmsList(self::ARTICLE_COM);	//cms文章推荐

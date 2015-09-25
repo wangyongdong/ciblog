@@ -16,7 +16,7 @@ class Record extends MY_Controller {
 		//分页执行
 		$pageId = $this->input->get('page');
 		$sPageNum = getSet('record_nums');
-		$arr = $this->public_model->getPage("record",'record?',$pageId,$sPageNum);
+		$arr = $this->public_model->getPage('record','record?',$pageId,$sPageNum);
 		$data['record'] = $this->record_model->getRecordList($arr['start'],$arr['pagenum']);
 		
 		//设置seo

@@ -122,20 +122,20 @@ function saveImg(val) {
 //搜索提交
 function searchFT(url) {
 	var keyword = $("#sf_keyword").val();
-	window.location = url+'?s='+keyword;
+	window.location = url+'?q='+keyword;
 }
 //搜索提交
 function searchFL(url) {
 	var keyword = $("#sl_keyword").val();
-	window.location = url+'?s='+keyword;
+	window.location = url+'?q='+keyword;
 }
 //sort条件搜索
 function searchSort(val,url) {
-	window.location = url+'?sort='+val;
+	window.location = url+'?s='+val;
 }
 // user条件搜索
 function searchUser(val,url) {
-	window.location = url+'?author='+val;
+	window.location = url+'?a='+val;
 }
 // 搜索操作日志
 function searchActionLog() {

@@ -43,14 +43,14 @@
 							<?php 
 							if(getSet('is_record') == 'y') {
 							?>
-							<li <?php if($header == 'record') {echo 'class="current"';}?>><a href="<?=site_url('record')?>">闲言碎语</a></li>
+							<li <?php if($header == 'record') {echo 'class="current"';}?>><a href="/record">闲言碎语</a></li>
 							<?php 
 							}
 							?>
-							<li <?php if($header == 'article') {echo 'class="current"';}?>><a href="<?=site_url('article')?>">学无止境</a></li>
-							<li <?php if($header == 'cms') {echo 'class="current"';}?>><a href="<?=site_url('cms')?>">业内新闻</a></li>
-							<li <?php if($header == 'contact') {echo 'class="current"';}?>><a href="<?=site_url('contact')?>">contact</a></li>
-							<li <?php if($header == 'about') {echo 'class="current"';}?>><a href="<?=site_url('about')?>">关于我</a></li>
+							<li <?php if($header == 'article') {echo 'class="current"';}?>><a href="/article">学无止境</a></li>
+							<li <?php if($header == 'cms') {echo 'class="current"';}?>><a href="/cms">业内新闻</a></li>
+							<li <?php if($header == 'contact') {echo 'class="current"';}?>><a href="/contact">contact</a></li>
+							<li <?php if($header == 'about') {echo 'class="current"';}?>><a href="/about">关于我</a></li>
 						</ul>
 					</div>
 				</div>

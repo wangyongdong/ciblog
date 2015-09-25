@@ -8,7 +8,7 @@ class Auth {
 	
 	//对登录后生成的key进行加密编码，以便于放到cookies里面的时候安全性
 	static private function sid_encode($username) {
-		$ip = sg($_SERVER["REMOTE_ADDR"]);
+		$ip = sg($_SERVER['REMOTE_ADDR']);
 		$agent = sg($_SERVER['HTTP_USER_AGENT']);
 		$authkey = md5($ip.$agent);
 		$check = substr(md5($ip.$agent), 0, 8);
@@ -17,7 +17,7 @@ class Auth {
 	
 	//对登录后生成的key进行解密，用于验证cookies中的key是否合法
 	static private function sid_decode($sid) {
-		$ip = sg($_SERVER["REMOTE_ADDR"]);
+		$ip = sg($_SERVER['REMOTE_ADDR']);
 		$agent = $_SERVER['HTTP_USER_AGENT'];
 		$authkey = md5($ip.$agent);
 		$s = self::authcode(rawurldecode($sid), 'DECODE', $authkey, 0);
@@ -36,7 +36,7 @@ class Auth {
 	static private function authcode($string,$operation='DECODE',$key='',$expiry=0){
 		$ckey_length=4;
 	 
-		$key=md5($key?$key:"blog");
+		$key=md5($key?$key:'blog');
 		$keya=md5(substr($key,0,16));
 		$keyb=md5(substr($key,16,16));
 		$keyc=$ckey_length ? ($operation=='DECODE' ? substr($string,0,$ckey_length):substr(md5(microtime()),-$ckey_length)):'';
@@ -94,7 +94,7 @@ class Auth {
 		}
 		
 		$life = $life > 0 ? time() + $life : ($life < 0 ? time() - 31536000 : 0);
-		$path = $httponly && PHP_VERSION < '5.2.0' ? UC_COOKIEPATH."; HttpOnly" : UC_COOKIEPATH;
+		$path = $httponly && PHP_VERSION < '5.2.0' ? UC_COOKIEPATH.'; HttpOnly' : UC_COOKIEPATH;
 		$secure = $_SERVER['SERVER_PORT'] == 443 ? 1 : 0;
 		if(PHP_VERSION < '5.2.0') {
 			setcookie($key, $value, $life, $path, UC_COOKIEDOMAIN, $secure);
@@ -111,7 +111,7 @@ class Auth {
 	 */
 	static function userLoginSet($uid,$username) {
 		if($uid>0 && !empty($username)) {
-			$sid = self::sid_encode($uid."-".$username);
+			$sid = self::sid_encode($uid.'-'.$username);
 			self::set_cookie('sid',$sid,0);
 			
 			$_SESSION['uid'] = intval($uid);
@@ -119,7 +119,7 @@ class Auth {
 		} else {
 			self::set_cookie('sid', '');
 			$_SESSION['uid'] = 0;
-			$_SESSION['username'] = "";
+			$_SESSION['username'] = '';
 		}
 		return;
 	}
@@ -130,7 +130,7 @@ class Auth {
 	static function useLoginOut(){
 		self::set_cookie('sid','');
 		$_SESSION['uid'] = 0;
-		$_SESSION['username'] = "";
+		$_SESSION['username'] = '';
 	}
 	
 	/**
@@ -140,13 +140,12 @@ class Auth {
     	$sid = empty($_COOKIE['sid']) ? '' : $_COOKIE['sid'];
     	$arr = self::sid_decode($sid);
 		$aUser = explode("-",$arr);
-		
 		if(intval($aUser[0]) > 0 && !empty($aUser[1])) {
 			$_SESSION['uid'] = $aUser[0];
 			$_SESSION['username'] = $aUser[1];
 		} else {
 			$_SESSION['uid'] = 0;
-			$_SESSION['username'] = "";
+			$_SESSION['username'] = '';
 		}
 	}
 }

@@ -33,7 +33,7 @@ class Contact extends MY_Controller {
 		$data['content'] = sg($this->input->post('content', TRUE));
 		$data['ip'] = $this->input->ip_address();
 		$data['useragent'] = $this->input->user_agent();
-		$data['datetime'] = date("Y-m-d H:i:s",time());
+		$data['datetime'] = date('Y-m-d H:i:s',time());
 		if (empty($data['author']) || empty($data['email']) || empty($data['content'])) {
 			localCommon('数据信息不完整。');
 		} else if (mb_strlen($data['author']) < 2 || mb_strlen($data['author']) > 16) {

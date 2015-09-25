@@ -13,7 +13,7 @@ class Cms_model extends CI_Model{
 	 */
 	function getCmsList($sOrder='datetime',$iStart=0,$iPageNum=10) {
 		$cache_time = $this->config->item('data_cache');
-		$cache_path = CacheModule('cms_list('.$iStart.'-'.$iPageNum.')');
+		$cache_path = CacheModule('cms_list_'.$sOrder.'('.$iStart.'-'.$iPageNum.')');
 		if(readCache($cache_path)) {
 			@include $cache_path;
 			$list = @$arr['info'];

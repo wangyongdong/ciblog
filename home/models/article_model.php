@@ -13,7 +13,7 @@ class Article_model extends CI_Model{
 	 */
 	function getArticleList($sOrder='datetime',$iStart=0,$iPageNum=10,$aFilter='') {
 		$cache_time = $this->config->item('data_cache');
-		$cache_path = CacheModule('article_list('.$iStart.'-'.$iPageNum.')');
+		$cache_path = CacheModule('article_list_'.$sOrder.'('.$iStart.'-'.$iPageNum.')_'.$aFilter);
 		if(readCache($cache_path)) {
 			@include $cache_path;
 			$list = @$arr['info'];
