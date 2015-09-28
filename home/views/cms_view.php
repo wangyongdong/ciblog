@@ -312,7 +312,6 @@
 		<h3 class="widgettitle">Meta</h3>
 		<div class="widget">
 			<ul>
-				<li><a href="/admin">登录blog</a></li>
 				<li><a href="/archive">文章归档</a></li>
 				<li><a href="/history">博客事件</a></li>
 				<li><a href="/contact">给我留言</a></li>
