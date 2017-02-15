@@ -1,358 +1,358 @@
-Ö÷ÒªÄÚÈİ
-	CI¼ò½é
-	CIµÄ³¬¼¶¶ÔÏó
-	CIµÄ¿ØÖÆÆ÷ÓëÊÓÍ¼
-	Êı¾İ¿â·ÃÎÊ
-	ARÄ£ĞÍ
-	ÈçºÎÀ©Õ¹CIµÄ¿ØÖÆÆ÷
-	CIÖĞµÄÄ£ĞÍ
+ä¸»è¦å†…å®¹
+	CIç®€ä»‹
+	CIçš„è¶…çº§å¯¹è±¡
+	CIçš„æ§åˆ¶å™¨ä¸è§†å›¾
+	æ•°æ®åº“è®¿é—®
+	ARæ¨¡å‹
+	å¦‚ä½•æ‰©å±•CIçš„æ§åˆ¶å™¨
+	CIä¸­çš„æ¨¡å‹
 	
-	urlÏà¹Øº¯Êı
-	ÉèÖÃÂ·ÓÉ
-	·ÖÒ³
-	ÎÄ¼şÉÏ´«
+	urlç›¸å…³å‡½æ•°
+	è®¾ç½®è·¯ç”±
+	åˆ†é¡µ
+	æ–‡ä»¶ä¸Šä¼ 
 	session
-	ÑéÖ¤Âë
-	±íµ¥ÑéÖ¤
+	éªŒè¯ç 
+	è¡¨å•éªŒè¯
 
-Èë¿ÚÎÄ¼ş.php/¿ØÖÆÆ÷/¶¯×÷
+å…¥å£æ–‡ä»¶.php/æ§åˆ¶å™¨/åŠ¨ä½œ
 
-	controlles 	¿ØÖÆÆ÷
-	models		Ä£ĞÍ
-	views		ÊÔÍ¼
+	controlles 	æ§åˆ¶å™¨
+	models		æ¨¡å‹
+	views		è¯•å›¾
 
-Ä¬ÈÏ¿ØÖÆÆ÷ÊÇwelcome
-Ä¬ÈÏ¶¯×÷ÊÇindex
-²»×öÈÎºÎÖ¸¶¨ Ä¬ÈÏ·ÃÎÊµÄ
+é»˜è®¤æ§åˆ¶å™¨æ˜¯welcome
+é»˜è®¤åŠ¨ä½œæ˜¯index
+ä¸åšä»»ä½•æŒ‡å®š é»˜è®¤è®¿é—®çš„
 
-CIÖĞµÄ¿ØÖÆÆ÷£º
-	1.²»ĞèÒª¼Óºó×º ÀıÈç£ºuserAction£¬Ö±½ÓÊÇÀàÃû.php
-	2.ÎÄ¼şÃûÈ«²¿Ğ¡Ğ´
-	3.ËùÓĞµÄ¿ØÖÆÆ÷ĞèÒªÖ±½Ó»ò¼ä½Ó¼Ì³Ğ×ÔCI_ControllerÀà
-	4.protected ÊÜ±£»¤µÄ ·½·¨²»ÄÜ±»ä¯ÀÀÆ÷Ö±½ÓÇëÇó
-	5.ÒÔÏÂ»®Ïß¿ªÍ·µÄ·½·¨£¬²»ÄÜ±»ä¯ÀÀÆ÷Ö±½ÓÇëÇó_test
-	6.	public function test2(){	//ÔÚÀàÄÚ²¿¿ÉÒÔ
+CIä¸­çš„æ§åˆ¶å™¨ï¼š
+	1.ä¸éœ€è¦åŠ åç¼€ ä¾‹å¦‚ï¼šuserActionï¼Œç›´æ¥æ˜¯ç±»å.php
+	2.æ–‡ä»¶åå…¨éƒ¨å°å†™
+	3.æ‰€æœ‰çš„æ§åˆ¶å™¨éœ€è¦ç›´æ¥æˆ–é—´æ¥ç»§æ‰¿è‡ªCI_Controllerç±»
+	4.protected å—ä¿æŠ¤çš„ æ–¹æ³•ä¸èƒ½è¢«æµè§ˆå™¨ç›´æ¥è¯·æ±‚
+	5.ä»¥ä¸‹åˆ’çº¿å¼€å¤´çš„æ–¹æ³•ï¼Œä¸èƒ½è¢«æµè§ˆå™¨ç›´æ¥è¯·æ±‚_test
+	6.	public function test2(){	//åœ¨ç±»å†…éƒ¨å¯ä»¥
 			$this->_test1();
 		}
-	7.¿ØÖÆÆ÷ÖĞ¶Ô¶¯×÷(·½·¨)ÒªÇó£ºpublic
-								ÒÔ_¿ªÍ·
-	8.·½·¨Ãû²»Çø·Ö´óĞ¡Ğ´
-	9.ÓëÀàÃûÏàÍ¬µÄ£¬»á±»PHPµ±×ö¹¹Ôì·½·¨£¬__construct()
+	7.æ§åˆ¶å™¨ä¸­å¯¹åŠ¨ä½œ(æ–¹æ³•)è¦æ±‚ï¼špublic
+								ä»¥_å¼€å¤´
+	8.æ–¹æ³•åä¸åŒºåˆ†å¤§å°å†™
+	9.ä¸ç±»åç›¸åŒçš„ï¼Œä¼šè¢«PHPå½“åšæ„é€ æ–¹æ³•ï¼Œ__construct()
 
-CIÖĞµÄÊÓÍ¼£º
-	1.ÔÚ¿ØÖÆÆ÷ÖĞ¼ÓÔØÌØ¶¨ÎÄ¼ş¼ĞµÄÊÓÍ¼ user/index
-	2.ÊÓÍ¼ÖĞÖ±½ÓÊ¹ÓÃÔ­Éùphp´úÂë£¬²»ÊÊÓÃÄ£°åÒıÇæ
-	3.ÈçºÎ½«±äÁ¿·ÖÅäµ½ÊÓÍ¼ÖĞ£¬ÔÚÊÓÍ¼ÀïÊ¹ÓÃ
+CIä¸­çš„è§†å›¾ï¼š
+	1.åœ¨æ§åˆ¶å™¨ä¸­åŠ è½½ç‰¹å®šæ–‡ä»¶å¤¹çš„è§†å›¾ user/index
+	2.è§†å›¾ä¸­ç›´æ¥ä½¿ç”¨åŸå£°phpä»£ç ï¼Œä¸é€‚ç”¨æ¨¡æ¿å¼•æ“
+	3.å¦‚ä½•å°†å˜é‡åˆ†é…åˆ°è§†å›¾ä¸­ï¼Œåœ¨è§†å›¾é‡Œä½¿ç”¨
 		1.$this->assign('key','value'); smarty
 		2.$this->load->vars('title','this is title');
-		3.ÔÚÊÓÍ¼Êä³ö £ºecho $title;
-		4.·ÖÅä¶şÎ¬Êı×é
+		3.åœ¨è§†å›¾è¾“å‡º ï¼šecho $title;
+		4.åˆ†é…äºŒç»´æ•°ç»„
 			$list = array(array(),array(),array());
 			$data['list'] = $list;
-			$data['title'] = 'ÕâÊÇ±êÌâ';
-			$this->load->vars($data); //¿ÉÒÔ¶à´ÎÊ¹ÓÃ
-			//Ä£°å
-	4.ÍÆ¼öÊ¹ÓÃ<?php foreach($list as $item):?>
+			$data['title'] = 'è¿™æ˜¯æ ‡é¢˜';
+			$this->load->vars($data); //å¯ä»¥å¤šæ¬¡ä½¿ç”¨
+			//æ¨¡æ¿
+	4.æ¨èä½¿ç”¨<?php foreach($list as $item):?>
 				<?=$item['name']?>
 			  <?php endforeach;?>
 			  
-CIÖĞµÄ³¬¼¶¶ÔÏó£º
-	var_dump($this); //¿ØÖÆÆ÷¶ÔÏó£¬³¬¼¶¶ÔÏó
+CIä¸­çš„è¶…çº§å¯¹è±¡ï¼š
+	var_dump($this); //æ§åˆ¶å™¨å¯¹è±¡ï¼Œè¶…çº§å¯¹è±¡
 	var_dump($this->load);
-	µ±Ç°µÄ¿ØÖÆÆ÷¶ÔÏó
-	Ìá¹©ÁËºÜ¶àÊôĞÔ
+	å½“å‰çš„æ§åˆ¶å™¨å¯¹è±¡
+	æä¾›äº†å¾ˆå¤šå±æ€§
 	$this->load
-		×°ÔØÆ÷ÀàµÄÊµÀı system/core/Loader.php
-		×°ÔØÆ÷ÀàÌá¹©µÄ·½·¨£º
-		view() 		×°ÔØÊÓÍ¼
-		vars() 		·ÖÅä±äÁ¿µ½ÊÓÍ¼
-		database()	×°ÔØÊı¾İ¿â²Ù×÷¶ÔÏó
-		model()		×°ÔØÄ£ĞÍ¶ÔÏó
-		helper()	¼ÓÔØÒ»Ğ©¸¨Öúº¯Êı
+		è£…è½½å™¨ç±»çš„å®ä¾‹ system/core/Loader.php
+		è£…è½½å™¨ç±»æä¾›çš„æ–¹æ³•ï¼š
+		view() 		è£…è½½è§†å›¾
+		vars() 		åˆ†é…å˜é‡åˆ°è§†å›¾
+		database()	è£…è½½æ•°æ®åº“æ“ä½œå¯¹è±¡
+		model()		è£…è½½æ¨¡å‹å¯¹è±¡
+		helper()	åŠ è½½ä¸€äº›è¾…åŠ©å‡½æ•°
 		
-		//CI»á×Ô¶¯ÊµÀı»¯Ò»¸öCI_LoaderµÄ¶ÔÏó£¬·ÅÔÚ³¬¼¶¶ÔÏóµÄÊôĞÔÖĞ
-		//ÏÂÃæ´úÂë°ïÖú´ó¼ÒÀí½â$this->loadÊôĞÔ
+		//CIä¼šè‡ªåŠ¨å®ä¾‹åŒ–ä¸€ä¸ªCI_Loaderçš„å¯¹è±¡ï¼Œæ”¾åœ¨è¶…çº§å¯¹è±¡çš„å±æ€§ä¸­
+		//ä¸‹é¢ä»£ç å¸®åŠ©å¤§å®¶ç†è§£$this->loadå±æ€§
 		$obj = new CI_Loader();
 		$this->load=$obj;
 		$this->load->view();
 	
 	$this->uri
-		ÊÇCI_URIµÄÊµÀı(urlµÄÒ»Ğ©¶«Î÷)system/core/URI.php
-		CI_URIÀàÌá¹©·½·¨£º
-		*segment(n)  ÓÃÓÚ»ñÈ¡urlÖĞµÄµÚn¸ö²ÎÊı(Öµ)
-		Èë¿ÚÎÄ¼ş.php/¿ØÖÆÆ÷/¶¯×÷/²ÎÊı1/²ÎÊı2
-			$this->uri->segment(4); //»ñÈ¡µÚËÄ¶ÎµÄ
-			´«Í³µÄ£ºÊ¹ÓÃ ²ÎÊı1/Öµ1/²ÎÊı2/Öµ2  //$_GET['id'];
-		¿ÉÒÔÔÚ·½·¨ÀïÃæÖ±½ÓĞ´£¬Ö±½ÓÊä³ö
-		//index.php/¿ØÖÆÆ÷/index/6
-		echo $this->segment(2);	//Êä³ö6
+		æ˜¯CI_URIçš„å®ä¾‹(urlçš„ä¸€äº›ä¸œè¥¿)system/core/URI.php
+		CI_URIç±»æä¾›æ–¹æ³•ï¼š
+		*segment(n)  ç”¨äºè·å–urlä¸­çš„ç¬¬nä¸ªå‚æ•°(å€¼)
+		å…¥å£æ–‡ä»¶.php/æ§åˆ¶å™¨/åŠ¨ä½œ/å‚æ•°1/å‚æ•°2
+			$this->uri->segment(4); //è·å–ç¬¬å››æ®µçš„
+			ä¼ ç»Ÿçš„ï¼šä½¿ç”¨ å‚æ•°1/å€¼1/å‚æ•°2/å€¼2  //$_GET['id'];
+		å¯ä»¥åœ¨æ–¹æ³•é‡Œé¢ç›´æ¥å†™ï¼Œç›´æ¥è¾“å‡º
+		//index.php/æ§åˆ¶å™¨/index/6
+		echo $this->segment(2);	//è¾“å‡º6
 		public function index($p) {
-			echo $p; //Êä³ö6
+			echo $p; //è¾“å‡º6
 		}
 	$this->input
-		ÊÇCI_InputµÄÊµÀı(urlµÄÒ»Ğ©¶«Î÷)system/core/Input.php
-		Ìá¹©µÄ·½·¨
+		æ˜¯CI_Inputçš„å®ä¾‹(urlçš„ä¸€äº›ä¸œè¥¿)system/core/Input.php
+		æä¾›çš„æ–¹æ³•
 			$this->input_post('username');
 			$this->input_server('DOCUMENT_ROOT');
-				µÈÓÚ var_dump($_SERVER['']);
-	ÔÚÊÓÍ¼ÖĞ Ö±½ÓÓÃ$thisÀ´·ÃÎÊ³¬¼¶¶ÔÏó	
+				ç­‰äº var_dump($_SERVER['']);
+	åœ¨è§†å›¾ä¸­ ç›´æ¥ç”¨$thisæ¥è®¿é—®è¶…çº§å¯¹è±¡	
 	
 	
-ciÖĞµÄÊı¾İ¿â²Ù×÷
-		ARÄ£ĞÍ£¬¾ÍÊÇÒÔÇ°µÄmodel
-		1.´ò¿ªÅäÖÃÎÄ¼şdatabase.php
-		2.½«Êı¾İ¿â·ÃÎÊ¶ÔÏó£¬×°ÔØµ½³¬¼¶¶ÔÏóµÄÊôĞÔ $this->db ÖĞ
+ciä¸­çš„æ•°æ®åº“æ“ä½œ
+		ARæ¨¡å‹ï¼Œå°±æ˜¯ä»¥å‰çš„model
+		1.æ‰“å¼€é…ç½®æ–‡ä»¶database.php
+		2.å°†æ•°æ®åº“è®¿é—®å¯¹è±¡ï¼Œè£…è½½åˆ°è¶…çº§å¯¹è±¡çš„å±æ€§ $this->db ä¸­
 			$this->load->database();	
-			//ÅäÖÃ×Ô¶¯¼ÓÔØdb
-			//°ÑËûĞ´ÈëautoloadÀïÃæ,$autoload['libraries'] = array('database'); ,¾Í²»ĞèÒªÃ¿´Î¼ÓÔØÁË
-		3.Ö´ĞĞÒ»Ğ©Êı¾İ¿â²Ù×÷º¯Êı
+			//é…ç½®è‡ªåŠ¨åŠ è½½db
+			//æŠŠä»–å†™å…¥autoloadé‡Œé¢,$autoload['libraries'] = array('database'); ,å°±ä¸éœ€è¦æ¯æ¬¡åŠ è½½äº†
+		3.æ‰§è¡Œä¸€äº›æ•°æ®åº“æ“ä½œå‡½æ•°
 			
-			²éÑ¯£º
-				var_dump($this->db)		//¼ÓÔØºó£¬»á·ÅÈë³¬¼¶¶ÔÏóÊôĞÔÖĞ,Ä¬ÈÏÊôĞÔÃûÊÇdb
-				//Ö´ĞĞ²Ù×÷,µ÷ÓÃ¶ÔÏóµÄÄ³Ò»¸ö·½·¨
-				$res = $this->db->query($sql);	//·µ»Ø¶ÔÏó
-				$list = $res->result();	//·µ»ØÊı×é£¬ÀïÃæÊÇÒ»¸öÒ»¸öµÄ¶ÔÏó
+			æŸ¥è¯¢ï¼š
+				var_dump($this->db)		//åŠ è½½åï¼Œä¼šæ”¾å…¥è¶…çº§å¯¹è±¡å±æ€§ä¸­,é»˜è®¤å±æ€§åæ˜¯db
+				//æ‰§è¡Œæ“ä½œ,è°ƒç”¨å¯¹è±¡çš„æŸä¸€ä¸ªæ–¹æ³•
+				$res = $this->db->query($sql);	//è¿”å›å¯¹è±¡
+				$list = $res->result();	//è¿”å›æ•°ç»„ï¼Œé‡Œé¢æ˜¯ä¸€ä¸ªä¸€ä¸ªçš„å¯¹è±¡
 				var_dump($list);
-				//mysql_fetch_object(); //·µ»Ø¶ÔÏó
+				//mysql_fetch_object(); //è¿”å›å¯¹è±¡
 				
 				$data['user_list'] = $users;
-				//·Åµ½Ä£°åÖĞ,×÷ÎªµÚ¶ş¸ö²ÎÊı
+				//æ”¾åˆ°æ¨¡æ¿ä¸­,ä½œä¸ºç¬¬äºŒä¸ªå‚æ•°
 				$this->load->view('user/showusers',$data);
 				
-				$res->result_array(); 	//·µ»Ø¶şÎ¬Êı×é£¬¹ØÁªÊı×é
-				$res->row();			//·µ»ØµÚÒ»ÌõÊı¾İ,Ö±½ÓÊÇÒ»¸ö¶ÔÏó
+				$res->result_array(); 	//è¿”å›äºŒç»´æ•°ç»„ï¼Œå…³è”æ•°ç»„
+				$res->row();			//è¿”å›ç¬¬ä¸€æ¡æ•°æ®,ç›´æ¥æ˜¯ä¸€ä¸ªå¯¹è±¡
 			
-			Ìí¼Ó£º
-				$this->load->databases(); 	//¼ÓÔØÊı¾İ¿â²Ù×÷Àà
+			æ·»åŠ ï¼š
+				$this->load->databases(); 	//åŠ è½½æ•°æ®åº“æ“ä½œç±»
 				$sql = "insert into user (name,password) values ('jack','123')";
-				$res = $this->db->query($sql);	//½á¹ûÎª£ºtrue or false
+				$res = $this->db->query($sql);	//ç»“æœä¸ºï¼štrue or false
 				if($res) {
-					$this->db->affected_rows();	//»ñÈ¡Ó°ÏìĞĞÊımysql_affected_rows()
-					$this->db->insert_id();		//»ñÈ¡insert²Ù×÷²úÉúµÄid£¬×ÔÔöid
+					$this->db->affected_rows();	//è·å–å½±å“è¡Œæ•°mysql_affected_rows()
+					$this->db->insert_id();		//è·å–insertæ“ä½œäº§ç”Ÿçš„idï¼Œè‡ªå¢id
 				}
-			ĞŞ¸Ä£º
-			É¾³ı£º
+			ä¿®æ”¹ï¼š
+			åˆ é™¤ï¼š
 	
-			½â¾ö°²È«£º	¿ÉÒÔ±íÇ°×º;
-							ÅäÖÃÒ»ÏÂ
+			è§£å†³å®‰å…¨ï¼š	å¯ä»¥è¡¨å‰ç¼€;
+							é…ç½®ä¸€ä¸‹
 							$db['default']['dbprefix'] = 'blog_';
 							$db['default']['swap_pre'] = 'blog_';
-							ÅäÖÃÎªÒ»Ñù£¬´úÂëÖĞ¾ÍÖ±½ÓĞ´ËÀ¾ÍĞĞ£¬Èç¹ûÒÔºó±íÇ°×º±ä»¯£¬Ö»ĞèÒª
-							ĞŞ¸Ä$db['default']['dbprefix'] = 'new_'; ´úÂëÖĞµÄblog_»á×Ô¶¯Ìæ»»Îªnew_
-						²ÎÊı°ó¶¨,?Ìí¼Ó ²éÑ¯;
+							é…ç½®ä¸ºä¸€æ ·ï¼Œä»£ç ä¸­å°±ç›´æ¥å†™æ­»å°±è¡Œï¼Œå¦‚æœä»¥åè¡¨å‰ç¼€å˜åŒ–ï¼Œåªéœ€è¦
+							ä¿®æ”¹$db['default']['dbprefix'] = 'new_'; ä»£ç ä¸­çš„blog_ä¼šè‡ªåŠ¨æ›¿æ¢ä¸ºnew_
+						å‚æ•°ç»‘å®š,?æ·»åŠ  æŸ¥è¯¢;
 							$data[0] = "ss";
 							$data[1] = "123";
-							$sql = "insert into user (name,password) values (?,?)";//°²È«
+							$sql = "insert into user (name,password) values (?,?)";//å®‰å…¨
 							$res = $this->db->query($sql,$data);
 							
 							$sql = "select * from test where name=?";
 							$res = $this->db->query($sql,$name);
-							Èç¹ûÓĞ¶à¸ö?Ê±£¬´«ÈëË÷ÒıÊı×é
-			db×Ô¶¯¼ÓÔØ:
+							å¦‚æœæœ‰å¤šä¸ª?æ—¶ï¼Œä¼ å…¥ç´¢å¼•æ•°ç»„
+			dbè‡ªåŠ¨åŠ è½½:
 					
 	
-CIÖĞµÄAR£¨Êı¾İ¿âÔöÉ¾¸Ä²é£©  // ¼ò»¯²Ù×÷
-	¿ØÖÆÎÄ¼şÖĞ
-	$active_record = TRUE; //¿ªÆôARÄ£ĞÍ£¬¿ØÖÆÆ÷ÖĞ¿ÉÒÔÖ±½ÓÊ¹ÓÃ$this->db £¬false Ôò²»¿ÉÒÔ£¬Ö»¿ÉÒÔÊ¹ÓÃquery
+CIä¸­çš„ARï¼ˆæ•°æ®åº“å¢åˆ æ”¹æŸ¥ï¼‰  // ç®€åŒ–æ“ä½œ
+	æ§åˆ¶æ–‡ä»¶ä¸­
+	$active_record = TRUE; //å¼€å¯ARæ¨¡å‹ï¼Œæ§åˆ¶å™¨ä¸­å¯ä»¥ç›´æ¥ä½¿ç”¨$this->db ï¼Œfalse åˆ™ä¸å¯ä»¥ï¼Œåªå¯ä»¥ä½¿ç”¨query
 	
-	1.È·±£database.phpÀï$active_record = TRUE £¬¿ªÆôARÄ£ĞÍ
-	2.ÔÚÅäÖÃÎÄ¼şÖĞ£¬ÕıÈ·ÅäÖÃ±íÇ°×ººó£¬»á×Ô¶¯Ìí¼Ó±íÇ°×º
+	1.ç¡®ä¿database.phpé‡Œ$active_record = TRUE ï¼Œå¼€å¯ARæ¨¡å‹
+	2.åœ¨é…ç½®æ–‡ä»¶ä¸­ï¼Œæ­£ç¡®é…ç½®è¡¨å‰ç¼€åï¼Œä¼šè‡ªåŠ¨æ·»åŠ è¡¨å‰ç¼€
 	
-	//²é
-	$res = $this->db->get('±íÃû');  //·µ»Ø½á¹û¼¯¶ÔÏó
+	//æŸ¥
+	$res = $this->db->get('è¡¨å');  //è¿”å›ç»“æœé›†å¯¹è±¡
 	$res->result();
-	//Ôö
-	$bool = $this->db->insert('±íÃû',¹ØÁªÊı×é);
-	//¸Ä
-	$bool = $this->db->update('±íÃû',¹ØÁªÊı×é,Ìõ¼ş);//Ìõ¼şÓ¦ÎªÊı×é
-	//É¾
-	$bool = $this->db->delete('±íÃû',Ìõ¼ş);
+	//å¢
+	$bool = $this->db->insert('è¡¨å',å…³è”æ•°ç»„);
+	//æ”¹
+	$bool = $this->db->update('è¡¨å',å…³è”æ•°ç»„,æ¡ä»¶);//æ¡ä»¶åº”ä¸ºæ•°ç»„
+	//åˆ 
+	$bool = $this->db->delete('è¡¨å',æ¡ä»¶);
 	
-	//Á¬¹á²Ù×÷
+	//è¿è´¯æ“ä½œ
 		//select * from user where id>=3 order by id desc limit 2,3;
-		$res = $this->db->select('id,name') 	//id´óÓÚ1£¬idÅÅĞò£¬
+		$res = $this->db->select('id,name') 	//idå¤§äº1ï¼Œidæ’åºï¼Œ
 				 ->from('user')
 				 ->where('id >=',3)
-				 ->limit(3,2)					//±íÊ¾Ìø¹ı2Ìõ£¬È¡³ö3ÌõÊı¾İ
+				 ->limit(3,2)					//è¡¨ç¤ºè·³è¿‡2æ¡ï¼Œå–å‡º3æ¡æ•°æ®
 				 ->order_by('id desc')
 				 ->get();
-		echo $this->db->last_query(); 			//´òÓ¡×îºóÒ»ÌõsqlÓï¾ä
-		var_dump($res->result);		//´òÓ¡½á¹û¼¯
-	//where·½·¨
-		//where·½·¨
-		$res = $this->db->where('name','jack')->get('user');	//Ö±½Ó´«×Ö¶Î£¬ºÍÖµ
-		$res = $this->db->where(array('name'=>'jack'))->get('user');			//´«Êı×é £¬ nameÎªjack
-		$res = $this->db->where(array('name'=>'jack','id >'=>2))->get('user');	//id ´óÓÚ2
-		//$res = $this->db->where('name !=','jack')->get('user');	//Ö±½Ó´«×Ö¶Î£¬ºÍÖµ name²»Îªjack
-		//$res = $this->db->where('name =','jack')->get('user');	//Ö±½Ó´«×Ö¶Î£¬ºÍÖµ nameÎªjack
+		echo $this->db->last_query(); 			//æ‰“å°æœ€åä¸€æ¡sqlè¯­å¥
+		var_dump($res->result);		//æ‰“å°ç»“æœé›†
+	//whereæ–¹æ³•
+		//whereæ–¹æ³•
+		$res = $this->db->where('name','jack')->get('user');	//ç›´æ¥ä¼ å­—æ®µï¼Œå’Œå€¼
+		$res = $this->db->where(array('name'=>'jack'))->get('user');			//ä¼ æ•°ç»„ ï¼Œ nameä¸ºjack
+		$res = $this->db->where(array('name'=>'jack','id >'=>2))->get('user');	//id å¤§äº2
+		//$res = $this->db->where('name !=','jack')->get('user');	//ç›´æ¥ä¼ å­—æ®µï¼Œå’Œå€¼ nameä¸ä¸ºjack
+		//$res = $this->db->where('name =','jack')->get('user');	//ç›´æ¥ä¼ å­—æ®µï¼Œå’Œå€¼ nameä¸ºjack
 		
-	¸´ÔÓµÄ²éÑ¯£¬ÇëÓÃ$this->db->query($sql,$data); //Ê¹ÓÃÎÊºÅ²ÎÊı°ó¶¨
+	å¤æ‚çš„æŸ¥è¯¢ï¼Œè¯·ç”¨$this->db->query($sql,$data); //ä½¿ç”¨é—®å·å‚æ•°ç»‘å®š
 	
-À©Õ¹CIµÄ¿ØÖÆÆ÷:
-	ÔÚapplication/core/MY_Controller.php
-	¼Ì³ĞCIµÄ»ùÀà£¬¿ÉÒÔÖØĞ´¹¹Ôì·½·¨£¬
-	\system ÕâÀïÃæÓĞºÜ¶àÏµÍ³µÄ£¬Èç¹ûÏëÖØĞ´ÆäËûµÄÒ²¿ÉÒÔ
+æ‰©å±•CIçš„æ§åˆ¶å™¨:
+	åœ¨application/core/MY_Controller.php
+	ç»§æ‰¿CIçš„åŸºç±»ï¼Œå¯ä»¥é‡å†™æ„é€ æ–¹æ³•ï¼Œ
+	\system è¿™é‡Œé¢æœ‰å¾ˆå¤šç³»ç»Ÿçš„ï¼Œå¦‚æœæƒ³é‡å†™å…¶ä»–çš„ä¹Ÿå¯ä»¥
 	
-	¿ÉÒÔĞŞ¸Ä×Ô¶¨Òå¿ØÖÆÆ÷µÄÇ°×º ÔÚconfig.phpÀï
+	å¯ä»¥ä¿®æ”¹è‡ªå®šä¹‰æ§åˆ¶å™¨çš„å‰ç¼€ åœ¨config.phpé‡Œ
 	
 	
-CIÖĞµÄÄ£ĞÍmodel	
-	¼Ì³Ğ×ÔCI_Model£¬
+CIä¸­çš„æ¨¡å‹model	
+	ç»§æ‰¿è‡ªCI_Modelï¼Œ
 	application/models
-	user_model.php£¨ÎÄ¼şÃûÈ«Ğ¡Ğ´£© 
-	class User_model(ÀàÃûÊ××ÖÄ¸´óĞ´)
-	½¨ÒéÊ¹ÓÃ_model×÷Îªºó×º£¬·ÀÖ¹ºÍ¿ØÖÆÆ÷ÀàÃû³åÍ»
+	user_model.phpï¼ˆæ–‡ä»¶åå…¨å°å†™ï¼‰ 
+	class User_model(ç±»åé¦–å­—æ¯å¤§å†™)
+	å»ºè®®ä½¿ç”¨_modelä½œä¸ºåç¼€ï¼Œé˜²æ­¢å’Œæ§åˆ¶å™¨ç±»åå†²çª
 	
-	ÔÚÄ£ĞÍÖĞ£¬¿ÉÒÔÖ±½ÓÊ¹ÓÃ³¬¼¶¶ÔÏóÖĞµÄÊôĞÔ £¨³¬¼¶¶ÔÏó¾ÍÊÇ¿ØÖÆÆ÷ÊôĞÔ£©
-	Ä£ĞÍÖĞµÄ·½·¨£¬ÊÇ¸ù¾İ¿ØÖÆÆ÷µÄĞèÇó£¬¿ØÖÆÆ÷ÒªÊ²Ã´µÄÊı¾İ£¬¾ÍÔÚÄ£ĞÍÖĞ¾ÍOKÁË
+	åœ¨æ¨¡å‹ä¸­ï¼Œå¯ä»¥ç›´æ¥ä½¿ç”¨è¶…çº§å¯¹è±¡ä¸­çš„å±æ€§ ï¼ˆè¶…çº§å¯¹è±¡å°±æ˜¯æ§åˆ¶å™¨å±æ€§ï¼‰
+	æ¨¡å‹ä¸­çš„æ–¹æ³•ï¼Œæ˜¯æ ¹æ®æ§åˆ¶å™¨çš„éœ€æ±‚ï¼Œæ§åˆ¶å™¨è¦ä»€ä¹ˆçš„æ•°æ®ï¼Œå°±åœ¨æ¨¡å‹ä¸­å°±OKäº†
 	
-CIÖĞµÄurlÏà¹Øº¯Êı
+CIä¸­çš„urlç›¸å…³å‡½æ•°
 	htdoc/phpci/
-	$this->load->helper('url'); //¼ÓÔØurlº¯Êı,¿ÉÒÔÅäÖÃ×Ô¶¯¼ÓÔØ$autiload['helper'] = array('url');
+	$this->load->helper('url'); //åŠ è½½urlå‡½æ•°,å¯ä»¥é…ç½®è‡ªåŠ¨åŠ è½½$autiload['helper'] = array('url');
 	
-	site_url('¿ØÖÆÆ÷/·½·¨');	//Éú³Éurl ,ÊÊÓÃÓÚ±íµ¥
-	base_url(); 				//ÍøÕ¾¸ùÄ¿Â¼ <?php echo base_url(); ?>upload/girl.jpg
+	site_url('æ§åˆ¶å™¨/æ–¹æ³•');	//ç”Ÿæˆurl ,é€‚ç”¨äºè¡¨å•
+	base_url(); 				//ç½‘ç«™æ ¹ç›®å½• <?php echo base_url(); ?>upload/girl.jpg
 	
-CIÖĞµÄÂ·ÓÉÓëÎ±¾²Ì¬¡¢Òş²Øindex.phpÈë¿ÚÎÄ¼ş
-	Â·ÓÉ£º
-		ÅäÖÃÎÄ¼ş£ºapplication\config\routes.php
-		Ä¬ÈÏ¿ØÖÆÆ÷£º$route['default_controller'] = "welcome"; //Ä¬ÈÏ½øÀ´·ÃÎÊµÄÒ³Ãæ
+CIä¸­çš„è·¯ç”±ä¸ä¼ªé™æ€ã€éšè—index.phpå…¥å£æ–‡ä»¶
+	è·¯ç”±ï¼š
+		é…ç½®æ–‡ä»¶ï¼šapplication\config\routes.php
+		é»˜è®¤æ§åˆ¶å™¨ï¼š$route['default_controller'] = "welcome"; //é»˜è®¤è¿›æ¥è®¿é—®çš„é¡µé¢
 		
-	¼ÓÈëÎ±¾²Ì¬£º	
+	åŠ å…¥ä¼ªé™æ€ï¼š	
 		//http://localhost/phpci/news/4.html
 		//$route['news/[\d]+\.html'] = 'article/show/$1';
 		//$route['news/[\d]{6}/([\d]+)\.html'] = 'article/show/$1';
 	
-	Òş²ØÈë¿ÚÎÄ¼şindex.php£º
-		  ¿ªÆôapacheµÄrewriteÄ£¿é£ºapacheµÄÅäÖÃÎÄ¼ş httpd.conf£¬ÕÒrewrite,È¥µô×¢ÊÍ£¬ÖØÖÃapache
-		  ÔÚÈë¿ÚÎÄ¼şÍ¬¼¶Ä¿Â¼ÏÂ½¨Á¢.htaccessÎÄ¼ş
-		  ¼ÓÈëÒÔÏÂÄÚÈİ£º
+	éšè—å…¥å£æ–‡ä»¶index.phpï¼š
+		  å¼€å¯apacheçš„rewriteæ¨¡å—ï¼šapacheçš„é…ç½®æ–‡ä»¶ httpd.confï¼Œæ‰¾rewrite,å»æ‰æ³¨é‡Šï¼Œé‡ç½®apache
+		  åœ¨å…¥å£æ–‡ä»¶åŒçº§ç›®å½•ä¸‹å»ºç«‹.htaccessæ–‡ä»¶
+		  åŠ å…¥ä»¥ä¸‹å†…å®¹ï¼š
 			RewriteEngine on   
 			RewriteCond %{REQUEST_FILENAME} !-f
 			RewriteCond %{REQUEST_FILENAME} !-d  
 			RewriteCond $1 !^(index/.php|images|js|css|robots/.txt)  
 			RewriteRule ^(.*)$ index.php?/$1 [L]
 	
-CIÖĞµÄ·ÖÒ³
-		//×°ÔØÀàÎÄ¼ş
+CIä¸­çš„åˆ†é¡µ
+		//è£…è½½ç±»æ–‡ä»¶
 		$this->load->library('pagination');
-		$this->load->helper('url'); //¼ÓÔØurl¸¨Öúº¯Êı
-		//ÅäÖÃ
-		$page_size = 10; //Ã¿Ò³ÏÔÊ¾10ÌõÊı¾İ
+		$this->load->helper('url'); //åŠ è½½urlè¾…åŠ©å‡½æ•°
+		//é…ç½®
+		$page_size = 10; //æ¯é¡µæ˜¾ç¤º10æ¡æ•°æ®
 		
-		$config['base_url'] = site_url('user/page'); 	//µ±Ç°¿ØÖÆÆ÷ÏÂµÄµ±Ç°·½·¨
-		$config['total_rows'] = '200';	//×ÜÌõÊı
-		$config['per_page'] = '10';		//Ã¿Ò³ÏÔÊ¾ÌõÊı
+		$config['base_url'] = site_url('user/page'); 	//å½“å‰æ§åˆ¶å™¨ä¸‹çš„å½“å‰æ–¹æ³•
+		$config['total_rows'] = '200';	//æ€»æ¡æ•°
+		$config['per_page'] = '10';		//æ¯é¡µæ˜¾ç¤ºæ¡æ•°
 		
-		$config['first_link'] = 'Ê×Ò³';
-		$config['next_link'] = 'ÉÏÒ»Ò³';
-		$config['prev_link'] = 'ÏÂÒ»Ò³';
-		$config['uri_segment'] = 3;	//·ÖÒ³µÄÊı¾İ²éÑ¯Æ«ÒÆÁ¿ÔÚÄÄÒ»¶Î
+		$config['first_link'] = 'é¦–é¡µ';
+		$config['next_link'] = 'ä¸Šä¸€é¡µ';
+		$config['prev_link'] = 'ä¸‹ä¸€é¡µ';
+		$config['uri_segment'] = 3;	//åˆ†é¡µçš„æ•°æ®æŸ¥è¯¢åç§»é‡åœ¨å“ªä¸€æ®µ
 		
 		$this->pagination->initialize($config);
 		
-		$offset = intval($this->uri->segment(3));  //»ñÈ¡µÚÈı¶ÎµÄ²ÎÊıÖµ,Óë$config['uri_segment']¶ÔÓ¦
+		$offset = intval($this->uri->segment(3));  //è·å–ç¬¬ä¸‰æ®µçš„å‚æ•°å€¼,ä¸$config['uri_segment']å¯¹åº”
 		
-		echo $sql = "select * from blog_user limit $offset,$page_size"; //sqlÓï¾ä
+		echo $sql = "select * from blog_user limit $offset,$page_size"; //sqlè¯­å¥
 		
-		$data['links'] = $this->pagination->create_links(); //´´½¨ÉÏÒ»Ò³£¬ÏÂÒ»Ò³µÄ°´Å¥
+		$data['links'] = $this->pagination->create_links(); //åˆ›å»ºä¸Šä¸€é¡µï¼Œä¸‹ä¸€é¡µçš„æŒ‰é’®
 		$this->load->view('user/page',$data);
 	
-CIÖĞµÄÎÄ¼şÉÏ´«
-	1.´´½¨ÉÏ´«Ä¿Â¼
-	2.½¨Á¢ÉÏ´«Ò³Ãæ
+CIä¸­çš„æ–‡ä»¶ä¸Šä¼ 
+	1.åˆ›å»ºä¸Šä¼ ç›®å½•
+	2.å»ºç«‹ä¸Šä¼ é¡µé¢
 		<form action="<?php echo site_url('user/upload'); ?>" method="post" enctype="multipart/form-data">
 			<input type="file" name="pic">
-			<input type="submit" value="ÉÏ´«">
+			<input type="submit" value="ä¸Šä¼ ">
 		</form>
-	3.Ö´ĞĞÉÏ´«
-		$config['upload_path'] = './upload/'; 			//ÉÏ´«Ä¿Â¼£¬ĞèÒªÊÖ¹¤´´½¨£¬ÒÔÈë¿ÚÎÄ¼şÎª×¼
-		$config['allowed_types'] = 'gif|png|jpg|jpeg'; 	//ÎÄ¼şÔÊĞíÀàĞÍ
-		$config['file_name'] = uniqid(); 				//Éú³ÉĞÂÎÄ¼şÃû³Æ
+	3.æ‰§è¡Œä¸Šä¼ 
+		$config['upload_path'] = './upload/'; 			//ä¸Šä¼ ç›®å½•ï¼Œéœ€è¦æ‰‹å·¥åˆ›å»ºï¼Œä»¥å…¥å£æ–‡ä»¶ä¸ºå‡†
+		$config['allowed_types'] = 'gif|png|jpg|jpeg'; 	//æ–‡ä»¶å…è®¸ç±»å‹
+		$config['file_name'] = uniqid(); 				//ç”Ÿæˆæ–°æ–‡ä»¶åç§°
 		
-		$this->load->library('upload',$config); 		//¼ÓÔØÎÄ¼şÉÏ´«Àà£¬·ÅÈëÅäÖÃÎÄ¼ş
-		$this->upload->do_upload('pic');				//µ÷ÓÃÎÄ¼şÉÏ´«·½·¨£¬Ö´ĞĞÉÏ´«£¬·Å±íµ¥Ãû×Ö
+		$this->load->library('upload',$config); 		//åŠ è½½æ–‡ä»¶ä¸Šä¼ ç±»ï¼Œæ”¾å…¥é…ç½®æ–‡ä»¶
+		$this->upload->do_upload('pic');				//è°ƒç”¨æ–‡ä»¶ä¸Šä¼ æ–¹æ³•ï¼Œæ‰§è¡Œä¸Šä¼ ï¼Œæ”¾è¡¨å•åå­—
 		
-		//var_dump($this->upload->data());	//´òÓ¡ÉÏ´«³É¹¦ ·µ»ØĞÅÏ¢
+		//var_dump($this->upload->data());	//æ‰“å°ä¸Šä¼ æˆåŠŸ è¿”å›ä¿¡æ¯
 		$data = $this->upload->data();
-		echo $data['file_name'];//Êä³öĞÂÎÄ¼şÃû
+		echo $data['file_name'];//è¾“å‡ºæ–°æ–‡ä»¶å
 	
-CIÖĞµÄSession
-		//CIÖĞ²»Ê¹ÓÃPHPµÄÔ­Éùsession£¬Ä¬ÈÏCIÖĞµÄsessionÊ¹ÓÃµÄÊÇcookie£¬
+CIä¸­çš„Session
+		//CIä¸­ä¸ä½¿ç”¨PHPçš„åŸå£°sessionï¼Œé»˜è®¤CIä¸­çš„sessionä½¿ç”¨çš„æ˜¯cookieï¼Œ
 		
-		//SESSIONÀà
+		//SESSIONç±»
 		public function login() {
-			//echo md5(uniqid());  //Ê¹ÓÃËüÉú³ÉÒ»¸ö¼ÓÃÜid£¬ÌîÈëÅäÖÃÎÄ¼şÖĞconfig.php ÀïµÄ$config['encryption_key'] = 'c40e2bfe70d2c6956044f944bdfaaf8b';Ñ¡Ïî
+			//echo md5(uniqid());  //ä½¿ç”¨å®ƒç”Ÿæˆä¸€ä¸ªåŠ å¯†idï¼Œå¡«å…¥é…ç½®æ–‡ä»¶ä¸­config.php é‡Œçš„$config['encryption_key'] = 'c40e2bfe70d2c6956044f944bdfaaf8b';é€‰é¡¹
 			
-			$this->load->library('session'); //Ò»µ©±»ÔØÈë, session¾Í¿ÉÒÔÕâÑùÊ¹ÓÃ£º $this->session
+			$this->load->library('session'); //ä¸€æ—¦è¢«è½½å…¥, sessionå°±å¯ä»¥è¿™æ ·ä½¿ç”¨ï¼š $this->session
 			$user = array('id'=>3,'name'=>'jack');
 			
-			$this->session->set_userdata('user',$user);	//½«Êı¾İ·ÅÈësessionÖĞ£¬Ö»ÔÊĞí·ÅKEY ºÍVALUE ¼üÖµ¶ÔÓ¦µÄÊı¾İ
-			//¸Õ·ÅÍêÖ®ºó£¬²»ÒªÂíÉÏÔÚÕâÀï»ñÈ¡¸Õ·ÅÈëµÄÊı¾İ,Ö»ÓĞÒ³ÃæÖØĞÂ¼ÓÔØ»òÌø×ªµ½±ğµÄurlÖĞ²ÅÄÜ»ñÈ¡µ½
+			$this->session->set_userdata('user',$user);	//å°†æ•°æ®æ”¾å…¥sessionä¸­ï¼Œåªå…è®¸æ”¾KEY å’ŒVALUE é”®å€¼å¯¹åº”çš„æ•°æ®
+			//åˆšæ”¾å®Œä¹‹åï¼Œä¸è¦é©¬ä¸Šåœ¨è¿™é‡Œè·å–åˆšæ”¾å…¥çš„æ•°æ®,åªæœ‰é¡µé¢é‡æ–°åŠ è½½æˆ–è·³è½¬åˆ°åˆ«çš„urlä¸­æ‰èƒ½è·å–åˆ°
 			
-			//¿ÉÒÔÔÚÅäÖÃÎÄ¼şÖĞÉèÖÃ¼ÓÃÜ´æ·Å
-			//$config['sess_encrypt_cookie'] = FALSE; 	//Ê¹ÓÃ¼ÓÃÜ´æ·Å TRUEÎªÊÇ
+			//å¯ä»¥åœ¨é…ç½®æ–‡ä»¶ä¸­è®¾ç½®åŠ å¯†å­˜æ”¾
+			//$config['sess_encrypt_cookie'] = FALSE; 	//ä½¿ç”¨åŠ å¯†å­˜æ”¾ TRUEä¸ºæ˜¯
 			
-			//ÁíÒ»ÖÖ·ÅÖÃÊı¾İ£¬¿ÉÒÔÓÃÓÚµÇÂ½£¬·ÅÈëµÇÂ½Ç°µÄurl
-			$this->session->set_flashdata('test','aaaaaa');  //ºÍsessionÔ­ÀíÒ»Ñù£¬ÏÂ´ÎË¢ĞÂ½«Ã»ÓĞ£¬Ò»´ÎĞÔÊı¾İ
+			//å¦ä¸€ç§æ”¾ç½®æ•°æ®ï¼Œå¯ä»¥ç”¨äºç™»é™†ï¼Œæ”¾å…¥ç™»é™†å‰çš„url
+			$this->session->set_flashdata('test','aaaaaa');  //å’ŒsessionåŸç†ä¸€æ ·ï¼Œä¸‹æ¬¡åˆ·æ–°å°†æ²¡æœ‰ï¼Œä¸€æ¬¡æ€§æ•°æ®
 		}
 		
-		//SESSIONÀà
+		//SESSIONç±»
 		public function show_session() {
-			//È¥ÁíÒ»¸öÒ³ÃæÈ¥È¡ CI ÖĞsessionµÄÊı¾İ
+			//å»å¦ä¸€ä¸ªé¡µé¢å»å– CI ä¸­sessionçš„æ•°æ®
 			$this->load->library('session');
-			$user = $this->session->userdata('user'); 	//»ñÈ¡sessionÖĞµÄÊı¾İ
+			$user = $this->session->userdata('user'); 	//è·å–sessionä¸­çš„æ•°æ®
 			var_dump($user);
 			
 			$test = $this->session->flashdata('test');
 			echo $test;
 		}
 	
-CIÖĞµÄÑéÖ¤Âë,CAPTCHA ¸¨Öúº¯Êı
-		1.ÏÈÊÖ¶¯ÔÚindexÈë¿ÚÎÄ¼şÍ¬¼¶Ä¿Â¼ÏÂ£¬´´½¨ÎÄ¼ş¼Ğ
-		2.	//ÑéÖ¤Âë
+CIä¸­çš„éªŒè¯ç ,CAPTCHA è¾…åŠ©å‡½æ•°
+		1.å…ˆæ‰‹åŠ¨åœ¨indexå…¥å£æ–‡ä»¶åŒçº§ç›®å½•ä¸‹ï¼Œåˆ›å»ºæ–‡ä»¶å¤¹
+		2.	//éªŒè¯ç 
 			public function code() {
 				$this->load->helper('url');
-				$this->load->helper('captcha'); //ÊÇ¸¨Öúº¯Êı
+				$this->load->helper('captcha'); //æ˜¯è¾…åŠ©å‡½æ•°
 				$vals = array(
-						//'word' => rand(1000,9999),					//Ö¸¶¨Ëæ»ú×Ö·û´®
-						'img_path' => './codeimg/', 					//ÑéÖ¤Âë´æ·ÅÄ¿Â¼£¬ÊÖ¶¯´´½¨ £¬±ØĞë²ÎÊı
+						//'word' => rand(1000,9999),					//æŒ‡å®šéšæœºå­—ç¬¦ä¸²
+						'img_path' => './codeimg/', 					//éªŒè¯ç å­˜æ”¾ç›®å½•ï¼Œæ‰‹åŠ¨åˆ›å»º ï¼Œå¿…é¡»å‚æ•°
 						'img_url' => base_url().'/codeimg/',			//url
-						//'font_path' => './path/to/fonts/texb.ttf', 	//Èç¹ûÑéÖ¤ÂëÎªÖĞÎÄ£¬Ö¸¶¨×ÖÌåÄ¿Â¼
+						//'font_path' => './path/to/fonts/texb.ttf', 	//å¦‚æœéªŒè¯ç ä¸ºä¸­æ–‡ï¼ŒæŒ‡å®šå­—ä½“ç›®å½•
 						//'img_width' => '150',
 						//'img_height' => 30,
-						//'expiration' => 60 							//ÑéÖ¤ÂëÉ¾³ıÊ±¼ä,Ãë
+						//'expiration' => 60 							//éªŒè¯ç åˆ é™¤æ—¶é—´,ç§’
 				);
 				
-				$cap = create_captcha($vals); //´´½¨ÑéÖ¤Âë
+				$cap = create_captcha($vals); //åˆ›å»ºéªŒè¯ç 
 				//echo $cap['image'];
-				$this->load->view('user/code',array('cap'=>$cap['image'])); //½«Í¼Æ¬·ÖÅäµ½Ò³Ãæ
+				$this->load->view('user/code',array('cap'=>$cap['image'])); //å°†å›¾ç‰‡åˆ†é…åˆ°é¡µé¢
 				
-				//echo $cap['word']; //ÑéÖ¤ÂëÊı×ÖÄÚÈİ£¬¿ÉÒÔ·Åµ½sessionÖĞ£¬½øĞĞÑéÖ¤£¬¿´ÊÖ²á
+				//echo $cap['word']; //éªŒè¯ç æ•°å­—å†…å®¹ï¼Œå¯ä»¥æ”¾åˆ°sessionä¸­ï¼Œè¿›è¡ŒéªŒè¯ï¼Œçœ‹æ‰‹å†Œ
 				//session_start();
 				//$_SESSION['cap'] = $cap['word'];
 				
-				//ÑéÖ¤µÄÊ±ºò£¬¶Ô±È$cap['word']¾ÍĞĞ
+				//éªŒè¯çš„æ—¶å€™ï¼Œå¯¹æ¯”$cap['word']å°±è¡Œ
 			}
 			
-CIÖĞµÄ±íµ¥ÑéÖ¤
-	//±íµ¥ÑéÖ¤Àà,´Ë·½·¨¿ÉÒÔ²»Òª£¬Ö±½ÓÓÃÏÂÃæµÄ,Ã»ÓĞÊı¾İÖ±½ÓÏÔÊ¾£¬ËùÓĞÀàËÆµÄ¶¼¿ÉÒÔ
+CIä¸­çš„è¡¨å•éªŒè¯
+	//è¡¨å•éªŒè¯ç±»,æ­¤æ–¹æ³•å¯ä»¥ä¸è¦ï¼Œç›´æ¥ç”¨ä¸‹é¢çš„,æ²¡æœ‰æ•°æ®ç›´æ¥æ˜¾ç¤ºï¼Œæ‰€æœ‰ç±»ä¼¼çš„éƒ½å¯ä»¥
 	public function forms() {
 		$this->load->view('user/add');
 	}
 	
-	//±íµ¥ÑéÖ¤Àà
+	//è¡¨å•éªŒè¯ç±»
 	public function form() {
-		$this->load->library('form_validation');	//¼ÓÔØÀà¿â
-		//ÑéÖ¤¹æÔò
-		$this->form_validation->set_rules('name', 'ÓÃ»§Ãû', 'required');
+		$this->load->library('form_validation');	//åŠ è½½ç±»åº“
+		//éªŒè¯è§„åˆ™
+		$this->form_validation->set_rules('name', 'ç”¨æˆ·å', 'required');
 		
-		$bool = $this->form_validation->run(); //Ö´ĞĞÑéÖ¤£¬³É¹¦·µ»Øtrue
+		$bool = $this->form_validation->run(); //æ‰§è¡ŒéªŒè¯ï¼ŒæˆåŠŸè¿”å›true
 		//var_dump($bool);
 		if($bool) {
-			//ÎªÕæ£¬µ÷ÓÃÄ£ĞÍ±£´æµ½Êı¾İ¿â
+			//ä¸ºçœŸï¼Œè°ƒç”¨æ¨¡å‹ä¿å­˜åˆ°æ•°æ®åº“
 		} else {
-			//ÏÔÊ¾´íÎóĞÅÏ¢
+			//æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
 			$this->load->view('user/form');
 		}
 	}	
@@ -362,48 +362,48 @@ CIÖĞµÄ±íµ¥ÑéÖ¤
 			<title></title>
 		</head>
 		<body>
-			<?php echo validation_errors();?> <!-- ÏÔÊ¾ËùÓĞ´íÎó -->
+			<?php echo validation_errors();?> <!-- æ˜¾ç¤ºæ‰€æœ‰é”™è¯¯ -->
 			<form action="<?php echo site_url('user/insert'); ?>" method="post">
 				name:<input type="text" name="name" value="<?php echo set_value('name'); ?>"/>
-				<?php echo form_error('name','<span>','</span>');?><!-- Êä³ö´íÎóĞÅÏ¢ -->
+				<?php echo form_error('name','<span>','</span>');?><!-- è¾“å‡ºé”™è¯¯ä¿¡æ¯ -->
 				<br>
 				pass:<input type="text" name="password" /><br>
 				email:<input type="text" name="email" /><br>
-				<input type="submit" value="Ìá½»" /><br>
+				<input type="submit" value="æäº¤" /><br>
 			</form>
 		</body>
 	</html>
 		
-ĞŞ¸ÄÓïÑÔ°ü
-	//ÓïÑÔ°ü·Åµ½application/language/
-	//ĞŞ¸ÄÅäÖÃÎÄ¼ş$config['language']	= 'english';		
+ä¿®æ”¹è¯­è¨€åŒ…
+	//è¯­è¨€åŒ…æ”¾åˆ°application/language/
+	//ä¿®æ”¹é…ç½®æ–‡ä»¶$config['language']	= 'english';		
 		
-//Ç°ºóÌ¨·ÖÀë
-	ĞŞ¸Ä/index.php  
-	½«$application_folder = 'application';¸ÄÎª$application_folder = 'home';
-	/application/ÎÄ¼ş¼Ğ ¸ÄÎª/home/ÎÄ¼ş¼Ğ
+//å‰åå°åˆ†ç¦»
+	ä¿®æ”¹/index.php  
+	å°†$application_folder = 'application';æ”¹ä¸º$application_folder = 'home';
+	/application/æ–‡ä»¶å¤¹ æ”¹ä¸º/home/æ–‡ä»¶å¤¹
 
-	ĞÂ½¨/admin/ÎÄ¼ş¼Ğ ½«/index.phpÓë/home/ÏÂËùÓĞÎÄ¼ş¸´ÖÆµ½/admin/
+	æ–°å»º/admin/æ–‡ä»¶å¤¹ å°†/index.phpä¸/home/ä¸‹æ‰€æœ‰æ–‡ä»¶å¤åˆ¶åˆ°/admin/
 
-	ĞŞ¸Ä/admin/index.php 
-		$application_folder = 'application';¸ÄÎª£º$application_folder = './'
-		$system_path = 'system';¸ÄÎª£º$system_path = '../system';
+	ä¿®æ”¹/admin/index.php 
+		$application_folder = 'application';æ”¹ä¸ºï¼š$application_folder = './'
+		$system_path = 'system';æ”¹ä¸ºï¼š$system_path = '../system';
 
-//¿ªÆôsession¼ÓÃÜ
-	ĞŞ¸Ä/admin/config/config.phpÏÂµÄ$config['encryption_key']ÈçÏÂ£º
+//å¼€å¯sessionåŠ å¯†
+	ä¿®æ”¹/admin/config/config.phpä¸‹çš„$config['encryption_key']å¦‚ä¸‹ï¼š
 	$config['encryption_key'] = 'rushui';	
 		
-//¿ªÆô×Ô¶¯¼ÓÔØÊı¾İ¿âÁ´½ÓÓësession
-	ĞŞ¸Ä/admin/config/autoload.phpÏÂµÄÄ¬ÈÏ¼ÓÔØÖµÈçÏÂ£º
+//å¼€å¯è‡ªåŠ¨åŠ è½½æ•°æ®åº“é“¾æ¥ä¸session
+	ä¿®æ”¹/admin/config/autoload.phpä¸‹çš„é»˜è®¤åŠ è½½å€¼å¦‚ä¸‹ï¼š
 	$autoload['libraries'] = array('database','session');
-//¿ªÆôURL ¸¨Öúº¯Êı
+//å¼€å¯URL è¾…åŠ©å‡½æ•°
 	$autoload['helper'] = array('url');
 
-//È¥µôindex.php
-	½«/home/ ºÍ/admin/Ä¿Â¼ÏÂµÄ.htaccessÎÄ¼şÄÚÈİ¸ÄÎª£¨È¥µôindex.php,ÔÚ¿ªÆôrewriteÊ±ÉúĞ§£©£º
+//å»æ‰index.php
+	å°†/home/ å’Œ/admin/ç›®å½•ä¸‹çš„.htaccessæ–‡ä»¶å†…å®¹æ”¹ä¸ºï¼ˆå»æ‰index.php,åœ¨å¼€å¯rewriteæ—¶ç”Ÿæ•ˆï¼‰ï¼š
 	RewriteEngine on
 	RewriteCond %{REQUEST_FILENAME} !-f  
-	RewriteCond $1 !^(index\\.php|public|robots\\.txt) (ÔÊĞí·ÃÎÊµÄÄ¿Â¼)
+	RewriteCond $1 !^(index\\.php|public|robots\\.txt) (å…è®¸è®¿é—®çš„ç›®å½•)
 	RewriteRule ^(.*)$ /index.php/$1 [L]		
 		
 		

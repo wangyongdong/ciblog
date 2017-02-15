@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 // | Authors: wangyongdong                                 		  		  |
 // +----------------------------------------------------------------------+
 
-class login extends CI_Controller {
+class Auth::user()->email extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('login_model');

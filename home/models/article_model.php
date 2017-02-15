@@ -141,20 +141,28 @@ class Article_model extends CI_Model{
 	function getRelated($iArticle,$iLimit=6) {
 		//获取文章所属分类
 		$iSort = getSortByArticle($iArticle);
+		if($iSort == 2) {
+			return '';
+		}
 		$list = $this->sort_model->getArticleBySort($iSort,$iStart=0,$iLimit);
-		$iLength = count($list);
-		if($iLength < $iLimit) {
-			//如果数量不够，随机一个分类填充数量
-			$sort_list = $this->sort_model->getSort();
-			$sortNum = count($sort_list);
-			$iOtherType = rand(1,$sortNum);
-			$iOtherLimit = $iLimit - $iLength;
-			$otherList = $this->sort_model->getArticleBySort($iOtherType,$iOtherStart=0,$iOtherLimit);
-			
-			if($iLength > 0) {
-				$list = array_merge($list,$otherList);
-			} else {
-				$list = $otherList;
+		if(empty($list)) {
+			return '';
+		}
+		if(!empty($list)) {
+			$iLength = count($list);
+			if($iLength < $iLimit) {
+				//如果数量不够，随机一个分类填充数量
+				$sort_list = $this->sort_model->getSort();
+				$sortNum = count($sort_list);
+				$iOtherType = rand(1,$sortNum);
+				$iOtherLimit = $iLimit - $iLength;
+				$otherList = $this->sort_model->getArticleBySort($iOtherType,$iOtherStart=0,$iOtherLimit);
+				
+				if($iLength > 0) {
+					$list = array_merge($list,$otherList);
+				} else {
+					$list = $otherList;
+				}
 			}
 		}
 		return $list;

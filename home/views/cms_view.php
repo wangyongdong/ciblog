@@ -58,11 +58,17 @@
 			<div class="otherlink">
 				<h2>相关文章</h2>
 				<ul>
-					<?php foreach($article_related as $list):?>
+					<?php 
+					if(!empty($article_related)) {
+					foreach($article_related as $list):
+					?>
 					<li>
 						<a title="<?=$list['title']?>" href="<?=site_url('article/'.$list['id'])?>"><?=cutTab($list['title'],18)?></a>
 					</li>
-					<?php endforeach;?>
+					<?php 
+					endforeach;
+					}
+					?>
 				</ul>
 			</div>
 			<div id="comment_list" class="re_reply">

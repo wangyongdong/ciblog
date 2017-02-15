@@ -38,6 +38,7 @@ class Sort_model extends CI_Model{
 	 * 根据类别获取文章
 	 */
 	function getArticleBySort($iType,$iStart='',$iPageNum='') {
+		pl($iType);
 		$data_cache = $this->config->item('data_cache');
 		$cache_time = $data_cache['time'];
 		$cache_path = CacheModule('sort_article_'.$iType.'('.$iStart.'-'.$iPageNum.')');
@@ -60,10 +61,12 @@ class Sort_model extends CI_Model{
 						datetime DESC '.$sLimit;
 			$res = $this->db->query($sql);
 			$aList = $res->result_array();
-			//分类置顶操作
-			$list = topwaySort($aList);
-			//写入缓存
-			writeCache($list, $cache_path, $cache_time);
+			if(!empty($aList)) {
+				//分类置顶操作
+				$list = topwaySort($aList);
+				//写入缓存
+				writeCache($list, $cache_path, $cache_time);
+			}
 		}
 		return $list;
 	}

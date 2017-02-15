@@ -42,7 +42,7 @@ class Cms extends MY_Controller {
 	 * 文章详情页
 	 */
 	public function view() {
-		$iArticle = $this->uri->segment(3);
+		$iArticle = $this->uri->segment(2);
 		$data['article'] = $this->article_model->getArticleInfo($iArticle);
 		$data['article_near'] = $this->article_model->getLastNext($iArticle,'cms');	//上一篇文章,下一篇文章
 		$data['article_related'] = $this->article_model->getRelated($iArticle);		//获取相关文章
